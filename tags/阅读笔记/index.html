@@ -6,11 +6,11 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://nsxz945.github.io">
-  <title>nsxz&#39;s blog</title>
+  <title>Tag: 阅读笔记 | nsxz&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
 <meta property="og:title" content="nsxz&#39;s blog">
-<meta property="og:url" content="https://nsxz945.github.io/index.html">
+<meta property="og:url" content="https://nsxz945.github.io/tags/阅读笔记/index.html">
 <meta property="og:site_name" content="nsxz&#39;s blog">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
@@ -144,94 +144,34 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-pwa2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+  
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/25/pwa2/">pwa2</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/25/pwa2/" class="archive-article-date">
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/07/25/pwa2/" class="archive-article-date">
   	<time datetime="2017-07-25T02:25:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-25</time>
 </a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="PWA前的准备工作"><a href="#PWA前的准备工作" class="headerlink" title="PWA前的准备工作"></a>PWA前的准备工作</h1><p>刚刚接触PWA概念，我就很看好它的发展。因此我决定借鉴一些成熟的案例，确定下需要攻克的主要</p>
-<blockquote>
-<p><a href="https://zhuanlan.zhihu.com/p/25800461" target="_blank" rel="external">PWA 在饿了么的实践经验</a><br><a href="https://zhuanlan.zhihu.com/p/25524382" target="_blank" rel="external">PWA 入门: 理解和创建 Service Worker 脚本</a><br> <a href="https://github.com/w3c/ServiceWorker/blob/master/explainer.md" target="_blank" rel="external">Service workers explained</a></p>
-</blockquote>
-<h2 id="降级方案"><a href="#降级方案" class="headerlink" title="降级方案"></a>降级方案</h2><p>因为 server worker将被缓存，因此要预留一个降级开关来注销掉sw，以便能够有效处理SW上出现的bug。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">if (支持SW) &#123;</div><div class="line">  fetch(开关接口)</div><div class="line">  .then(() =&gt; &#123;</div><div class="line">    if (降级) &#123;</div><div class="line">      for(let registration of registrations) &#123;</div><div class="line">  			registration.unregister()</div><div class="line">  		&#125;</div><div class="line">    &#125; else &#123;</div><div class="line">      // 注册 SW</div><div class="line">    &#125;</div><div class="line">  &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>注意的点:</p>
-<ul>
-<li>降级一定要注销掉 SW ，而不是简单地不安装。因为之前访问过站点的用户已安装了sw。</li>
-<li>降级开关需要有即时性，因此服务器和 SW 都不应该缓存该接口。</li>
-</ul>
-<h2 id="错误监控"><a href="#错误监控" class="headerlink" title="错误监控"></a>错误监控</h2><p>SW 运行在 worker 线程里，其抛出的错误在页面是捕捉不到的，因此需要在 SW 里引入错误监控。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(&apos;error&apos;, event =&gt; &#123;</div><div class="line">  // 上报错误信息</div><div class="line">  // 常用的属性：</div><div class="line">  // event.message</div><div class="line">  // event.filename</div><div class="line">  // event.lineno</div><div class="line">  // event.colno</div><div class="line">  // event.error.stack</div><div class="line">&#125;)</div><div class="line">self.addEventListener(&apos;unhandledrejection&apos;, event =&gt; &#123;</div><div class="line">  // 上报错误信息</div><div class="line">  // 常用的属性：</div><div class="line">  // event.reason</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<ol>
-<li>SW 大部分 API 都是 promise-based 的，promise 里未处理的错误触发的不是 error 事件，而是 unhandledrejection 事件。</li>
-<li>这两个事件都只能在 worker 线程的 initial 生命周期里注册。（否则会失败，控制台可看到警告）</li>
-</ol>
-<h2 id="数据统计"><a href="#数据统计" class="headerlink" title="数据统计"></a>数据统计</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// 「弹出添加到主屏对话框」事件</div><div class="line">window.addEventListener(&apos;beforeinstallprompt&apos;, event =&gt; &#123;</div><div class="line">  // 这个 `event.userChoice` 是一个 Promise ，在用户选择后 resolve</div><div class="line">  event.userChoice.then(result =&gt; &#123;</div><div class="line">    console.log(result.outcome)</div><div class="line">    // &apos;accepted&apos;: 添加到主屏</div><div class="line">    // &apos;dismissed&apos;: 用户不想理你并向你扔了个取消</div><div class="line">  &#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<h2 id="service-worker"><a href="#service-worker" class="headerlink" title="service worker"></a>service worker</h2><h3 id="service-worker的特点"><a href="#service-worker的特点" class="headerlink" title="service worker的特点"></a>service worker的特点</h3><ul>
-<li>service不依赖于页面</li>
-<li>有自己的全局执行上下文</li>
-<li>没有操作DOM的权限</li>
-<li>可以脱离页面运行</li>
-<li>可以按需被终止、运行</li>
-<li>只支持HTTPS</li>
-<li>通过网络拦截器，可以加快网站访问甚至实现离线访问</li>
-<li>可以实现推送以及后台同步</li>
-</ul>
-<h3 id="service-worker的生命周期"><a href="#service-worker的生命周期" class="headerlink" title="service worker的生命周期"></a>service worker的生命周期</h3><p><img src="/2017/07/25/pwa2/1.png" alt="生命周期"></p>
-<ul>
-<li>parsed: 注册完成, 脚本解析成功, 尚未安装</li>
-<li>installing: 对应 Service Worker 脚本 install 事件执行, 如果事件里有event.waitUntil() 则会等待传入的 Promise 完成才会成功</li>
-<li>installed(waiting): 页面被旧的 Service Worker 脚本控制, 所以当前的脚本尚未激活。可以通过 self.skipWaiting() 激活新的 Service Worker</li>
-<li>activating: 对应 Service Worker 脚本 activate 事件执行, 如果事件里有event.waitUntil() 则会等待这个 Promise 完成才会成功。这时可以调用 Clients.claim() 接管页面</li>
-<li>activated: 激活成功, 可以处理 fetch, message 等事件</li>
-<li>redundant: 安装失败, 或者激活失败, 或者被新的 Service Worker 替代掉<br>备选项</li>
-</ul>
-<p>Service Worker 脚本最常用的功能是截获请求和缓存资源文件, 这些行为可以绑定在下面这些事件上:</p>
-<ul>
-<li>install 事件中, 抓取资源进行缓存</li>
-<li>activate 事件中, 遍历缓存, 清除过期的资源</li>
-<li>fetch 事件中, 拦截请求, 查询缓存或者网络, 返回请求的资源</li>
-</ul>
-<p>Service Worker 可以访问 Cache API, Fetch API 等接口, 获取数据和完成响应</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(&apos;fetch&apos;, function(event) &#123;</div><div class="line">  event.respondWith(</div><div class="line">    caches.match(event.request)</div><div class="line">      .then(function(response) &#123;</div><div class="line">        // Cache hit - return response</div><div class="line">        if (response) &#123;</div><div class="line">          return response;</div><div class="line">        &#125;</div><div class="line">        return fetch(event.request);</div><div class="line">      &#125;</div><div class="line">    )</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>event.waitUntil() 接收一个 Promise, 等到 Promise 完成时, 事件才最终完成。</p>
-<p>###SW库</p>
-<ul>
-<li>sw-precache-webpack-plugin<br>实现预加载以便离线运行</li>
-<li><a href="https://github.com/GoogleChrome/sw-toolbox" target="_blank" rel="external">sw-toolbox</a><br>线上使用的service worker</li>
-</ul>
-<h2 id="manifest-json"><a href="#manifest-json" class="headerlink" title="manifest.json"></a>manifest.json</h2><p><a href="http://link.zhihu.com/?target=https%3A//developer.mozilla.org/en-US/docs/Web/Manifest" target="_blank" rel="external">MDN-manifest.json</a><br><a href="https://h5.ele.me/manifest.json" target="_blank" rel="external">饿了么manifest</a></p>
-<h2 id="App-Shell提高首屏渲染"><a href="#App-Shell提高首屏渲染" class="headerlink" title="App Shell提高首屏渲染"></a>App Shell提高首屏渲染</h2><p>使用服务端渲染实现App Shell。实践中，渲染往往等到同步的JS完成才进行。所以把耗时的js移到setTimeout里，等待主调用栈清空才执行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">setTimeout(() =&gt; &#123;</div><div class="line">  // 把初始化渲染放到 setTimeout 里</div><div class="line">  new Vue()</div><div class="line">&#125;, 0)</div></pre></td></tr></table></figure>
-<p>vue的服务端渲染可以参考<a href="https://www.npmjs.com/package/vue-server-renderer" target="_blank" rel="external">vue-server-renderer</a>和<a href="https://github.com/vuejs/vue-hackernews-2.0" target="_blank" rel="external">vue-hackernews-2.0
-</a></p>
-<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><ul>
-<li>使用Lighthouse提供修改建议</li>
-<li>对照<a href="https://developers.google.com/web/progressive-web-apps/checklist" target="_blank" rel="external">Progressive Web App Checklist</a>检查</li>
-</ul>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/07/25/pwa2/">pwa2</a>
+    </h1>
+  
 
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -243,88 +183,33 @@
 		</ul>
 	</div>
 
-      
+          
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/25/pwa2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
-    <article id="post-pwa" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/25/pwa/">什么是pwa</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/25/pwa/" class="archive-article-date">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/07/25/pwa/" class="archive-article-date">
   	<time datetime="2017-07-25T00:37:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-25</time>
 </a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="什么是pwa"><a href="#什么是pwa" class="headerlink" title="什么是pwa"></a>什么是pwa</h1><p><a href="https://zhuanlan.zhihu.com/p/26445223?utm_medium=social&amp;utm_source=wechat_session" target="_blank" rel="external">原文:通过 PWA 我们让新用户转化率提升了 104%</a></p>
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>PWA全程，Progressive Web Applications。它是一种web app，但致力于提供native app的性能。</p>
-<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><ul>
-<li><p>独立的桌面logo</p>
-</li>
-<li><p>使用App Shell 快速加载页面<br>App Shell 预加载页面的框架结构和基础 UI 元素，渐进式缓存，动态加载内容。使用微博时，加载新内容时，出现的灰色布局框就是类似的方法。</p>
-</li>
-<li><p>无需下载，随时唤起<br>PWA让web应用可以添加到主屏，</p>
-</li>
-<li><p>友好的启动页<br>启动时，展示一个启动页，以便加载第一个页面所需的资源，同时缓和用户的等待时间</p>
-</li>
-<li><p>沉浸式的的全屏体验 Web App Manifest<br>用户从桌面的PWA图标打开页面时，将进入全屏的界面。没有了浏览器头部</p>
-</li>
-<li><p>无网络访问<br>  无网络时，可以继续使用PWA，会自动加载你已经缓存的内容得以在离线时继续访问。应用提供方可以根据情况，来改变无网络时展示内容的样式、功能。</p>
-</li>
-<li><p>Push Notification<br>  PWA可以实现推送功能。</p>
-</li>
-<li><p>tips<br>  icon需要支持安卓、ios、windows phone 等多种终端。可以使用<a href="http://realfavicongenerator.net/" target="_blank" rel="external">Favicon Generator</a>来协助完成</p>
-</li>
-</ul>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/07/25/pwa/">什么是pwa</a>
+    </h1>
+  
 
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -336,370 +221,19 @@
 		</ul>
 	</div>
 
-      
+          
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/25/pwa/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
-    <article id="post-express" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+  
+    </div></section>
+  
+
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/24/express/">express</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/24/express/" class="archive-article-date">
-  	<time datetime="2017-07-24T07:01:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="express官方文档学习"><a href="#express官方文档学习" class="headerlink" title="express官方文档学习"></a>express官方文档学习</h1><h2 id="first-sight-入门指南"><a href="#first-sight-入门指南" class="headerlink" title="first sight(入门指南)"></a>first sight(入门指南)</h2><ul>
-<li><p>提到了应用生成器，快速形成框架。</p>
-</li>
-<li><p>路由。管理、分配不同的请求。</p>
-</li>
-<li><p>静态文件管理。<br>使用<code>app.use(express.static(&#39;path&#39;))</code>管理静态文件()。同时映射为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  http://localhost:3000/images/kitten.jpg</div><div class="line">http://localhost:3000/css/style.css</div><div class="line">http://localhost:3000/js/app.js</div><div class="line">http://localhost:3000/images/bg.png</div><div class="line">http://localhost:3000/hello.html</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>express.static可以执行多次以加入不同目录下的静态文件。还可以进行命名(<code>app.use(&#39;/static&#39;, express.static(&#39;public&#39;))</code>)，将静态文件放在域名下的虚拟目录中。</p>
-<h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>-</p>
-<ul>
-<li>expressz，请求地址支持正则表达式。</li>
-<li>可以使用多个回调函数处理路由（记得指定 next 对象）：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">app.get(&apos;/example/b&apos;, function (req, res, next) &#123;</div><div class="line">  console.log(&apos;response will be sent by the next function ...&apos;);</div><div class="line">  next();</div><div class="line">&#125;, function (req, res) &#123;</div><div class="line">  res.send(&apos;Hello from B!&apos;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<ul>
-<li>使用回调函数数组处理路由：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">var cb0 = function (req, res, next) &#123;</div><div class="line">  console.log(&apos;CB0&apos;);</div><div class="line">  next();</div><div class="line">&#125;</div><div class="line"></div><div class="line">var cb1 = function (req, res, next) &#123;</div><div class="line">  console.log(&apos;CB1&apos;);</div><div class="line">  next();</div><div class="line">&#125;</div><div class="line"></div><div class="line">var cb2 = function (req, res) &#123;</div><div class="line">  res.send(&apos;Hello from C!&apos;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">app.get(&apos;/example/c&apos;, [cb0, cb1, cb2]);</div></pre></td></tr></table></figure>
-<p>这两种回调函数的使用形式比较特殊，特别点明。它们二者也可以混合使用。</p>
-<h3 id="响应方法"><a href="#响应方法" class="headerlink" title="响应方法"></a>响应方法</h3><p>以特定的方法完成请求，句柄中如果一个方法都不调用，客户端的请求会一直挂着。<br>res.download()、res.end()、res.json()    、res.jsonp()、res.redirect()、res.render()、res.send()、res.sendFile、res.sendStatus()</p>
-<h3 id="app-route"><a href="#app-route" class="headerlink" title="app.route()"></a>app.route()</h3><p>通过链式调用，定义多个请求，以减少代码冗余。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">app.route(&apos;/book&apos;)</div><div class="line">  .get(function(req, res) &#123;</div><div class="line">    res.send(&apos;Get a random book&apos;);</div><div class="line">  &#125;)</div><div class="line">  .post(function(req, res) &#123;</div><div class="line">    res.send(&apos;Add a book&apos;);</div><div class="line">  &#125;)</div><div class="line">  .put(function(req, res) &#123;</div><div class="line">    res.send(&apos;Update the book&apos;);</div><div class="line">  &#125;);</div></pre></td></tr></table></figure>
-<h3 id="express-Router"><a href="#express-Router" class="headerlink" title="express.Router"></a>express.Router</h3><p>用来创建一个router实例，该实例可以加载中间件，定义路由。同时作为一个模块提供给程序使用。</p>
-<h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><p>调用一个个程序，以最终实现完整功能，这些小程序就是中间件。中间件接受一定程度的定制，以微调最终功能。<br>在express中，路由和中间件共同构成一个web开发框架。</p>
-<p>中间件的功能包括：</p>
-<ul>
-<li>执行任何代码。</li>
-<li>修改请求和响应对象。</li>
-<li>终结请求-响应循环。</li>
-<li>调用堆栈中的下一个中间件。</li>
-</ul>
-<p>express中，中间件又分为应用级中间件、路由级中间件、错误处理中间件、内置中间件、第三方中间件。</p>
-<h3 id="应用级中间件"><a href="#应用级中间件" class="headerlink" title="应用级中间件"></a>应用级中间件</h3><p>应用级中间件是针对顶成实例app的处理，绑定在app.use()和app.Mthod()上。</p>
-<h3 id="路由级中间件"><a href="#路由级中间件" class="headerlink" title="路由级中间件"></a>路由级中间件</h3><p><code>router = express.Router()</code> express.Router()可以生成一个路由实例，挂载在其上的执行代码便是路由级中间件。<br>该实例依次定义的路由形成一个栈，按顺序出栈。中间件中调用<code>next(&#39;route&#39;)</code>可以略过当前路由的剩余代码，将控制权交给下一个路由。</p>
-<h3 id="错误处理中间件"><a href="#错误处理中间件" class="headerlink" title="错误处理中间件"></a>错误处理中间件</h3><p>错误处理中间件有4个必须标明的参数(err, req, res, next)。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">\\所有请求发生错误都交给该路由</div><div class="line">app.use(function(err, req, res, next) &#123;</div><div class="line">  console.error(err.stack);</div><div class="line">  res.status(500).send(&apos;Something broke!&apos;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<h3 id="内置中间件"><a href="#内置中间件" class="headerlink" title="内置中间件"></a>内置中间件</h3><p>4.x版本开始，只有express.static这唯一的内置中间件。<br>express.static(root, [options])</p>
-<p>root指向静态资源的根目录,options有许多可供设置的属性，留待使用中去熟悉。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/24/express/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-NodeSchool" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/17/NodeSchool/">NodeSchool</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/17/NodeSchool/" class="archive-article-date">
-  	<time datetime="2017-07-17T09:47:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>两周左右的时间，利用空闲时间，完成了这个NodeSchool的教程。难度很适合入门。<br><!-- ## NodeScholl --></p>
-</blockquote>
-<h3 id="lesson2"><a href="#lesson2" class="headerlink" title="lesson2"></a>lesson2</h3><p>在程序中，process.argv将返回一个数组，数组的第一个参数始终为node，第二个参数为程序的路径。<br>从process.argv[2]开始为传入的参数。且传入的参数均为字符串。</p>
-<h3 id="lesson3-同步读取文件"><a href="#lesson3-同步读取文件" class="headerlink" title="lesson3 同步读取文件"></a>lesson3 同步读取文件</h3><ul>
-<li>使用<code>import fs from &quot;fs&quot;</code>或<code>var fs = require(&#39;fs&#39;)</code>引入filesystem</li>
-<li>在fs中，同步的方法，均以Sync结尾。</li>
-<li>Buffer对象是node处理文件的方式。使用toString()方法可以将其转为字符串。</li>
-</ul>
-<h3 id="lessson4-异步读取文件"><a href="#lessson4-异步读取文件" class="headerlink" title="lessson4 异步读取文件"></a>lessson4 异步读取文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">fs.readFile(file, function (err, data) &#123;</div><div class="line">      if (err) &#123;</div><div class="line">        return console.log(err)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>代码中，fs.readFile接受两个参数，第一个是路径，第二个是回调函数。nodejs中的回调都是这个形式。</p>
-<p><strong><em>也可以使用 fs.readFile(file, ‘utf8’, callback)，第二个参数是文件编码</em></strong></p>
-<h3 id="lesson5-ls过滤器"><a href="#lesson5-ls过滤器" class="headerlink" title="lesson5 ls过滤器"></a>lesson5 ls过滤器</h3><ul>
-<li>fs.readdir可以获取文件夹下文件列表，并返回一个数组。</li>
-</ul>
-<h4 id="path的用法"><a href="#path的用法" class="headerlink" title="path的用法"></a>path的用法</h4><ul>
-<li>path.normalize(p)</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">path.normalize(&apos;/foo/bar//baz/asdf/quux/..&apos;)</div><div class="line">// returns</div><div class="line">&apos;/foo/bar/baz/asdf&apos;</div></pre></td></tr></table></figure>
-<p>处理路径，考虑..(上一级文件夹)和.(同级文件夹)，返回最终路径。</p>
-<ul>
-<li>path.join([path1], [path2], […])</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">path.join(&apos;/foo&apos;, &apos;bar&apos;, &apos;baz/asdf&apos;, &apos;quux&apos;, &apos;..&apos;)</div><div class="line">// returns</div><div class="line">&apos;/foo/bar/baz/asdf&apos;</div></pre></td></tr></table></figure>
-<p>将多个字符串合并为一个路径，并进行处理。处理方式与path.normalize相同。</p>
-<ul>
-<li>path.resolve([from …], to)</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">path.resolve(&apos;foo/bar&apos;, &apos;/tmp/file/&apos;, &apos;..&apos;, &apos;a/../subfile&apos;)</div></pre></td></tr></table></figure>
-<p>依次进入每个路径(相当于多条cd命令)</p>
-<ul>
-<li><p>path.relative(from, to)</p>
-<p>得到相对路径</p>
-</li>
-<li><p>path.dirname </p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">path.dirname(&apos;/foo/bar/baz/asdf/quux&apos;)</div><div class="line">// returns</div><div class="line">&apos;/foo/bar/baz/asdf&apos;</div></pre></td></tr></table></figure>
-<p>得到上级路径</p>
-<ul>
-<li>path.basename(p, [ext])</li>
-</ul>
-<p>得到路径的最后一部分。[ext]接受后缀名并对结果进行删去。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">path.basename(&apos;/foo/bar/baz/asdf/quux.html&apos;)</div><div class="line">// returns</div><div class="line">&apos;quux.html&apos;</div><div class="line"></div><div class="line">path.basename(&apos;/foo/bar/baz/asdf/quux.html&apos;, &apos;.html&apos;)</div><div class="line">// returns</div><div class="line">&apos;quux&apos;</div></pre></td></tr></table></figure>
-<ul>
-<li>path.extname(p)</li>
-</ul>
-<p>得到后缀名</p>
-<ul>
-<li>path.sep</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&apos;foo/bar/baz&apos;.split(path.sep)</div><div class="line">// returns</div><div class="line">[&apos;foo&apos;, &apos;bar&apos;, &apos;baz&apos;]</div></pre></td></tr></table></figure>
-<p>将路径分为字符串，并返回一个数组</p>
-<ul>
-<li>path.delimiter</li>
-</ul>
-<p>提取由’:’或’;’分隔的多个路径，返回一个数组</p>
-<h3 id="lesson6-模块初识"><a href="#lesson6-模块初识" class="headerlink" title="lesson6 模块初识"></a>lesson6 模块初识</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">dir, filterStr, callback</span>) </span>&#123;</div><div class="line">      fs.readdir(dir, <span class="function"><span class="keyword">function</span> (<span class="params">err, list</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (err) &#123;</div><div class="line">          <span class="keyword">return</span> callback(err)</div><div class="line">        &#125;</div><div class="line">    </div><div class="line">        list = list.filter(<span class="function"><span class="keyword">function</span> (<span class="params">file</span>) </span>&#123;</div><div class="line">          <span class="keyword">return</span> path.extname(file) === <span class="string">'.'</span> + filterStr</div><div class="line">        &#125;)</div><div class="line">    </div><div class="line">        callback(<span class="literal">null</span>, list)</div><div class="line">      &#125;)</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>模块中最重要的一点是，模块中出错时，要记得<code>return callback(err)</code><br>初学时多适应下回调函数的写法。node支持await/async的写法，可以使回调更简明。</p>
-<h3 id="http"><a href="#http" class="headerlink" title="http"></a>http</h3><p>http.get(url,callback)可以简单地发起get请求。<br>这里的回调函数形式有别于其他回调函数。</p>
-<ol>
-<li><p><code>function callback (response) { /* ... */ }</code><br>response是node流对象，它是一个会触发事件的对象。在这里，它会触发三种事件，分别是”data”、”error”和”end”。</p>
-</li>
-<li><p><code>response.on(&quot;data&quot;, function (data) { /* ... */ })</code><br>通过上述形式对事件进行监听，可对相应事件进行处理。</p>
-</li>
-<li><p>response对象还提供了setEncoding()方法，它可以将data转化为相应格式(如utf8)的字符串。如不转化，data为buffer对象。在事件监听前<code>res.setEncoding(&#39;utf8&#39;)</code>进行即可。</p>
-</li>
-</ol>
-<h3 id="异步http处理"><a href="#异步http处理" class="headerlink" title="异步http处理"></a>异步http处理</h3><p>异步处理可以提高效率，但代码执行顺序将有随机性。在这节课中，使用了回调计数器，确保在所有请求都完成后再按顺序执行代码。</p>
-<p>通过插件可以简便地处理异步，如async、after插件。node已支持ES7的async/await的语法，这是个更好的选择。</p>
-<h3 id="授时服务器"><a href="#授时服务器" class="headerlink" title="授时服务器"></a>授时服务器</h3><ul>
-<li>net模块为我们提供了所有的基础网络功能。</li>
-<li>net.createServer()创建一个服务器，并接受一个回调函数<code>function callback (socket) { /* ... */ }</code>。服务器每次被请求都会执行该函数。</li>
-<li>socket.write(data) 可以写数据到 socket 中，用socket.end()<br>可以关闭一个 socket。</li>
-<li>socket.end(data)可以同时完成写数据和关闭socket</li>
-<li>server.listen(portNumber) 让服务器开始监听一个特定的端口</li>
-</ul>
-<h3 id="http服务器-读取文本内容并传输"><a href="#http服务器-读取文本内容并传输" class="headerlink" title="http服务器(读取文本内容并传输)"></a>http服务器(读取文本内容并传输)</h3><ul>
-<li>http模块同样提供createServer()方法来创建服务器，并接受一个回调函数<code>function callback (request, response) { /* ... */ }</code>。函数中的request，response均为流对象。</li>
-<li>res.writeHead(200, { ‘content-type’: ‘text/plain’ })可以编辑头部</li>
-<li>fs.createReadStream()将文件处理为流对象，通过流对象的pipe方法，可以将文件内容注入response中。stream.pipe(response)</li>
-</ul>
-<h3 id="http服务器-post-API"><a href="#http服务器-post-API" class="headerlink" title="http服务器(post API)"></a>http服务器(post API)</h3><ul>
-<li><p>通过request.method可以判断请求类型。</p>
-</li>
-<li><p>流对象request、respond的处理可以借助插件，本例中使用through2-map，它类似数组的map方法，对流的每个chunk进行处理。</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var map = require(&apos;through2-map&apos;)</div><div class="line">inStream.pipe(map(function (chunk) &#123;</div><div class="line">  return chunk.toString().split(&apos;&apos;).reverse().join(&apos;&apos;)</div><div class="line">&#125;)).pipe(outStream)</div></pre></td></tr></table></figure>
-<h3 id="http服务器-JSON-API"><a href="#http服务器-JSON-API" class="headerlink" title="http服务器(JSON API)"></a>http服务器(JSON API)</h3><ul>
-<li>一定要考虑路由判断的完整性，并在其余情况下用res.end()结束请求</li>
-<li>url模块，提供url.parase可以将地址字符串转换为对象，提供类似browser环境下location的用法。</li>
-<li>应养成良好习惯，书写请求报头<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">res.writeHead(200, &#123;</div><div class="line">      &apos;Content-Type&apos;: &apos;application/json&apos;</div><div class="line">    &#125;)</div></pre></td></tr></table></figure></li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/17/NodeSchool/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/28/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/28/hello-world/" class="archive-article-date">
-  	<time datetime="2017-04-28T02:07:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/28/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
 
 
           </div>
@@ -721,10 +255,10 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
+		isHome: false,
 		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
