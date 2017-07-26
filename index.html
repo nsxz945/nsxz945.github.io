@@ -144,6 +144,105 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-optImageLoading" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/26/optImageLoading/">优化图片加载--渐显</a>
+    </h1>
+  
+
+        
+        <a href="/2017/07/26/optImageLoading/" class="archive-article-date">
+  	<time datetime="2017-07-26T06:06:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="优化图片加载–渐显"><a href="#优化图片加载–渐显" class="headerlink" title="优化图片加载–渐显"></a>优化图片加载–渐显</h2><blockquote>
+<p><a href="http://www.jackpu.com/medium-shi-ru-he-zuo-tu-pian-jia-zai-de/" target="_blank" rel="external">Medium 是如何优化图片加载的</a><br><a href="http://www.cnblogs.com/cuoreqzt/p/5848270.html" target="_blank" rel="external">CSS黑科技2】CSS百分比实现高度占位自适应（margin/padding）</a></p>
+</blockquote>
+<p>在许多网站中，照片的展示能从模糊渐渐变为清晰，这是个很不错的设定。</p>
+<p>渐进式图片本身具有这一特性，但可能显示过程不是特别符合我们的要求，另外也受限于图片格式。（PS中保存web格式时勾选连续，就能使图片具有这个特征）</p>
+<p>如果自定义完成这个图片加载过程，基本流程如下：</p>
+<ol>
+<li>为图片的加载预留一个展示区.</li>
+<li>加载小图片，并以模糊显示。</li>
+<li>当大图片加载完成时，显示大图片。</li>
+</ol>
+<h3 id="预留展示区"><a href="#预留展示区" class="headerlink" title="预留展示区"></a>预留展示区</h3><p>图片宽高只有等到加载完成才能获取，渲染时会使页面发生重排，通过给容器设定宽高可以为图片预留位置。<br>在这里，将用到一个小技巧，通过padding-bottom/padding-top的设置来撑高容器。值得注意的一点，使用百分数来设置padding/margin时，参照物都是父元素的width。<strong>利用这一特性，便可以得到一个根据父元素width变化的展示区。</strong>这一特点，在响应式的栅格布局，以及flexbox布局中将很有用。具体代码如下。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"placeholder"</span> <span class="attr">data-src</span>=<span class="string">"urlOfLarge"</span>&gt;</span></div><div class="line">	 <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">"img-small"</span> <span class="attr">src</span>=<span class="string">"urlOfLarge"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></div><div class="line">.placeholder &#123;</div><div class="line">  position: relative;</div><div class="line">  overflow: hidden;</div><div class="line">  background: #e1e1e1;</div><div class="line">  /*利用padding-bottom占位,值为宽高比*/</div><div class="line">  padding-bottom: 56%;</div><div class="line">&#125;</div><div class="line">.placeholder img &#123;</div><div class="line">  position: absolute;</div><div class="line">  left: 0;</div><div class="line">  top: 0;</div><div class="line">  width: 100%;</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这个做法有个不足之处，我们无法给容器设置max-height属性。<br>解决这个问题有两个办法:</p>
+<ul>
+<li>将box-sizing:content-box 改为 box-sizing:border-box</li>
+<li>将padding-bottom这一项属性交给图片容器的伪元素或者子元素。</li>
+</ul>
+<h3 id="模糊显示小图。"><a href="#模糊显示小图。" class="headerlink" title="模糊显示小图。"></a>模糊显示小图。</h3><p>模糊显示小图主要有两种方法，一种是使用canvas以高斯模糊绘制小图，另一种是使用CSS的模糊滤镜filter: blur()。当然，也可以在批量生成预览图时便对原图模糊处理。<br>canvas与CSS方法相比，canvas在兼容性方面略胜一筹(canvas支持IE11)，但CSS的方法更为简单。</p>
+<p>在模糊显示小图时，还有一点可以作为备选。可以将小图转为Data URL再引入html中，这样做可以减少http请求，优化加载速度。</p>
+<h3 id="当大图片加载完成时，显示大图片"><a href="#当大图片加载完成时，显示大图片" class="headerlink" title="当大图片加载完成时，显示大图片"></a>当大图片加载完成时，显示大图片</h3><p>这步比较简单，使用transition属性优化过渡即可。</p>
+<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><p><a href="http://js.jirengu.com/yeguv" target="_blank" rel="external">预览</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line"></div><div class="line">&lt;head&gt;</div><div class="line">&lt;meta name=&quot;description&quot; content=&quot;图片渐显&quot; /&gt;</div><div class="line">  &lt;meta charset=&quot;utf-8&quot;&gt;</div><div class="line">  &lt;title&gt;JS Bin&lt;/title&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;style&gt;</div><div class="line">.placeholder &#123;</div><div class="line">  position: relative;</div><div class="line">  overflow: hidden;</div><div class="line">  /* 控制图片大小 */</div><div class="line">  </div><div class="line">  width: 800px;</div><div class="line">&#125;</div><div class="line">/* 由伪元素撑开高度，使得max-height可以使用 */</div><div class="line"></div><div class="line">.placeholder:before &#123;</div><div class="line">  content: &apos;&apos;;</div><div class="line">  display: block;</div><div class="line">  background: #e1e1e1;</div><div class="line">  /*利用padding-bottom占位,值为宽高比*/</div><div class="line">  </div><div class="line">  padding-bottom: 56%;</div><div class="line">&#125;</div><div class="line">.placeholder img &#123;</div><div class="line">  position: absolute;</div><div class="line">  opacity: 0;</div><div class="line">  left: 0;</div><div class="line">  top: 0;</div><div class="line">  width: 100%;</div><div class="line">  transition: opacity 1s linear;</div><div class="line">&#125;</div><div class="line">.img-small &#123;</div><div class="line">  filter: blur(50px);</div><div class="line">  /* this is needed so Safari keeps sharp edges */</div><div class="line">  </div><div class="line">  transform: scale(1);</div><div class="line">&#125;</div><div class="line">.placeholder img.loaded &#123;</div><div class="line">  opacity: 1;</div><div class="line">&#125;</div><div class="line">&lt;/style&gt;</div><div class="line">&lt;body&gt;</div><div class="line">    &lt;div class=&quot;placeholder&quot; data-src=&quot;http://onh4x8q0o.bkt.clouddn.com/17-7-26/8085761.jpg&quot;&gt;</div><div class="line">      &lt;img class=&quot;img-small&quot; src=&quot;http://onh4x8q0o.bkt.clouddn.com/17-7-26/14430529.jpg&quot;&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;script&gt;</div><div class="line">window.onload = function() &#123;</div><div class="line">  var placeholder = document.querySelector(&apos;.placeholder&apos;)</div><div class="line">  var small = placeholder.querySelector(&apos;.img-small&apos;)</div><div class="line">  console.log(placeholder.clientHeight)</div><div class="line">    // 1: load small image and show it</div><div class="line">  var img = new Image();</div><div class="line">  img.src = small.src;</div><div class="line">  img.onload = function() &#123;</div><div class="line">    small.classList.add(&apos;loaded&apos;);</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  // 2: load large image</div><div class="line">  var imgLarge = new Image();</div><div class="line">  imgLarge.src = placeholder.dataset.src;</div><div class="line">  imgLarge.onload = function() &#123;</div><div class="line">    imgLarge.classList.add(&apos;loaded&apos;);</div><div class="line">  &#125;;</div><div class="line">  placeholder.appendChild(imgLarge);</div><div class="line">&#125;</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">阅读笔记</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">demo</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/07/26/optImageLoading/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-pwa2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -793,6 +892,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">阅读笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">demo</a>
               </li>
             
             <div class="clearfix"></div>
