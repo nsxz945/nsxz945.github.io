@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://nsxz945.github.io">
-  <title>Archives | nsxz&#39;s blog</title>
+  <title>mongdbForJs | nsxz&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="nsxz&#39;s blog">
-<meta property="og:url" content="https://nsxz945.github.io/archives/index.html">
+  <meta name="description" content="mongodb for node.js官方课程学习笔记 节前就顺利通过测验啦！🎉虽然是全英的教程，但是我坚持下来了，并顺利拿到官方认证。因为目前不怎么能用到，所以做了一个简单的记录，方便未来快速拾起。不得不说的是，mongodb掌握概念有助于学习、实践。但是在实践中，官方文档依然是我们很好的工具，分类清晰，使用关键词搜索基本上没杂项。  结构database→collections→docume">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mongdbForJs">
+<meta property="og:url" content="https://nsxz945.github.io/2017/10/09/mongdbForJs/index.html">
 <meta property="og:site_name" content="nsxz&#39;s blog">
+<meta property="og:description" content="mongodb for node.js官方课程学习笔记 节前就顺利通过测验啦！🎉虽然是全英的教程，但是我坚持下来了，并顺利拿到官方认证。因为目前不怎么能用到，所以做了一个简单的记录，方便未来快速拾起。不得不说的是，mongodb掌握概念有助于学习、实践。但是在实践中，官方文档依然是我们很好的工具，分类清晰，使用关键词搜索基本上没杂项。  结构database→collections→docume">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-10-09T02:29:18.817Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="nsxz&#39;s blog">
+<meta name="twitter:title" content="mongdbForJs">
+<meta name="twitter:description" content="mongodb for node.js官方课程学习笔记 节前就顺利通过测验啦！🎉虽然是全英的教程，但是我坚持下来了，并顺利拿到官方认证。因为目前不怎么能用到，所以做了一个简单的记录，方便未来快速拾起。不得不说的是，mongodb掌握概念有助于学习、实践。但是在实践中，官方文档依然是我们很好的工具，分类清晰，使用关键词搜索基本上没杂项。  结构database→collections→docume">
   
     <link rel="alternative" href="/atom.xml" title="nsxz&#39;s blog" type="application/atom+xml">
   
@@ -142,36 +147,151 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-mongdbForJs" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/09/mongdbForJs/" class="archive-article-date">
-  	<time datetime="2017-10-09T02:21:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-09</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/09/mongdbForJs/">mongdbForJs</a>
+    <h1 class="article-title" itemprop="name">
+      mongdbForJs
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/10/09/mongdbForJs/" class="archive-article-date">
+  	<time datetime="2017-10-09T02:21:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="mongodb-for-node-js官方课程学习笔记"><a href="#mongodb-for-node-js官方课程学习笔记" class="headerlink" title="mongodb for node.js官方课程学习笔记"></a>mongodb for node.js官方课程学习笔记</h1><blockquote>
+<p>节前就顺利通过测验啦！🎉虽然是全英的教程，但是我坚持下来了，并顺利拿到官方认证。因为目前不怎么能用到，所以做了一个简单的记录，方便未来快速拾起。<br>不得不说的是，mongodb掌握概念有助于学习、实践。但是在实践中，官方文档依然是我们很好的工具，分类清晰，使用关键词搜索基本上没杂项。</p>
+</blockquote>
+<h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><p>database→collections→documents<br>在mogondb中，我们可以针对database、collections这两个层次设置权限。</p>
+<h3 id="界面查看"><a href="#界面查看" class="headerlink" title="界面查看"></a>界面查看</h3><p>compass会对数据进行简单的数据图形化。在这里，点击生成图中项目，可以进行简单筛选。<br>mogondb原生支持地理信息存储，以及查询。</p>
+<h3 id="安装mongoDB"><a href="#安装mongoDB" class="headerlink" title="安装mongoDB"></a>安装mongoDB</h3><p>安装过程比较简单，解压后设置环境变量。<br>我使用的是ZSH，设置的文件为~/.zshrc,在其中添加<br><code>export PATH=&quot;url/of/mongodb/bin:$PATH&quot;</code><br>ps:在设置时，一开始我使用的是家目录<code>~/mongodb</code>为路径，发现无法正确索引，最后改为了绝对路径，便可以使用了。</p>
+<h3 id="Mogondb-shell"><a href="#Mogondb-shell" class="headerlink" title="Mogondb shell"></a>Mogondb shell</h3><p>使用如下命令，可以连接学习用的mongodb atlas<br><code>mongo &quot;mongodb://cluster0-shard-00-00-fw5cx.mongodb.net:27017,cluster0-shard-00-01-fw5cx.mongodb.net:27017,cluster0-shard-00-02-fw5cx.mongodb.net:27017/test?replicaSet=Cluster0-shard-0&quot; --authenticationDatabase admin --ssl --username nsxz --password &lt;PASSWORD&gt;</code></p>
+<p>连接后 <code>show dbs</code>可以显示所有数据库<br><code>use dbName</code>可以选择要使用的数据库</p>
+<h3 id="CRUD-增删改查"><a href="#CRUD-增删改查" class="headerlink" title="CRUD(增删改查)"></a>CRUD(增删改查)</h3><h4 id="insertOne-单数据添加"><a href="#insertOne-单数据添加" class="headerlink" title="insertOne 单数据添加"></a>insertOne 单数据添加</h4><p>在命令行下，连接数据库之后。输入命令<code>db.nameOfCollection.insertOne({JSONString})</code>。<br>即可以JSON的形式的描述插入项，并插入到指定collection下。</p>
+<p><code>_id</code>作为document的唯一识别，在新增时，我们可以手动键入，如果不键入，数据库会自动分配一个数据类型为ObjectID的<code>_id</code>。</p>
+<h4 id="insertMany-多数据添加"><a href="#insertMany-多数据添加" class="headerlink" title="insertMany 多数据添加"></a>insertMany 多数据添加</h4><p><code>db.nameOfCollection.insertMany([JSONString1, JSONString2])</code><br>将对个document放入数组中作为参数，便可以进行多项插入。</p>
+<p>另外，insertMany接受第二个参数作为设置项。<code>insertMany([JSONString1, JSONString2],{&quot;ordered&quot;:false})</code>,使用inordered的方式插入多项数据，这样，当某几项因重复而报错时，它们仅会被跳过，而不会在错误的地方中止。</p>
+<h4 id="find-查询"><a href="#find-查询" class="headerlink" title="find 查询"></a>find 查询</h4><p><code>db.nameOfCollection.find({&quot;key&quot;: val}).pretty()</code><br>这样可以查询指定collection中key为val的document。当key的数据类型为数组时，则是查询数组中是否含有val。如果要对val在数据中的位置进行限定，键名需要指定位置，如<code>db.nameOfCollection.find(&quot;key.0&quot;: &quot;val&quot;).pretty()</code>则是匹配数组中的第一项。</p>
+<h5 id="find-vs-findOne"><a href="#find-vs-findOne" class="headerlink" title="find() vs findOne()"></a>find() vs findOne()</h5><p>find()用来查找document对应的指针，findOne()查找并返回document的内容</p>
+<h5 id="projection-投影"><a href="#projection-投影" class="headerlink" title="projection 投影"></a>projection 投影</h5><p>如果我们的查询结果,只想显示document的某个部分。我们就可以用到这个方法。<br><code>db.nameOfCollection.find({&quot;key&quot;: val}，{&quot;title&quot;:1})</code><br>find操作的第二个参数，便可以进行设置。上诉命令的结果就只显示_id和title，而不是整个document。<br>在设置时，键名表示要设置的字段，值表示是否显示(0为不显示，1为显示)。_id默认显示。</p>
+<h5 id="Comparison-比较"><a href="#Comparison-比较" class="headerlink" title="Comparison 比较"></a>Comparison 比较</h5><p>$eq $ne $gt $gte $lt $lte $in $nin<br>其中比较特殊的是$in($nin),参数值为一个数组，结果需匹配数组中的其中一项(不能匹配结果中的任意一项)。</p>
+<h5 id="Logical-Query-逻辑运算"><a href="#Logical-Query-逻辑运算" class="headerlink" title="Logical Query 逻辑运算"></a>Logical Query 逻辑运算</h5><p>$and  $not $nor $or<br>设置的参数均为由条件组成的一个数组</p>
+<h5 id="Regex-Operator-正则运算"><a href="#Regex-Operator-正则运算" class="headerlink" title="Regex Operator 正则运算"></a>Regex Operator 正则运算</h5><h5 id="Array-Operator"><a href="#Array-Operator" class="headerlink" title="Array Operator"></a>Array Operator</h5><p>针对array的元素进行检索</p>
+<ul>
+<li>$all:[elm1,elm2…],包含条件内的所有元素</li>
+<li>$size 限定数组的长度</li>
+<li>$element, 针对元素进行条件限定<h4 id="Update-更新"><a href="#Update-更新" class="headerlink" title="Update 更新"></a>Update 更新</h4><code>.upadteOne()</code> 接受两个参数，第一个参数是查询，第二个查询是更新方法及更新内容，第三个参数接受更多设置。<br><code>.updateMany()</code>可以同时更新所有匹配项。</li>
+</ul>
+<p>更新方法包括：</p>
+<ul>
+<li>$set，新增，替换字符段内容</li>
+<li>$unset，删除一个字段</li>
+<li>$inc, 按量增长字符串的值</li>
+<li>$min，当新值更小时更新</li>
+<li>$max，当新值更大时更新</li>
+</ul>
+<p>更多方法<a href="https://docs.mongodb.com/manual/reference/operator/update/" target="_blank" rel="external">Update Operators</a></p>
+<h5 id="push一个数组"><a href="#push一个数组" class="headerlink" title="push一个数组"></a>push一个数组</h5><p><code>.updateOne(&lt;query&gt;,{$push:{target:{$each:&lt;array&gt;}}})</code></p>
+<h5 id="upsert"><a href="#upsert" class="headerlink" title="upsert"></a>upsert</h5><p><code>.upadteOne(&lt;query&gt;,&lt;update&gt;,{upsert:true})</code>作为第三个参数的设置项,相当于update+insert的混合。<br>如果document中有匹配项，进行更新，没有则插入。</p>
+<h5 id="replaceOne"><a href="#replaceOne" class="headerlink" title="replaceOne"></a>replaceOne</h5><p>用新项去替换匹配项。</p>
+<p>对某个文档进行修改时，可以使用findOne()将其存在缓存变量中，对缓存进行修改后，再用replaceOne替换原项。</p>
+<h4 id="delete-删除"><a href="#delete-删除" class="headerlink" title="delete 删除"></a>delete 删除</h4><p><code>.deleteOne()</code> <code>.deleteMany()</code></p>
+<h3 id="Node-js-中的使用"><a href="#Node-js-中的使用" class="headerlink" title="Node.js 中的使用"></a>Node.js 中的使用</h3><h4 id="Cursor的处理"><a href="#Cursor的处理" class="headerlink" title="Cursor的处理"></a>Cursor的处理</h4><p><code>var cursor= db.collection(&#39;test&#39;).find()</code><br>得到一个指针后，可以用两种操作方式。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//等待查询全部完成后，转为一个数组进行处理</span></div><div class="line">cursor.toArray(<span class="function"><span class="keyword">function</span>(<span class="params">err,docs</span>)</span>&#123;&#125;)</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//对查询结果逐条发起调用,并在指针耗尽时结束</span></div><div class="line">cursor.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">doc</span>)</span>&#123;&#125;,<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</div><div class="line">	assert.equal(err,<span class="literal">null</span>)</div><div class="line">	<span class="keyword">return</span> db.closed()</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h4 id="projection-映射"><a href="#projection-映射" class="headerlink" title="projection 映射"></a>projection 映射</h4><p><code>cursor.project(projection)</code><br>除了将projection作为find的第二个参数，我们还可以使用cursor的project方法为其添加projection参数。然后再使用cursor去获取数据。在获取数据前就对projection进行限定，使交互的数据量最小化。</p>
+<h4 id="command-line-args的使用"><a href="#command-line-args的使用" class="headerlink" title="command-line-args的使用"></a>command-line-args的使用</h4><p>引入插件command-line-args后，可以以特定的格式在命令行中输入命令，并使app.js获得对应的变量来运行程序。</p>
+<h4 id="sort-整理"><a href="#sort-整理" class="headerlink" title="sort 整理"></a>sort 整理</h4><p><code>cursor.sort({field:1})</code><br><code>cursor.sort([[field,1],[field,-1]])</code><br>根据指定字段，对输出结果进行排序。<br>参数中，字段的值为1时，进行降序排列；-1时，进行升序排列。<br>对多个字段进行整理时，将字段放在数组中，越前面的字段优先级越高</p>
+<h4 id="skip-limit-分页器"><a href="#skip-limit-分页器" class="headerlink" title="skip,limit 分页器"></a>skip,limit 分页器</h4><p><code>cursor.limit(number)</code> docs数目上限<br><code>cursor.skip(number)</code> 跳过一定数量的docs<br>当limit的数量固定n，skip逐页增加n，就能构成一个分页器</p>
+<p>在实际使用中，sort,skip,limit的调用不会对最终结果造成影响。发起请求后，mongodb始终按照sort、skip、limit的顺序执行。<br>当sort文件数目过多时，mongodb会因为内存过大而报错。这种情况，我们要预先在shell中执行<code>db.collection.createIndex({field:1})</code>，对字段建立索引。</p>
+<h3 id="week4-Schema"><a href="#week4-Schema" class="headerlink" title="week4 Schema"></a>week4 Schema</h3><p>####嵌套结构的优势</p>
+<ul>
+<li>读写速度<br>由于磁盘的特性，它在确定数据的第一个字节时耗时最长(约1ms)，而之后相关数据的读取却是非常快的。</li>
+</ul>
+<h4 id="多个collection建立联系"><a href="#多个collection建立联系" class="headerlink" title="多个collection建立联系"></a>多个collection建立联系</h4><ul>
+<li><p>Manual references <br><br>使用_id作为键值，通过二次查找来访问。</p>
+</li>
+<li><p>DBRefs <br></p>
+</li>
+</ul>
+<h3 id="week5-Indexes-and-Performance"><a href="#week5-Indexes-and-Performance" class="headerlink" title="week5 Indexes and Performance"></a>week5 Indexes and Performance</h3><blockquote>
+<p>最好好忙。。</p>
+</blockquote>
+<h4 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h4><p>创建索引，就是一笔交易。<br>付出：增加磁盘占用空间，增加写入时间。<br>收货：加快读取时间。</p>
+<h4 id="Multikey-Indexes"><a href="#Multikey-Indexes" class="headerlink" title="Multikey Indexes"></a>Multikey Indexes</h4><p>创建的索引，是一种线性排列，是对数据的一次整理。<br>索引1（a,b,c）与索引2（b,a,c）是完全不同的。</p>
+<ol>
+<li>索引1在只查询a时也可以生效，而索引2则不行。</li>
+<li>查询(a,b)时，索引1能生效，而查询(a,c时)索引并不能生效。</li>
+</ol>
+<p>这都是因为我们的索引中，次级键名仅在主键名的每个局部被按序整理</p>
+<h4 id="unique-index"><a href="#unique-index" class="headerlink" title="unique index"></a>unique index</h4><p>_id就是一个默认的唯一索引。</p>
+<h4 id="Sparse-Index"><a href="#Sparse-Index" class="headerlink" title="Sparse Index"></a>Sparse Index</h4><p>在创建索引时，如果有的document中相应的键值对为空时，需要使用稀疏索引选项才能正常创建。</p>
+<h4 id="foreground-amp-background"><a href="#foreground-amp-background" class="headerlink" title="foreground &amp; background"></a>foreground &amp; background</h4><p>后台创建索引，将不会影响数据库本身的使用。但速度较慢。<br>前台创建索引，会阻止该数据库下其他即将到来的读写操作。但速度较快。</p>
+<p>使用多个数据库协调工作，可以充分利用background Creation的特性。当主数据库需要创建索引时，使用备用数据库提供服务，当索引创建完成后，再使用主数据库提供服务，并对两个数据库进行同步。</p>
+<h4 id="explain"><a href="#explain" class="headerlink" title="explain"></a>explain</h4><p>进行一个类似查询的操作，但不会将数据拿回。可以用来分析查询流程，性能。<br>db.explain()被称为explain对象。<br>db.explain().help()可以查看帮助信息。<br>在分析结果中，我们可以看到最终的执行方案winnerPlan，以及其他被淘汰的方案。</p>
+<h5 id="verbosity"><a href="#verbosity" class="headerlink" title="verbosity"></a>verbosity</h5><p>explain的模式</p>
+<ul>
+<li>queryPlanner<br><br><br>告诉我们数据库怎么使用索引</li>
+<li>executionStats<br><br><br>告诉我们数据库怎么使用索引，以及索引结果</li>
+<li>allPlansExecution(包含前两种模式)<br><br><br>除了winnerPlanner，也实现其他方案的结果。</li>
+</ul>
+<h3 id="week6-Aggregation-Framework"><a href="#week6-Aggregation-Framework" class="headerlink" title="week6 Aggregation Framework"></a>week6 Aggregation Framework</h3><blockquote>
+<p>数据的分析处理<br><a href="https://docs.mongodb.com/manual/meta/aggregation-quick-reference/index.html" target="_blank" rel="external">aggregation-quick-reference</a></p>
+</blockquote>
+<p><code>db.companies.aggregate([stage,])</code><br>stage代表一个个操作流程的参数。</p>
+<p>一些常用操作：</p>
+<ul>
+<li>$match (类似find操作)</li>
+<li>$unwind (根据一个数组，将一个document拆解为多个document)</li>
+<li><code>{ $filter: { input: &lt;array&gt;, as: &lt;string&gt;, cond: &lt;expression&gt; } }</code></li>
+<li><code>$arrayElemAt:[&lt;array&gt;,index]</code></li>
+<li><code>$slice:[&lt;array&gt;,start,end]</code></li>
+<li>$sort</li>
+</ul>
+<h4 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h4><p>project stage中的运算只能在单一document中运算，group stage中可以对多个document进行运算。</p>
+<p>#####group stage<br><code>$group:{_id:{keyName:&quot;$keyinDoc&quot;,}}</code></p>
+<p>_id用来明确通过哪个字段进行分组。可以同时根据多个字段进行分组。<br>不建议这样使用，因为没有办法根据结果看出分组条件。<br><del><code>$group:{_id:&quot;$keyinDoc&quot;}</code></del></p>
+<p>group stage中，可以使用$push，来得到一个运算中逐步累积的数组。使用$sum，则可以对document进行计数。</p>
+<h3 id="week7-Application-Engineering"><a href="#week7-Application-Engineering" class="headerlink" title="week7 Application Engineering"></a>week7 Application Engineering</h3><h4 id="Write-concern"><a href="#Write-concern" class="headerlink" title="Write concern"></a>Write concern</h4><p>为了更快的速度，我们读写数据是在内存中进行，并由日志(journal)将数据同步到数据库中。</p>
+<p>通常的设置中，我们只对journal进行设置:1.false，请求无需等待journal写入磁盘。2.true，请求需要等待journal写入磁盘。</p>
+<p>第一种速度更快；第二种数据更安全，宕机时，数据库可以从磁盘中的journal将数据复写出来。</p>
+<h4 id="Network-error"><a href="#Network-error" class="headerlink" title="Network error"></a>Network error</h4><p>网络请求失败，会导致数据库被写入，但app以为数据库没写入。这样APP就可能会发起多条重复的请求。（网络通常都很好，实际情况中该问题比较罕见）</p>
+<p>比如update中的$inc就会带来错误的结果。解决办法是，用insert替代update操作。</p>
+<h4 id="Introduce-to-replication"><a href="#Introduce-to-replication" class="headerlink" title="Introduce to replication"></a>Introduce to replication</h4><p>最少需要3个。一个主数据库，其他为次要数据库。当主要数据库宕机后，会选择一个数据库作为主数据库。</p>
+<p>数据交互是在主数据库中进行的。</p>
+<h4 id="write-consistency"><a href="#write-consistency" class="headerlink" title="write consistency"></a>write consistency</h4><p>如果只允许APP读取主数据库，那么就可以保证读取的数据是最新的。</p>
+<h4 id="Replica-Set-Elections"><a href="#Replica-Set-Elections" class="headerlink" title="Replica Set Elections"></a>Replica Set Elections</h4><p>集群结点类型</p>
+<p>regular、arbiter、delayed regular、hidden</p>
+<p>都可以参与promary node的投票，但后两种都不能成为primary node。<br>arbiter是为了保证一定能选出primary node。</p>
+<h4 id="rollback"><a href="#rollback" class="headerlink" title="rollback"></a>rollback</h4><p>当主数据库宕机重启后，主数据会作为次要数据库，同时把当前主数据库中未存数据以文件存储(留待手工处理），然后与当前主数据库保存一致。</p>
+<h4 id="Connecting-to-a-Replica-Set-from-the-Node-js-Driver"><a href="#Connecting-to-a-Replica-Set-from-the-Node-js-Driver" class="headerlink" title="Connecting to a Replica Set from the Node.js Driver"></a>Connecting to a Replica Set from the Node.js Driver</h4><p>配置方法与单一数据库相同，只需要将数据库地址用逗号相连即可。 </p>
+<p>其实，只要Node.js Driver连接上集群中的一个数据库，它就能自动检测到其他数据库。但为了避免单一数据库无法连接的情况，我们还是应该把集群中数据库的地址都写上。</p>
+<h4 id="failover-in-the-Node-js-Driver"><a href="#failover-in-the-Node-js-Driver" class="headerlink" title="failover in the Node.js Driver"></a>failover in the Node.js Driver</h4><p>当主数据库宕机时，期间的数据库操作会被node.js Driver缓存。当Driver找到可用的数据库后，这些请求会依次被重新发起。<br>所以，我们不必担心这个问题。</p>
+<h4 id="write-concern"><a href="#write-concern" class="headerlink" title="write concern"></a>write concern</h4><p>w,j waiting timeout<br>w 代表需要等待多少个数据库完成对操作的acknowledge<br>j 是否等待日志写入磁盘</p>
+<h4 id="Read-Preference"><a href="#Read-Preference" class="headerlink" title="Read Preference"></a>Read Preference</h4><ul>
+<li>primary</li>
+<li>primaryPrefered</li>
+<li>Secondary</li>
+<li>SecondaryPrefered</li>
+</ul>
+<h4 id="sharding-分区"><a href="#sharding-分区" class="headerlink" title="sharding 分区"></a>sharding 分区</h4><p>通过mongods router来连接多个独立的数据库以及config server。通过sharde_id将不同数据放到不同的数据库中。</p>
+<h4 id="shard-Key"><a href="#shard-Key" class="headerlink" title="shard Key"></a>shard Key</h4><p>选择的key要具有普遍性，要避免数据集中在某一些shard key里。实现各分区的负载均衡。<br>shard key一旦确定，无法更改，需要慎重。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -183,321 +303,104 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://nsxz945.github.io/2017/10/09/mongdbForJs/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/30/thisofArrow/" class="archive-article-date">
-  	<time datetime="2017-08-30T07:30:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-30</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/08/30/thisofArrow/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">箭头函数的this指向</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/30/thisofArrow/">箭头函数的this指向</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">阅读笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/30/typeof/" class="archive-article-date">
-  	<time datetime="2017-08-30T07:30:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/30/typeof/">typeof</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">JS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/28/image2dataurl/" class="archive-article-date">
-  	<time datetime="2017-07-28T01:33:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/28/image2dataurl/">image2dataurl</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/26/optImageLoading/" class="archive-article-date">
-  	<time datetime="2017-07-26T06:06:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/26/optImageLoading/">优化图片加载--渐显</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">阅读笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">demo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/25/pwa2/" class="archive-article-date">
-  	<time datetime="2017-07-25T02:25:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/25/pwa2/">pwa2</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">阅读笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/25/pwa/" class="archive-article-date">
-  	<time datetime="2017-07-25T00:37:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/25/pwa/">什么是pwa</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">阅读笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/24/express/" class="archive-article-date">
-  	<time datetime="2017-07-24T07:01:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/24/express/">express</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/17/NodeSchool/" class="archive-article-date">
-  	<time datetime="2017-07-17T09:47:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/17/NodeSchool/">NodeSchool</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/04/28/hello-world/" class="archive-article-date">
-  	<time datetime="2017-04-28T02:07:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/28/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -520,8 +423,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
