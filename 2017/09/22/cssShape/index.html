@@ -6,22 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://nsxz945.github.io">
-  <title>pwa2 | nsxz&#39;s blog</title>
+  <title>cssShape | nsxz&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="PWA前的准备工作刚刚接触PWA概念，我就很看好它的发展。因此我决定借鉴一些成熟的案例，确定下需要攻克的主要  PWA 在饿了么的实践经验PWA 入门: 理解和创建 Service Worker 脚本 Service workers explained  降级方案因为 server worker将被缓存，因此要预留一个降级开关来注销掉sw，以便能够有效处理SW上出现的bug。 1234567891">
+  <meta name="description" content="CSS Shape –让元素区域不止能方方正正。 有点忙，草草记录下，很实用的一个功能。 CSS Shapes：打破矩形设计的限制shape-outside【第1062期】借助CSS Shapes实现元素滚动自动环绕iPhone X的刘海  insec内嵌矩形circleellipsepolygon插件：[CSS Shapes Editor for Brackets](http://blogs.a">
 <meta name="keywords" content="阅读笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pwa2">
-<meta property="og:url" content="https://nsxz945.github.io/2017/07/25/pwa2/index.html">
+<meta property="og:title" content="cssShape">
+<meta property="og:url" content="https://nsxz945.github.io/2017/09/22/cssShape/index.html">
 <meta property="og:site_name" content="nsxz&#39;s blog">
-<meta property="og:description" content="PWA前的准备工作刚刚接触PWA概念，我就很看好它的发展。因此我决定借鉴一些成熟的案例，确定下需要攻克的主要  PWA 在饿了么的实践经验PWA 入门: 理解和创建 Service Worker 脚本 Service workers explained  降级方案因为 server worker将被缓存，因此要预留一个降级开关来注销掉sw，以便能够有效处理SW上出现的bug。 1234567891">
+<meta property="og:description" content="CSS Shape –让元素区域不止能方方正正。 有点忙，草草记录下，很实用的一个功能。 CSS Shapes：打破矩形设计的限制shape-outside【第1062期】借助CSS Shapes实现元素滚动自动环绕iPhone X的刘海  insec内嵌矩形circleellipsepolygon插件：[CSS Shapes Editor for Brackets](http://blogs.a">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://nsxz945.github.io/2017/07/25/pwa2/1.png">
-<meta property="og:updated_time" content="2017-07-25T08:02:32.000Z">
+<meta property="og:updated_time" content="2017-10-10T06:04:14.247Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="pwa2">
-<meta name="twitter:description" content="PWA前的准备工作刚刚接触PWA概念，我就很看好它的发展。因此我决定借鉴一些成熟的案例，确定下需要攻克的主要  PWA 在饿了么的实践经验PWA 入门: 理解和创建 Service Worker 脚本 Service workers explained  降级方案因为 server worker将被缓存，因此要预留一个降级开关来注销掉sw，以便能够有效处理SW上出现的bug。 1234567891">
-<meta name="twitter:image" content="https://nsxz945.github.io/2017/07/25/pwa2/1.png">
+<meta name="twitter:title" content="cssShape">
+<meta name="twitter:description" content="CSS Shape –让元素区域不止能方方正正。 有点忙，草草记录下，很实用的一个功能。 CSS Shapes：打破矩形设计的限制shape-outside【第1062期】借助CSS Shapes实现元素滚动自动环绕iPhone X的刘海  insec内嵌矩形circleellipsepolygon插件：[CSS Shapes Editor for Brackets](http://blogs.a">
   
     <link rel="alternative" href="/atom.xml" title="nsxz&#39;s blog" type="application/atom+xml">
   
@@ -149,86 +147,32 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-pwa2" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-cssShape" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      pwa2
+      cssShape
     </h1>
   
 
         
-        <a href="/2017/07/25/pwa2/" class="archive-article-date">
-  	<time datetime="2017-07-25T02:25:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-25</time>
+        <a href="/2017/09/22/cssShape/" class="archive-article-date">
+  	<time datetime="2017-09-22T03:36:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-22</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="PWA前的准备工作"><a href="#PWA前的准备工作" class="headerlink" title="PWA前的准备工作"></a>PWA前的准备工作</h1><p>刚刚接触PWA概念，我就很看好它的发展。因此我决定借鉴一些成熟的案例，确定下需要攻克的主要</p>
-<blockquote>
-<p><a href="https://zhuanlan.zhihu.com/p/25800461" target="_blank" rel="external">PWA 在饿了么的实践经验</a><br><a href="https://zhuanlan.zhihu.com/p/25524382" target="_blank" rel="external">PWA 入门: 理解和创建 Service Worker 脚本</a><br> <a href="https://github.com/w3c/ServiceWorker/blob/master/explainer.md" target="_blank" rel="external">Service workers explained</a></p>
+        <h1 id="CSS-Shape-–让元素区域不止能方方正正。"><a href="#CSS-Shape-–让元素区域不止能方方正正。" class="headerlink" title="CSS Shape –让元素区域不止能方方正正。"></a>CSS Shape –让元素区域不止能方方正正。</h1><blockquote>
+<p>有点忙，草草记录下，很实用的一个功能。</p>
+<p><a href="http://www.w3cplus.com/css3/css-shapes-breaking-rectangular-design.html" target="_blank" rel="external">CSS Shapes：打破矩形设计的限制</a><br>shape-outside<br><a href="http://www.zhangxinxu.com/wordpress/2017/09/css-shapes-outside-iphone-x-head/" target="_blank" rel="external">【第1062期】借助CSS Shapes实现元素滚动自动环绕iPhone X的刘海</a></p>
 </blockquote>
-<h2 id="降级方案"><a href="#降级方案" class="headerlink" title="降级方案"></a>降级方案</h2><p>因为 server worker将被缓存，因此要预留一个降级开关来注销掉sw，以便能够有效处理SW上出现的bug。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">if (支持SW) &#123;</div><div class="line">  fetch(开关接口)</div><div class="line">  .then(() =&gt; &#123;</div><div class="line">    if (降级) &#123;</div><div class="line">      for(let registration of registrations) &#123;</div><div class="line">  			registration.unregister()</div><div class="line">  		&#125;</div><div class="line">    &#125; else &#123;</div><div class="line">      // 注册 SW</div><div class="line">    &#125;</div><div class="line">  &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>注意的点:</p>
-<ul>
-<li>降级一定要注销掉 SW ，而不是简单地不安装。因为之前访问过站点的用户已安装了sw。</li>
-<li>降级开关需要有即时性，因此服务器和 SW 都不应该缓存该接口。</li>
-</ul>
-<h2 id="错误监控"><a href="#错误监控" class="headerlink" title="错误监控"></a>错误监控</h2><p>SW 运行在 worker 线程里，其抛出的错误在页面是捕捉不到的，因此需要在 SW 里引入错误监控。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(&apos;error&apos;, event =&gt; &#123;</div><div class="line">  // 上报错误信息</div><div class="line">  // 常用的属性：</div><div class="line">  // event.message</div><div class="line">  // event.filename</div><div class="line">  // event.lineno</div><div class="line">  // event.colno</div><div class="line">  // event.error.stack</div><div class="line">&#125;)</div><div class="line">self.addEventListener(&apos;unhandledrejection&apos;, event =&gt; &#123;</div><div class="line">  // 上报错误信息</div><div class="line">  // 常用的属性：</div><div class="line">  // event.reason</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<ol>
-<li>SW 大部分 API 都是 promise-based 的，promise 里未处理的错误触发的不是 error 事件，而是 unhandledrejection 事件。</li>
-<li>这两个事件都只能在 worker 线程的 initial 生命周期里注册。（否则会失败，控制台可看到警告）</li>
-</ol>
-<h2 id="数据统计"><a href="#数据统计" class="headerlink" title="数据统计"></a>数据统计</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// 「弹出添加到主屏对话框」事件</div><div class="line">window.addEventListener(&apos;beforeinstallprompt&apos;, event =&gt; &#123;</div><div class="line">  // 这个 `event.userChoice` 是一个 Promise ，在用户选择后 resolve</div><div class="line">  event.userChoice.then(result =&gt; &#123;</div><div class="line">    console.log(result.outcome)</div><div class="line">    // &apos;accepted&apos;: 添加到主屏</div><div class="line">    // &apos;dismissed&apos;: 用户不想理你并向你扔了个取消</div><div class="line">  &#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<h2 id="service-worker"><a href="#service-worker" class="headerlink" title="service worker"></a>service worker</h2><h3 id="service-worker的特点"><a href="#service-worker的特点" class="headerlink" title="service worker的特点"></a>service worker的特点</h3><ul>
-<li>service不依赖于页面</li>
-<li>有自己的全局执行上下文</li>
-<li>没有操作DOM的权限</li>
-<li>可以脱离页面运行</li>
-<li>可以按需被终止、运行</li>
-<li>只支持HTTPS</li>
-<li>通过网络拦截器，可以加快网站访问甚至实现离线访问</li>
-<li>可以实现推送以及后台同步</li>
-</ul>
-<h3 id="service-worker的生命周期"><a href="#service-worker的生命周期" class="headerlink" title="service worker的生命周期"></a>service worker的生命周期</h3><p><img src="/2017/07/25/pwa2/1.png" alt="生命周期"></p>
-<ul>
-<li>parsed: 注册完成, 脚本解析成功, 尚未安装</li>
-<li>installing: 对应 Service Worker 脚本 install 事件执行, 如果事件里有event.waitUntil() 则会等待传入的 Promise 完成才会成功</li>
-<li>installed(waiting): 页面被旧的 Service Worker 脚本控制, 所以当前的脚本尚未激活。可以通过 self.skipWaiting() 激活新的 Service Worker</li>
-<li>activating: 对应 Service Worker 脚本 activate 事件执行, 如果事件里有event.waitUntil() 则会等待这个 Promise 完成才会成功。这时可以调用 Clients.claim() 接管页面</li>
-<li>activated: 激活成功, 可以处理 fetch, message 等事件</li>
-<li>redundant: 安装失败, 或者激活失败, 或者被新的 Service Worker 替代掉<br>备选项</li>
-</ul>
-<p>Service Worker 脚本最常用的功能是截获请求和缓存资源文件, 这些行为可以绑定在下面这些事件上:</p>
-<ul>
-<li>install 事件中, 抓取资源进行缓存</li>
-<li>activate 事件中, 遍历缓存, 清除过期的资源</li>
-<li>fetch 事件中, 拦截请求, 查询缓存或者网络, 返回请求的资源</li>
-</ul>
-<p>Service Worker 可以访问 Cache API, Fetch API 等接口, 获取数据和完成响应</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(&apos;fetch&apos;, function(event) &#123;</div><div class="line">  event.respondWith(</div><div class="line">    caches.match(event.request)</div><div class="line">      .then(function(response) &#123;</div><div class="line">        // Cache hit - return response</div><div class="line">        if (response) &#123;</div><div class="line">          return response;</div><div class="line">        &#125;</div><div class="line">        return fetch(event.request);</div><div class="line">      &#125;</div><div class="line">    )</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>event.waitUntil() 接收一个 Promise, 等到 Promise 完成时, 事件才最终完成。</p>
-<p>###SW库</p>
-<ul>
-<li>sw-precache-webpack-plugin<br>实现预加载以便离线运行</li>
-<li><a href="https://github.com/GoogleChrome/sw-toolbox" target="_blank" rel="external">sw-toolbox</a><br>线上使用的service worker</li>
-</ul>
-<h2 id="manifest-json"><a href="#manifest-json" class="headerlink" title="manifest.json"></a>manifest.json</h2><p><a href="http://link.zhihu.com/?target=https%3A//developer.mozilla.org/en-US/docs/Web/Manifest" target="_blank" rel="external">MDN-manifest.json</a><br><a href="https://h5.ele.me/manifest.json" target="_blank" rel="external">饿了么manifest</a></p>
-<h2 id="App-Shell提高首屏渲染"><a href="#App-Shell提高首屏渲染" class="headerlink" title="App Shell提高首屏渲染"></a>App Shell提高首屏渲染</h2><p>使用服务端渲染实现App Shell。实践中，渲染往往等到同步的JS完成才进行。所以把耗时的js移到setTimeout里，等待主调用栈清空才执行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">setTimeout(() =&gt; &#123;</div><div class="line">  // 把初始化渲染放到 setTimeout 里</div><div class="line">  new Vue()</div><div class="line">&#125;, 0)</div></pre></td></tr></table></figure>
-<p>vue的服务端渲染可以参考<a href="https://www.npmjs.com/package/vue-server-renderer" target="_blank" rel="external">vue-server-renderer</a>和<a href="https://github.com/vuejs/vue-hackernews-2.0" target="_blank" rel="external">vue-hackernews-2.0
-</a></p>
-<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><ul>
-<li>使用Lighthouse提供修改建议</li>
-<li>对照<a href="https://developers.google.com/web/progressive-web-apps/checklist" target="_blank" rel="external">Progressive Web App Checklist</a>检查</li>
-</ul>
+<p>insec内嵌矩形<br>circle<br>ellipse<br>polygon<br>插件：[CSS Shapes Editor for Brackets]<br>(<a href="http://blogs.adobe.com/webplatform/2014/04/17/css-shapes-editor-in-brackets/" target="_blank" rel="external">http://blogs.adobe.com/webplatform/2014/04/17/css-shapes-editor-in-brackets/</a>) 在页面上自定义路径<br>在线页:<a href="http://betravis.github.io/shape-tools/polygon-drawing/" target="_blank" rel="external">Polygon Drawing</a></p>
+<p>shape-image-threshold: 0.0;<br>将满足透明度的边缘挖去，来形成区域。</p>
 
       
 
@@ -298,7 +242,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://nsxz945.github.io/2017/07/25/pwa2/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://nsxz945.github.io/2017/09/22/cssShape/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -312,18 +256,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/07/26/optImageLoading/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/10/09/mongdbForJs/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          优化图片加载--渐显
+          mongdbForJs
         
       </div>
     </a>
   
   
-    <a href="/2017/07/25/pwa/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">什么是pwa</div>
+    <a href="/2017/09/19/communicationBetweenPages/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">跨页面通讯的方式</div>
       <i class="icon-circle-right"></i>
     </a>
   

@@ -6,22 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://nsxz945.github.io">
-  <title>pwa2 | nsxz&#39;s blog</title>
+  <title>You Don&#39;t Know JS(2)-Scope &amp; Closures | nsxz&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="PWA前的准备工作刚刚接触PWA概念，我就很看好它的发展。因此我决定借鉴一些成熟的案例，确定下需要攻克的主要  PWA 在饿了么的实践经验PWA 入门: 理解和创建 Service Worker 脚本 Service workers explained  降级方案因为 server worker将被缓存，因此要预留一个降级开关来注销掉sw，以便能够有效处理SW上出现的bug。 1234567891">
+  <meta name="description" content="#Scope &amp;amp; Closures chapter1-2编译过程1.Tokenizing/Lexing2.Parsing3.Code-Generation 执行过程在这个过程中，主要有3个部分在起作用  Engine Compiler Scope:明确已声明变量的作用域  当执行var a = 2时:1.解析var = a，Compiler向Scope询问当前作用域是否存在变量a:存在则忽">
 <meta name="keywords" content="阅读笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pwa2">
-<meta property="og:url" content="https://nsxz945.github.io/2017/07/25/pwa2/index.html">
+<meta property="og:title" content="You Don&#39;t Know JS(2)-Scope &amp; Closures">
+<meta property="og:url" content="https://nsxz945.github.io/2017/09/15/YDKJS-2/index.html">
 <meta property="og:site_name" content="nsxz&#39;s blog">
-<meta property="og:description" content="PWA前的准备工作刚刚接触PWA概念，我就很看好它的发展。因此我决定借鉴一些成熟的案例，确定下需要攻克的主要  PWA 在饿了么的实践经验PWA 入门: 理解和创建 Service Worker 脚本 Service workers explained  降级方案因为 server worker将被缓存，因此要预留一个降级开关来注销掉sw，以便能够有效处理SW上出现的bug。 1234567891">
+<meta property="og:description" content="#Scope &amp;amp; Closures chapter1-2编译过程1.Tokenizing/Lexing2.Parsing3.Code-Generation 执行过程在这个过程中，主要有3个部分在起作用  Engine Compiler Scope:明确已声明变量的作用域  当执行var a = 2时:1.解析var = a，Compiler向Scope询问当前作用域是否存在变量a:存在则忽">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://nsxz945.github.io/2017/07/25/pwa2/1.png">
-<meta property="og:updated_time" content="2017-07-25T08:02:32.000Z">
+<meta property="og:updated_time" content="2017-10-10T06:02:57.647Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="pwa2">
-<meta name="twitter:description" content="PWA前的准备工作刚刚接触PWA概念，我就很看好它的发展。因此我决定借鉴一些成熟的案例，确定下需要攻克的主要  PWA 在饿了么的实践经验PWA 入门: 理解和创建 Service Worker 脚本 Service workers explained  降级方案因为 server worker将被缓存，因此要预留一个降级开关来注销掉sw，以便能够有效处理SW上出现的bug。 1234567891">
-<meta name="twitter:image" content="https://nsxz945.github.io/2017/07/25/pwa2/1.png">
+<meta name="twitter:title" content="You Don&#39;t Know JS(2)-Scope &amp; Closures">
+<meta name="twitter:description" content="#Scope &amp;amp; Closures chapter1-2编译过程1.Tokenizing/Lexing2.Parsing3.Code-Generation 执行过程在这个过程中，主要有3个部分在起作用  Engine Compiler Scope:明确已声明变量的作用域  当执行var a = 2时:1.解析var = a，Compiler向Scope询问当前作用域是否存在变量a:存在则忽">
   
     <link rel="alternative" href="/atom.xml" title="nsxz&#39;s blog" type="application/atom+xml">
   
@@ -149,86 +147,67 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-pwa2" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-YDKJS-2" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      pwa2
+      You Don&#39;t Know JS(2)-Scope &amp; Closures
     </h1>
   
 
         
-        <a href="/2017/07/25/pwa2/" class="archive-article-date">
-  	<time datetime="2017-07-25T02:25:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-25</time>
+        <a href="/2017/09/15/YDKJS-2/" class="archive-article-date">
+  	<time datetime="2017-09-15T01:20:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-15</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="PWA前的准备工作"><a href="#PWA前的准备工作" class="headerlink" title="PWA前的准备工作"></a>PWA前的准备工作</h1><p>刚刚接触PWA概念，我就很看好它的发展。因此我决定借鉴一些成熟的案例，确定下需要攻克的主要</p>
-<blockquote>
-<p><a href="https://zhuanlan.zhihu.com/p/25800461" target="_blank" rel="external">PWA 在饿了么的实践经验</a><br><a href="https://zhuanlan.zhihu.com/p/25524382" target="_blank" rel="external">PWA 入门: 理解和创建 Service Worker 脚本</a><br> <a href="https://github.com/w3c/ServiceWorker/blob/master/explainer.md" target="_blank" rel="external">Service workers explained</a></p>
-</blockquote>
-<h2 id="降级方案"><a href="#降级方案" class="headerlink" title="降级方案"></a>降级方案</h2><p>因为 server worker将被缓存，因此要预留一个降级开关来注销掉sw，以便能够有效处理SW上出现的bug。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">if (支持SW) &#123;</div><div class="line">  fetch(开关接口)</div><div class="line">  .then(() =&gt; &#123;</div><div class="line">    if (降级) &#123;</div><div class="line">      for(let registration of registrations) &#123;</div><div class="line">  			registration.unregister()</div><div class="line">  		&#125;</div><div class="line">    &#125; else &#123;</div><div class="line">      // 注册 SW</div><div class="line">    &#125;</div><div class="line">  &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>注意的点:</p>
-<ul>
-<li>降级一定要注销掉 SW ，而不是简单地不安装。因为之前访问过站点的用户已安装了sw。</li>
-<li>降级开关需要有即时性，因此服务器和 SW 都不应该缓存该接口。</li>
-</ul>
-<h2 id="错误监控"><a href="#错误监控" class="headerlink" title="错误监控"></a>错误监控</h2><p>SW 运行在 worker 线程里，其抛出的错误在页面是捕捉不到的，因此需要在 SW 里引入错误监控。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(&apos;error&apos;, event =&gt; &#123;</div><div class="line">  // 上报错误信息</div><div class="line">  // 常用的属性：</div><div class="line">  // event.message</div><div class="line">  // event.filename</div><div class="line">  // event.lineno</div><div class="line">  // event.colno</div><div class="line">  // event.error.stack</div><div class="line">&#125;)</div><div class="line">self.addEventListener(&apos;unhandledrejection&apos;, event =&gt; &#123;</div><div class="line">  // 上报错误信息</div><div class="line">  // 常用的属性：</div><div class="line">  // event.reason</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+        <p>#Scope &amp; Closures</p>
+<h2 id="chapter1-2"><a href="#chapter1-2" class="headerlink" title="chapter1-2"></a>chapter1-2</h2><h3 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h3><p>1.Tokenizing/Lexing<br>2.Parsing<br>3.Code-Generation</p>
+<h3 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h3><p>在这个过程中，主要有3个部分在起作用</p>
 <ol>
-<li>SW 大部分 API 都是 promise-based 的，promise 里未处理的错误触发的不是 error 事件，而是 unhandledrejection 事件。</li>
-<li>这两个事件都只能在 worker 线程的 initial 生命周期里注册。（否则会失败，控制台可看到警告）</li>
+<li>Engine</li>
+<li>Compiler</li>
+<li>Scope:明确已声明变量的作用域</li>
 </ol>
-<h2 id="数据统计"><a href="#数据统计" class="headerlink" title="数据统计"></a>数据统计</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// 「弹出添加到主屏对话框」事件</div><div class="line">window.addEventListener(&apos;beforeinstallprompt&apos;, event =&gt; &#123;</div><div class="line">  // 这个 `event.userChoice` 是一个 Promise ，在用户选择后 resolve</div><div class="line">  event.userChoice.then(result =&gt; &#123;</div><div class="line">    console.log(result.outcome)</div><div class="line">    // &apos;accepted&apos;: 添加到主屏</div><div class="line">    // &apos;dismissed&apos;: 用户不想理你并向你扔了个取消</div><div class="line">  &#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<h2 id="service-worker"><a href="#service-worker" class="headerlink" title="service worker"></a>service worker</h2><h3 id="service-worker的特点"><a href="#service-worker的特点" class="headerlink" title="service worker的特点"></a>service worker的特点</h3><ul>
-<li>service不依赖于页面</li>
-<li>有自己的全局执行上下文</li>
-<li>没有操作DOM的权限</li>
-<li>可以脱离页面运行</li>
-<li>可以按需被终止、运行</li>
-<li>只支持HTTPS</li>
-<li>通过网络拦截器，可以加快网站访问甚至实现离线访问</li>
-<li>可以实现推送以及后台同步</li>
-</ul>
-<h3 id="service-worker的生命周期"><a href="#service-worker的生命周期" class="headerlink" title="service worker的生命周期"></a>service worker的生命周期</h3><p><img src="/2017/07/25/pwa2/1.png" alt="生命周期"></p>
-<ul>
-<li>parsed: 注册完成, 脚本解析成功, 尚未安装</li>
-<li>installing: 对应 Service Worker 脚本 install 事件执行, 如果事件里有event.waitUntil() 则会等待传入的 Promise 完成才会成功</li>
-<li>installed(waiting): 页面被旧的 Service Worker 脚本控制, 所以当前的脚本尚未激活。可以通过 self.skipWaiting() 激活新的 Service Worker</li>
-<li>activating: 对应 Service Worker 脚本 activate 事件执行, 如果事件里有event.waitUntil() 则会等待这个 Promise 完成才会成功。这时可以调用 Clients.claim() 接管页面</li>
-<li>activated: 激活成功, 可以处理 fetch, message 等事件</li>
-<li>redundant: 安装失败, 或者激活失败, 或者被新的 Service Worker 替代掉<br>备选项</li>
-</ul>
-<p>Service Worker 脚本最常用的功能是截获请求和缓存资源文件, 这些行为可以绑定在下面这些事件上:</p>
-<ul>
-<li>install 事件中, 抓取资源进行缓存</li>
-<li>activate 事件中, 遍历缓存, 清除过期的资源</li>
-<li>fetch 事件中, 拦截请求, 查询缓存或者网络, 返回请求的资源</li>
-</ul>
-<p>Service Worker 可以访问 Cache API, Fetch API 等接口, 获取数据和完成响应</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(&apos;fetch&apos;, function(event) &#123;</div><div class="line">  event.respondWith(</div><div class="line">    caches.match(event.request)</div><div class="line">      .then(function(response) &#123;</div><div class="line">        // Cache hit - return response</div><div class="line">        if (response) &#123;</div><div class="line">          return response;</div><div class="line">        &#125;</div><div class="line">        return fetch(event.request);</div><div class="line">      &#125;</div><div class="line">    )</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>event.waitUntil() 接收一个 Promise, 等到 Promise 完成时, 事件才最终完成。</p>
-<p>###SW库</p>
-<ul>
-<li>sw-precache-webpack-plugin<br>实现预加载以便离线运行</li>
-<li><a href="https://github.com/GoogleChrome/sw-toolbox" target="_blank" rel="external">sw-toolbox</a><br>线上使用的service worker</li>
-</ul>
-<h2 id="manifest-json"><a href="#manifest-json" class="headerlink" title="manifest.json"></a>manifest.json</h2><p><a href="http://link.zhihu.com/?target=https%3A//developer.mozilla.org/en-US/docs/Web/Manifest" target="_blank" rel="external">MDN-manifest.json</a><br><a href="https://h5.ele.me/manifest.json" target="_blank" rel="external">饿了么manifest</a></p>
-<h2 id="App-Shell提高首屏渲染"><a href="#App-Shell提高首屏渲染" class="headerlink" title="App Shell提高首屏渲染"></a>App Shell提高首屏渲染</h2><p>使用服务端渲染实现App Shell。实践中，渲染往往等到同步的JS完成才进行。所以把耗时的js移到setTimeout里，等待主调用栈清空才执行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">setTimeout(() =&gt; &#123;</div><div class="line">  // 把初始化渲染放到 setTimeout 里</div><div class="line">  new Vue()</div><div class="line">&#125;, 0)</div></pre></td></tr></table></figure>
-<p>vue的服务端渲染可以参考<a href="https://www.npmjs.com/package/vue-server-renderer" target="_blank" rel="external">vue-server-renderer</a>和<a href="https://github.com/vuejs/vue-hackernews-2.0" target="_blank" rel="external">vue-hackernews-2.0
-</a></p>
-<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><ul>
-<li>使用Lighthouse提供修改建议</li>
-<li>对照<a href="https://developers.google.com/web/progressive-web-apps/checklist" target="_blank" rel="external">Progressive Web App Checklist</a>检查</li>
-</ul>
+<p>当执行<code>var a = 2</code>时:<br>1.解析<code>var = a</code>，Compiler向Scope询问当前作用域是否存在变量<code>a</code>:存在则忽略声明并转到这一变量上；不存在，则让Scope在当前作用域下声明一个变量<code>a</code>。<br>2.Compiler让Engine执行<code>a=2</code>，Engine会向Scope询问当前作用域上是否存在变量<code>a</code>:存在,则使用该变量;不存在,则让Scope在作用域链上寻找。</p>
+<h3 id="LHS-amp-amp-RHS"><a href="#LHS-amp-amp-RHS" class="headerlink" title="LHS &amp;&amp; RHS"></a>LHS &amp;&amp; RHS</h3><p>LHS查询变量所在锚点，RHS查询变量实际代表什么。LHS在作用域链上查询不到时，会在最外层的作用域上添加该变量。</p>
+<h3 id="scope"><a href="#scope" class="headerlink" title="scope"></a>scope</h3><p>同名的内层变量会遮盖外层的变量，除了全局变量可以使用<code>windows.item</code>来访问到，其他层级的变量无法被直接访问。</p>
+<p>使用eval()实现动态变量(旧方法，不提倡！)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">function foo(str, a) &#123;</div><div class="line">	eval( str ); // cheating!</div><div class="line">	console.log( a, b );</div><div class="line">&#125;</div><div class="line"></div><div class="line">var b = 2;</div><div class="line"></div><div class="line">foo( &quot;var b = 3;&quot;, 1 ); // 1 3</div></pre></td></tr></table></figure>
+<p>使用new Function实现动态变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">new Function ([arg1[, arg2[, ...argN]],] functionBody)</div></pre></td></tr></table></figure>
+<p>functionBody接受一段字符串来作为函数体。</p>
+<h3 id="with"><a href="#with" class="headerlink" title="with"></a>with</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">function foo(obj) &#123;</div><div class="line">	with (obj) &#123;</div><div class="line">		a = 2;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">var o1 = &#123;</div><div class="line">	a: 3</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var o2 = &#123;</div><div class="line">	b: 3</div><div class="line">&#125;;</div><div class="line"></div><div class="line">foo( o1 );</div><div class="line">console.log( o1.a ); // 2</div><div class="line"></div><div class="line">foo( o2 );</div><div class="line">console.log( o2.a ); // undefined</div><div class="line">console.log( a ); // 2 -- Oops, leaked global!</div></pre></td></tr></table></figure>
+<p>with可以用来给obj内已有的属性赋值；当对不存在的属性进行赋值时，以LHS进行变量查询，所以在全局处创建了变量a。</p>
+<p>ps:eval和with的使用，将使引擎不进行性能优化。</p>
+<h2 id="Chapter-3-Function-vs-Block-Scope"><a href="#Chapter-3-Function-vs-Block-Scope" class="headerlink" title="Chapter 3: Function vs. Block Scope"></a>Chapter 3: Function vs. Block Scope</h2><p>function是一个常用的产生块级作用域的方法，为了简明书写，可以使用IIFE。</p>
+<p>当使用let来声明变量时，每个<code>{}</code>确实创造了一个作用域。甚至于在for循环中，每次循环都会生成一个单独的作用域。而使用var却不是这样的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++) &#123;</div><div class="line">	<span class="built_in">console</span>.log( i );</div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(i) <span class="comment">// 9</span></div><div class="line"></div><div class="line"><span class="keyword">if</span>(<span class="literal">true</span>)&#123;</div><div class="line">	<span class="keyword">var</span> b=<span class="number">1</span></div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(b) <span class="comment">//1</span></div><div class="line"></div><div class="line"><span class="comment">//ps:当把上诉情况中的var换成let，则会提示变量未定义</span></div></pre></td></tr></table></figure>
+<p>块级作用域的使用，能帮助引擎判断哪些变量已经没有用了，使内存回收机制更为有效。</p>
+<h2 id="Chapter-4-Hoisting"><a href="#Chapter-4-Hoisting" class="headerlink" title="Chapter 4: Hoisting"></a>Chapter 4: Hoisting</h2><p>函数声明、var变量声明均会发生变量提升。函数声明优先于var变量声明。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//函数声明提升导致了以下结果。</span></div><div class="line"><span class="comment">//在块级内声明函数的行为是不可靠的，应尽量避免</span></div><div class="line"><span class="comment">//个人认为，在源代码中，函数的执行在函数声明之后，并不会造成阅读、编译的误解</span></div><div class="line">foo(); <span class="comment">// "b"</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> a = <span class="literal">true</span>;</div><div class="line"><span class="keyword">if</span> (a) &#123;</div><div class="line">   <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log( <span class="string">"a"</span> ); &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span> &#123;</div><div class="line">   <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log( <span class="string">"b"</span> ); &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Chapter-5-Closure"><a href="#Chapter-5-Closure" class="headerlink" title="Chapter 5: Closure"></a>Chapter 5: Closure</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> a = <span class="number">2</span>;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="built_in">console</span>.log( a );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> bar;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> baz = foo(); <span class="comment">//bar被创建，其所在环境也被保留下来。局部作用域依然能被访问。</span></div><div class="line"></div><div class="line">baz();</div></pre></td></tr></table></figure>
+<p>###其他使用closure的方法：<br>不管什么方法，都是在外部留有访问内部函数的入口。这样的一个内部函数因为之后可能被访问，故而整个封包的内存不会被回收。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line">	var a = 2;</div><div class="line"></div><div class="line">	function baz() &#123;</div><div class="line">		console.log( a ); // 2</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	bar( baz );</div><div class="line">&#125;</div><div class="line"></div><div class="line">function bar(fn) &#123;</div><div class="line">	fn(); // look ma, I saw closure!</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">var fn;</div><div class="line"></div><div class="line">function foo() &#123;</div><div class="line">	var a = 2;</div><div class="line"></div><div class="line">	function baz() &#123;</div><div class="line">		console.log( a );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	fn = baz; // assign `baz` to global variable</div><div class="line">&#125;</div><div class="line"></div><div class="line">function bar() &#123;</div><div class="line">	fn(); // look ma, I saw closure!</div><div class="line">&#125;</div><div class="line"></div><div class="line">foo();</div><div class="line"></div><div class="line">bar(); // 2</div></pre></td></tr></table></figure>
+<p>###IIFE<br>IIFE因为函数并没有在其他地方执行，所以不是封包。但IIFE与封包的实践有很大关系。IIFE可以帮助我们快速地创建一个局部作用域。</p>
+<p>用IIFE解决一个经典循环问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">for (var i=1; i&lt;=5; i++) &#123;</div><div class="line">	(function(j)&#123;</div><div class="line">		setTimeout( function timer()&#123;</div><div class="line">			console.log( j );</div><div class="line">		&#125;, j*1000 );</div><div class="line">	&#125;)( i );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>###模块化中的封包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">var foo = (function CoolModule() &#123;</div><div class="line">	var something = &quot;cool&quot;;</div><div class="line">	var another = [1, 2, 3];</div><div class="line"></div><div class="line">	function doSomething() &#123;</div><div class="line">		console.log( something );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	function doAnother() &#123;</div><div class="line">		console.log( another.join( &quot; ! &quot; ) );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	return &#123;</div><div class="line">		doSomething: doSomething,</div><div class="line">		doAnother: doAnother</div><div class="line">	&#125;;</div><div class="line">&#125;)();</div><div class="line"></div><div class="line">foo.doSomething(); // cool</div><div class="line">foo.doAnother(); // 1 ! 2 ! 3</div></pre></td></tr></table></figure>
+<p>###模块的管理(仅用作说明)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> MyModules = (<span class="function"><span class="keyword">function</span> <span class="title">Manager</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> modules = &#123;&#125;;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">define</span>(<span class="params">name, deps, impl</span>) </span>&#123;</div><div class="line">		<span class="comment">// 将依赖，一一指向实际方法，并且可以直接使用名字进行调用。</span></div><div class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;deps.length; i++) &#123;</div><div class="line">			deps[i] = modules[deps[i]];</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// 添加新模块，并保存其依赖；</span></div><div class="line">		<span class="comment">// 调用时，impl需要将deps展开写清楚，同时顺序要与deps数组相同</span></div><div class="line">		<span class="comment">// 可以考虑将deps改为对象，模块具名保存。使用call进行调用。在定义时，impl中也只需要加入deps这一个参数就行。</span></div><div class="line">		modules[name] = impl.apply( impl, deps );</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">		<span class="keyword">return</span> modules[name];</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> &#123;</div><div class="line">		<span class="attr">define</span>: define,</div><div class="line">		<span class="attr">get</span>: get</div><div class="line">	&#125;;</div><div class="line">&#125;)();</div><div class="line">MyModules.define( <span class="string">"bar"</span>, [], <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">hello</span>(<span class="params">who</span>) </span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">"Let me introduce: "</span> + who;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> &#123;</div><div class="line">		<span class="attr">hello</span>: hello</div><div class="line">	&#125;;</div><div class="line">&#125; );</div><div class="line"></div><div class="line"><span class="comment">// 此处handler中bar不可或缺</span></div><div class="line">MyModules.define( <span class="string">"foo"</span>, [<span class="string">"bar"</span>], <span class="function"><span class="keyword">function</span>(<span class="params">bar</span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> hungry = <span class="string">"hippo"</span>;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">awesome</span>(<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="built_in">console</span>.log( bar.hello( hungry ).toUpperCase() );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> &#123;</div><div class="line">		<span class="attr">awesome</span>: awesome</div><div class="line">	&#125;;</div><div class="line">&#125; );</div><div class="line"></div><div class="line"><span class="keyword">var</span> bar = MyModules.get( <span class="string">"bar"</span> );</div><div class="line"><span class="keyword">var</span> foo = MyModules.get( <span class="string">"foo"</span> );</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(</div><div class="line">	bar.hello( <span class="string">"hippo"</span> )</div><div class="line">); <span class="comment">// Let me introduce: hippo</span></div><div class="line"></div><div class="line">foo.awesome(); <span class="comment">// LET ME INTRODUCE: HIPPO</span></div></pre></td></tr></table></figure></p>
+<h2 id="Dynamic-Scope"><a href="#Dynamic-Scope" class="headerlink" title="Dynamic Scope"></a>Dynamic Scope</h2><p>Lexial Scope vs Dynamic Scope<br>前者的作用域是在函数创建时确定的，后者则是在函数被调用时确定的。在JS中，this的用法和Dynamic Scope很类似。<br>eval，with可以起到类似Dynamic Scope的作用。这两个影响性能，基本不会用。</p>
+<h2 id="Polyfilling-Block-Scope"><a href="#Polyfilling-Block-Scope" class="headerlink" title="Polyfilling Block Scope"></a>Polyfilling Block Scope</h2><p>在ES6中，我们可以用花括号来声明一个局部作用域。在考虑兼容的情况下，我们可以采用下面这个方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	try &#123;</div><div class="line">		throw undefined;</div><div class="line">	&#125; catch (a) &#123;</div><div class="line">		a = 2;</div><div class="line">		console.log( a );//2</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">console.log( a );//VM341:9 Uncaught ReferenceError: a is not defined</div></pre></td></tr></table></figure>
+<p>使用try/catch，可以创建一个局部作用域。</p>
+<p>###let局部作用域<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">let (a = 2) &#123;</div><div class="line">	console.log( a ); // 2</div><div class="line">&#125;</div><div class="line"></div><div class="line">console.log( a ); // ReferenceError</div><div class="line"></div><div class="line">&#123; let a = 2;</div><div class="line">	console.log( a );</div><div class="line">&#125;</div><div class="line"></div><div class="line">console.log( a ); // ReferenceError</div></pre></td></tr></table></figure></p>
+<p>###与IIFE比较<br>与真正的局部作用域相比，IIFE改变了代码的原意，尤其是当内部代码含有this, return, break, 以及 continue时。</p>
 
       
 
@@ -298,7 +277,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://nsxz945.github.io/2017/07/25/pwa2/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://nsxz945.github.io/2017/09/15/YDKJS-2/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -312,18 +291,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/07/26/optImageLoading/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/09/19/communicationBetweenPages/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          优化图片加载--渐显
+          跨页面通讯的方式
         
       </div>
     </a>
   
   
-    <a href="/2017/07/25/pwa/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">什么是pwa</div>
+    <a href="/2017/08/30/thisofArrow/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">箭头函数的this指向</div>
       <i class="icon-circle-right"></i>
     </a>
   
