@@ -144,6 +144,271 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-TypeScriptTutorial" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/16/TypeScriptTutorial/">TypeScriptTutorial</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/16/TypeScriptTutorial/" class="archive-article-date">
+  	<time datetime="2017-10-16T01:11:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="《TypeScript-入门教程》学习笔记"><a href="#《TypeScript-入门教程》学习笔记" class="headerlink" title="《TypeScript 入门教程》学习笔记"></a>《TypeScript 入门教程》学习笔记</h1><p><a href="https://ts.xcatliu.com/" target="_blank" rel="external">TypeScript 入门教程 by xcatliu</a></p>
+<blockquote>
+<p>TypeScript的基础是类型定义。通过类型定义，可以在编译阶段就发现一些错误，另外它增强了编辑器和 IDE 的功能，包括代码补全、接口提示、跳转到定义、重构等。</p>
+</blockquote>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="原始数据类型"><a href="#原始数据类型" class="headerlink" title="原始数据类型"></a>原始数据类型</h3><p>在变量后使用“:”进行类型定义。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let isDone: boolean = false;</div><div class="line">let text: string = &apos;text string&apos;;</div></pre></td></tr></table></figure>
+<p>注意，使用构造函数 Boolean 创造的对象不是布尔值，而是对象(同理，其他基础类型也一样，除了undefined，null)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let createdByNewBoolean: boolean = new Boolean(1); // 编译失败</div><div class="line">let createdByNewBoolean: Boolean = new Boolean(1); // 编译成功</div></pre></td></tr></table></figure>
+<p>在 TypeScirpt 中，可以用 void 表示没有任何返回值的函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function alertName(): void &#123;</div><div class="line">  alert(&apos;My name is xcatliu&apos;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>undefined 和 null 是所有类型的子类型，其他类型的变量声明，可以赋值为undefined 和 null。</p>
+<h3 id="任意值"><a href="#任意值" class="headerlink" title="任意值"></a>任意值</h3><p>未声明、及声明为any时的变量，可以赋予任意值。</p>
+<h3 id="联合类型"><a href="#联合类型" class="headerlink" title="联合类型"></a>联合类型</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">let myFavoriteNumber: string | number;</div></pre></td></tr></table></figure>
+<h4 id="访问联合类型的属性或方法"><a href="#访问联合类型的属性或方法" class="headerlink" title="访问联合类型的属性或方法"></a>访问联合类型的属性或方法</h4><p>当 TypeScript 不确定一个联合类型的变量到底是哪个类型的时候，我们只能访问此联合类型的所有类型里共有的属性或方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function getLength(something: string | number): number &#123;</div><div class="line">  return something.length;</div><div class="line">&#125;</div><div class="line">// index.ts(2,20): error TS2339: Property &apos;length&apos; does not exist on type &apos;string | number&apos;.</div><div class="line">//   Property &apos;length&apos; does not exist on type &apos;number&apos;.</div></pre></td></tr></table></figure></p>
+<h3 id="对象的类型——接口"><a href="#对象的类型——接口" class="headerlink" title="对象的类型——接口"></a>对象的类型——接口</h3><p>类比插座上的接口，接口必须与插头匹配才能使用。在TS中，通过interface定义一个接口的标准，包括属性名称、类型。</p>
+<p>简单的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">interface Person &#123;</div><div class="line">  name: string;</div><div class="line">  age: number;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let xcatliu: Person = &#123;</div><div class="line">  name: &apos;Xcat Liu&apos;,</div><div class="line">  age: 25,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>上述例子中，xcatliu必须含有name，age属性，且类型必须符合。</p>
+<h4 id="可选属性"><a href="#可选属性" class="headerlink" title="可选属性"></a>可选属性</h4><p>有时我们希望不要完全匹配一个形状，那么可以用可选属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">interface Person &#123;</div><div class="line">  name: string;</div><div class="line">  age?: number;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let xcatliu: Person = &#123;</div><div class="line">  name: &apos;Xcat Liu&apos;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h4 id="任意属性"><a href="#任意属性" class="headerlink" title="任意属性"></a>任意属性</h4><p>有时候我们希望一个接口允许有任意的属性，可以使用如下方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">interface Person &#123;</div><div class="line">  name: string;</div><div class="line">  age?: number;</div><div class="line">  [propName: string]: any;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let xcatliu: Person = &#123;</div><div class="line">  name: &apos;Xcat Liu&apos;,</div><div class="line">  website: &apos;http://xcatliu.com&apos;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>需要注意的是，一旦定义了任意属性，那么确定属性和可选属性都必须是它的子属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">interface Person &#123;</div><div class="line">  name: string;</div><div class="line">  age?: number;</div><div class="line">  [propName: string]: string;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let xcatliu: Person = &#123;</div><div class="line">  name: &apos;Xcat Liu&apos;,</div><div class="line">  age: 25,</div><div class="line">  website: &apos;http://xcatliu.com&apos;,</div><div class="line">&#125;;</div><div class="line">// index.ts(3,3): error TS2411: Property &apos;age&apos; of type &apos;number&apos; is not assignable to string index type &apos;string&apos;.</div><div class="line">// index.ts(7,5): error TS2322: Type &apos;&#123; [x: string]: string | number; name: string; age: number; website: string; &#125;&apos; is not assignable to type &apos;Person&apos;.</div><div class="line">//   Index signatures are incompatible.</div><div class="line">//     Type &apos;string | number&apos; is not assignable to type &apos;string&apos;.</div><div class="line">//       Type &apos;number&apos; is not assignable to type &apos;string&apos;.</div></pre></td></tr></table></figure>
+<h4 id="只读属性"><a href="#只读属性" class="headerlink" title="只读属性"></a>只读属性</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">interface Person &#123;</div><div class="line">  readonly id: number;</div><div class="line">  name: string;</div><div class="line">  age?: number;</div><div class="line">  [propName: string]: any;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let xcatliu: Person = &#123;</div><div class="line">  id: 89757,</div><div class="line">  name: &apos;Xcat Liu&apos;,</div><div class="line">  website: &apos;http://xcatliu.com&apos;,</div><div class="line">&#125;;</div><div class="line"></div><div class="line">xcatliu.id = 9527;</div><div class="line"></div><div class="line">// index.ts(14,9): error TS2540: Cannot assign to &apos;id&apos; because it is a constant or a read-only property.</div></pre></td></tr></table></figure>
+<p>只读的约束存在于第一次给对象赋值的时候，而不是第一次给只读属性赋值的时候:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">interface Person &#123;</div><div class="line">  readonly id: number;</div><div class="line">  name: string;</div><div class="line">  age?: number;</div><div class="line">  [propName: string]: any;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let xcatliu: Person = &#123;</div><div class="line">  name: &apos;Xcat Liu&apos;,</div><div class="line">  website: &apos;http://xcatliu.com&apos;,</div><div class="line">&#125;;</div><div class="line"></div><div class="line">xcatliu.id = 89757;</div><div class="line"></div><div class="line">// index.ts(8,5): error TS2322: Type &apos;&#123; name: string; website: string; &#125;&apos; is not assignable to type &apos;Person&apos;.</div><div class="line">//   Property &apos;id&apos; is missing in type &apos;&#123; name: string; website: string; &#125;&apos;.</div><div class="line">// index.ts(13,9): error TS2540: Cannot assign to &apos;id&apos; because it is a constant or a read-only property.</div></pre></td></tr></table></figure>
+<h3 id="数组的类型"><a href="#数组的类型" class="headerlink" title="数组的类型"></a>数组的类型</h3><p>####「类型 + 方括号」表示法<br><code>let fibonacci: number[] = [1, 1, 2, 3, 5];</code></p>
+<h4 id="数组泛型"><a href="#数组泛型" class="headerlink" title="数组泛型"></a>数组泛型</h4><p><code>let fibonacci: Array&lt;number&gt; = [1, 1, 2, 3, 5];</code></p>
+<h4 id="用接口表示数组"><a href="#用接口表示数组" class="headerlink" title="用接口表示数组"></a>用接口表示数组</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">interface NumberArray &#123;</div><div class="line">  [index: number]: number;</div><div class="line">&#125;</div><div class="line">let fibonacci: NumberArray = [1, 1, 2, 3, 5];</div></pre></td></tr></table></figure>
+<h4 id="类数组"><a href="#类数组" class="headerlink" title="类数组"></a>类数组</h4><p>类数组（Array-like Object）不是数组类型，常见的类数组都有自己的接口定义，如 IArguments, NodeList, HTMLCollection 等。参考内置对象一章。</p>
+<h3 id="函数表达式"><a href="#函数表达式" class="headerlink" title="函数表达式"></a>函数表达式</h3><p>函数声明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function sum(x: number, y: number): number &#123;</div><div class="line">  return x + y;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用时，参数个数需要严格相同。</p>
+<p>当定义一个函数表达式时，还需要对变量声明类型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let mySum: (x: number, y: number) =&gt; number = function (x: number, y: number): number &#123;</div><div class="line">  return x + y;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h4 id="接口中函数的定义"><a href="#接口中函数的定义" class="headerlink" title="接口中函数的定义"></a>接口中函数的定义</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">interface SearchFunc &#123;</div><div class="line">  (source: string, subString: string): boolean;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let mySearch: SearchFunc;</div><div class="line">mySearch = function(source: string, subString: string) &#123;</div><div class="line">  return source.search(subString) !== -1;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="可选参数"><a href="#可选参数" class="headerlink" title="可选参数"></a>可选参数</h4><p>和对象类似，需要注意的是，可选参数一定要放在最后。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function buildName(firstName: string, lastName?: string) &#123;</div><div class="line">  if (lastName) &#123;</div><div class="line">    return firstName + &apos; &apos; + lastName;</div><div class="line">  &#125; else &#123;</div><div class="line">    return firstName;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">let xcatliu = buildName(&apos;Xcat&apos;, &apos;Liu&apos;);</div><div class="line">let xcat = buildName(&apos;Xcat&apos;);</div></pre></td></tr></table></figure>
+<h4 id="参数默认值"><a href="#参数默认值" class="headerlink" title="参数默认值"></a>参数默认值</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function buildName(firstName: string, lastName: string = &apos;Liu&apos;) &#123;</div><div class="line">  return firstName + &apos; &apos; + lastName;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="剩余参数"><a href="#剩余参数" class="headerlink" title="剩余参数"></a>剩余参数</h4><p>rest参数定义为数组，且必须作为最后一个参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function push(array: any[], ...items: any[]) &#123;</div><div class="line">  items.forEach(function(item) &#123;</div><div class="line">    array.push(item);</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h4><p>重载允许一个函数接受不同数量或类型的参数时，作出不同的处理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function reverse(x: number | string): number | string &#123;</div><div class="line">  if (typeof x === &apos;number&apos;) &#123;</div><div class="line">    return Number(x.toString().split(&apos;&apos;).reverse().join(&apos;&apos;));</div><div class="line">  &#125; else if (typeof x === &apos;string&apos;) &#123;</div><div class="line">    return x.split(&apos;&apos;).reverse().join(&apos;&apos;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这个类型定义中，是不够准确的。因为参数为字符串时，返回值既可以是字符串，也可以是数字。这时，我们可以使用重载定义多个 reverse 的函数类型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function reverse(x: number): number;</div><div class="line">function reverse(x: string): string;</div><div class="line">function reverse(x: number | string): number | string &#123;</div><div class="line">  if (typeof x === &apos;number&apos;) &#123;</div><div class="line">    return Number(x.toString().split(&apos;&apos;).reverse().join(&apos;&apos;));</div><div class="line">  &#125; else if (typeof x === &apos;string&apos;) &#123;</div><div class="line">    return x.split(&apos;&apos;).reverse().join(&apos;&apos;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上例中，我们重复定义了多次函数 reverse，前几次都是函数定义，最后一次是函数实现。<br>注意，TypeScript 会优先从最前面的函数定义开始匹配，所以多个函数定义如果由包含关系，需要优先把精确的定义写在前面。</p>
+<h3 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h3><p>将一个联合类型的变量指定为一个更加具体的类型 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function getLength(something: string | number): number &#123;</div><div class="line">  if ((&lt;string&gt;something).length) &#123;</div><div class="line">    return (&lt;string&gt;something).length;</div><div class="line">  &#125; else &#123;</div><div class="line">    return something.toString().length;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在需要断言的变量前加上 <type> 即可。如果不这么做，因为length不是string和number的共有属性，编译时会报错。</type></p>
+<h3 id="声明文件"><a href="#声明文件" class="headerlink" title="声明文件"></a>声明文件</h3><p>使用第三方库时，用 declare 关键字来定义它的类型，帮助 TypeScript 判断我们传入的参数类型对不对：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">declare var jQuery: (string) =&gt; any;</div><div class="line"></div><div class="line">jQuery(&apos;#foo&apos;);</div></pre></td></tr></table></figure>
+<h3 id="内置对象"><a href="#内置对象" class="headerlink" title="内置对象"></a>内置对象</h3><p>ECMAScript 标准提供的内置对象有：<br><code>Boolean、Error、Date、RegExp 等。</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let b: Boolean = new Boolean(1);</div><div class="line">let e: Error = new Error(&apos;Error occurred&apos;);</div><div class="line">let d: Date = new Date();</div><div class="line">let r: RegExp = /[a-z]/;</div></pre></td></tr></table></figure>
+<p>DOM 和 BOM 提供的内置对象有：<br><code>Document、HTMLElement、Event、NodeList 等。</code></p>
+<p>TypeScript 中会经常用到这些类型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">let body: HTMLElement = document.body;</div><div class="line">let allDiv: NodeList = document.querySelectorAll(&apos;div&apos;);</div><div class="line">document.addEventListener(&apos;click&apos;, function(e: MouseEvent) &#123;</div><div class="line">  // Do something</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h2><h3 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h3><p>上例中，我们使用 type 创建类型别名。<br>类型别名常用于联合类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">type Name = string;</div><div class="line">type NameResolver = () =&gt; string;</div><div class="line">type NameOrResolver = Name | NameResolver;</div><div class="line">function getName(n: NameOrResolver): Name &#123;</div><div class="line">  if (typeof n === &apos;string&apos;) &#123;</div><div class="line">    return n;</div><div class="line">  &#125;</div><div class="line">  else &#123;</div><div class="line">    return n();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="字符串字面量类型"><a href="#字符串字面量类型" class="headerlink" title="字符串字面量类型"></a>字符串字面量类型</h3><p>字符串字面量类型用来约束取值只能是某几个字符串中的一个。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">type EventNames = &apos;click&apos; | &apos;scroll&apos; | &apos;mousemove&apos;;</div><div class="line">function handleEvent(ele: Element, event: EventNames) &#123;</div><div class="line">  // do something</div><div class="line">&#125;</div><div class="line"></div><div class="line">handleEvent(document.getElementById(&apos;hello&apos;), &apos;scroll&apos;);  // 没问题</div><div class="line">handleEvent(document.getElementById(&apos;world&apos;), &apos;dbclick&apos;); // 报错，event 不能为 &apos;dbclick&apos;</div></pre></td></tr></table></figure>
+<h3 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h3><p>数组合并了相同类型的对象，而元组（Tuple）合并了不同类型的对象。</p>
+<p>定义一对值分别为 string 和 number 的元组：</p>
+<p><code>let xcatliu: [string, number] = [&#39;Xcat Liu&#39;, 25];</code></p>
+<p>当直接对元组类型的变量进行初始化或者赋值的时候，需要提供所有元组类型中指定的项。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let xcatliu: [string, number];</div><div class="line">xcatliu = [&apos;Xcat Liu&apos;, 25];</div></pre></td></tr></table></figure>
+<h4 id="越界的元素"><a href="#越界的元素" class="headerlink" title="越界的元素"></a>越界的元素</h4><p>当赋值给越界的元素时，它类型会被限制为元组中每个类型的联合类型<br>当访问一个越界的元素，也会识别为元组中每个类型的联合类型</p>
+<h3 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h3><blockquote>
+<p>对于几种枚举的实际用途前仍十分困惑。。留待实践中感受。</p>
+</blockquote>
+<p>枚举（Enum）类型用于取值被限定在一定范围内的场景，比如一周只能有七天，颜色限定为红绿蓝等。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">enum Days &#123;Sun, Mon, Tue, Wed, Thu, Fri, Sat&#125;;</div><div class="line"></div><div class="line">console.log(Days[&quot;Sun&quot;] === 0); // true</div><div class="line">console.log(Days[&quot;Mon&quot;] === 1); // true</div><div class="line">console.log(Days[&quot;Tue&quot;] === 2); // true</div><div class="line">console.log(Days[&quot;Sat&quot;] === 6); // true</div><div class="line"></div><div class="line">console.log(Days[0] === &quot;Sun&quot;); // true</div><div class="line">console.log(Days[1] === &quot;Mon&quot;); // true</div><div class="line">console.log(Days[2] === &quot;Tue&quot;); // true</div><div class="line">console.log(Days[6] === &quot;Sat&quot;); // true</div></pre></td></tr></table></figure>
+<p>事实上，上面的例子会被编译为：</p>
+<p>var Days;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">(function (Days) &#123;</div><div class="line">  Days[Days[&quot;Sun&quot;] = 0] = &quot;Sun&quot;;</div><div class="line">  Days[Days[&quot;Mon&quot;] = 1] = &quot;Mon&quot;;</div><div class="line">  Days[Days[&quot;Tue&quot;] = 2] = &quot;Tue&quot;;</div><div class="line">  Days[Days[&quot;Wed&quot;] = 3] = &quot;Wed&quot;;</div><div class="line">  Days[Days[&quot;Thu&quot;] = 4] = &quot;Thu&quot;;</div><div class="line">  Days[Days[&quot;Fri&quot;] = 5] = &quot;Fri&quot;;</div><div class="line">  Days[Days[&quot;Sat&quot;] = 6] = &quot;Sat&quot;;</div><div class="line">&#125;)(Days || (Days = &#123;&#125;));</div></pre></td></tr></table></figure>
+<h4 id="手动赋值"><a href="#手动赋值" class="headerlink" title="手动赋值"></a>手动赋值</h4><p>未手动赋值的枚举项会接着上一个枚举项递增。<br>TypeScript不会察觉,未手动赋值的枚举项与手动赋值的重复。应避免出现这种情况。<br>手动赋值的枚举项可以不是数字。</p>
+<h4 id="常数枚举"><a href="#常数枚举" class="headerlink" title="常数枚举"></a>常数枚举</h4><p>常数枚举是使用 const enum 定义的枚举类型。<br>常数枚举与普通枚举的区别是，它会在编译阶段被删除，并且不能包含计算成员。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">// constEnum.ts</div><div class="line">const enum Directions &#123;</div><div class="line">  Up,</div><div class="line">  Down,</div><div class="line">  Left,</div><div class="line">  Right</div><div class="line">&#125;</div><div class="line"></div><div class="line">let directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];</div><div class="line"></div><div class="line">// constEnum.js</div><div class="line">var directions = [0 /* Up */, 1 /* Down */, 2 /* Left */, 3 /* Right */];</div></pre></td></tr></table></figure>
+<h3 id="外部枚举"><a href="#外部枚举" class="headerlink" title="外部枚举"></a>外部枚举</h3><p>外部枚举（Ambient Enums）是使用 declare enum 定义的枚举类型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">declare enum Directions &#123;</div><div class="line">  Up,</div><div class="line">  Down,</div><div class="line">  Left,</div><div class="line">  Right</div><div class="line">&#125;</div><div class="line"></div><div class="line">let directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];</div></pre></td></tr></table></figure>
+<p>之前提到过，declare 定义的类型只会用于编译时的检查，编译结果中会被删除。</p>
+<p>上例的编译结果是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];</div></pre></td></tr></table></figure>
+<p>同时使用 declare 和 const 也是可以的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">declare const enum Directions &#123;</div><div class="line">  Up,</div><div class="line">  Down,</div><div class="line">  Left,</div><div class="line">  Right</div><div class="line">&#125;</div><div class="line"></div><div class="line">let directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];</div></pre></td></tr></table></figure>
+<p>编译结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var directions = [0 /* Up */, 1 /* Down */, 2 /* Left */, 3 /* Right */];</div></pre></td></tr></table></figure>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><p>TS支持ES6中的class，以及ES7中的静态属性。<br>此外还可以使用三种修饰符<br>分别是 public、private 和 protected。</p>
+<ul>
+<li>public 修饰的属性或方法是公有的，可以在任何地方被访问到，默认所有的属性和方法都是 public 的</li>
+<li>private 修饰的属性或方法是私有的，不能在声明它的类的外部访问</li>
+<li>protected 修饰的属性或方法是受保护的，它和 private 类似，区别是它在子类中也是允许被访问的</li>
+</ul>
+<h4 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h4><p>abstract 用于定义抽象类和其中的抽象方法。<br>抽象类是不允许被实例化的，它的抽象方法必须被子类实现。因此，抽象类是用来被继承的父类。</p>
+<h3 id="类与接口"><a href="#类与接口" class="headerlink" title="类与接口"></a>类与接口</h3><p>实现（implements）是面向对象中的一个重要概念。一般来讲，一个类只能继承自另一个类，有时候不同类之间可以有一些共有的特性，这时候就可以把特性提取成接口（interfaces），用 implements 关键字来实现。这个特性大大提高了面向对象的灵活性。</p>
+<p>举例来说，门是一个类，防盗门是门的子类。如果防盗门有一个报警器的功能，我们可以简单的给防盗门添加一个报警方法。这时候如果有另一个类，车，也有报警器的功能，就可以考虑把报警器提取出来，作为一个接口，防盗门和车都去实现它：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">interface Alarm &#123;</div><div class="line">  alert();</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Door &#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class SecurityDoor extends Door implements Alarm &#123;</div><div class="line">  alert() &#123;</div><div class="line">    console.log(&apos;SecurityDoor alert&apos;);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Car implements Alarm &#123;</div><div class="line">  alert() &#123;</div><div class="line">    console.log(&apos;Car alert&apos;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="接口继承接口"><a href="#接口继承接口" class="headerlink" title="接口继承接口"></a>接口继承接口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">interface Alarm &#123;</div><div class="line">  alert();</div><div class="line">&#125;</div><div class="line"></div><div class="line">interface LightableAlarm extends Alarm &#123;</div><div class="line">  lightOn();</div><div class="line">  lightOff();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="接口继承类"><a href="#接口继承类" class="headerlink" title="接口继承类"></a>接口继承类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">class Point &#123;</div><div class="line">  x: number;</div><div class="line">  y: number;</div><div class="line">&#125;</div><div class="line"></div><div class="line">interface Point3d extends Point &#123;</div><div class="line">  z: number;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let point3d: Point3d = &#123;x: 1, y: 2, z: 3&#125;;</div></pre></td></tr></table></figure>
+<h4 id="混合类型"><a href="#混合类型" class="headerlink" title="混合类型"></a>混合类型</h4><p>一个函数还可以有自己的属性和方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">interface Counter &#123;</div><div class="line">    (start: number): string;</div><div class="line">    interval: number;</div><div class="line">    reset(): void;</div><div class="line">&#125;</div><div class="line"></div><div class="line">function getCounter(): Counter &#123;</div><div class="line">    let counter = &lt;Counter&gt;function (start: number) &#123; &#125;;</div><div class="line">    counter.interval = 123;</div><div class="line">    counter.reset = function () &#123; &#125;;</div><div class="line">    return counter;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let c = getCounter();</div><div class="line">c(10);</div><div class="line">c.reset();</div><div class="line">c.interval = 5.0;</div></pre></td></tr></table></figure>
+<h4 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h4><p>泛型（Generics）是指在定义函数、接口或类的时候，不预先指定具体的类型，而在使用的时候再指定类型的一种特性。</p>
+<p>例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function createArray(length: number, value: any): Array&lt;any&gt; &#123;</div><div class="line">  let result = [];</div><div class="line">  for (let i = 0; i &lt; length; i++) &#123;</div><div class="line">    result[i] = value;</div><div class="line">  &#125;</div><div class="line">  return result;</div><div class="line">&#125;</div><div class="line"></div><div class="line">createArray(3, &apos;x&apos;); // [&apos;x&apos;, &apos;x&apos;, &apos;x&apos;]</div></pre></td></tr></table></figure>
+<p>我们预期的是，数组中每一项都应该是输入的 value 的类型。这时候，泛型就派上用场了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function createArray&lt;T&gt;(length: number, value: T): Array&lt;T&gt; &#123;</div><div class="line">  let result = [];</div><div class="line">  for (let i = 0; i &lt; length; i++) &#123;</div><div class="line">    result[i] = value;</div><div class="line">  &#125;</div><div class="line">  return result;</div><div class="line">&#125;</div><div class="line"></div><div class="line">createArray&lt;string&gt;(3, &apos;x&apos;); // [&apos;x&apos;, &apos;x&apos;, &apos;x&apos;]</div></pre></td></tr></table></figure>
+<p>上例中，我们在函数名后添加了 <t>，其中 T 用来指代任意输入的类型，在后面的输入 value: T 和输出 Array<t> 中即可使用了。接着在调用的时候，可以指定它具体的类型为 string。当然，也可以不手动指定，而让类型推论自动推算出来.</t></t></p>
+<h4 id="泛型约束"><a href="#泛型约束" class="headerlink" title="泛型约束"></a>泛型约束</h4><p>我们可以对泛型进行约束，只允许这个函数传入那些包含 length 属性的变量。这就是泛型约束：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">interface Lengthwise &#123;</div><div class="line">  length: number;</div><div class="line">&#125;</div><div class="line"></div><div class="line">function loggingIdentity&lt;T extends Lengthwise&gt;(arg: T): T &#123;</div><div class="line">  console.log(arg.length);</div><div class="line">  return arg;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="泛型接口"><a href="#泛型接口" class="headerlink" title="泛型接口"></a>泛型接口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">interface CreateArrayFunc &#123;</div><div class="line">  &lt;T&gt;(length: number, value: T): Array&lt;T&gt;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">interface CreateArrayFunc&lt;T&gt; &#123;</div><div class="line">  (length: number, value: T): Array&lt;T&gt;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="泛型类"><a href="#泛型类" class="headerlink" title="泛型类"></a>泛型类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">class GenericNumber&lt;T&gt; &#123;</div><div class="line">    zeroValue: T;</div><div class="line">    add: (x: T, y: T) =&gt; T;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let myGenericNumber = new GenericNumber&lt;number&gt;();</div><div class="line">myGenericNumber.zeroValue = 0;</div><div class="line">myGenericNumber.add = function(x, y) &#123; return x + y; &#125;;</div></pre></td></tr></table></figure>
+<p>###声明合并</p>
+<p>如果定义了两个相同名字的函数、接口或类，那么它们会合并成一个类型：</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">阅读笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/16/TypeScriptTutorial/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-compile-opt" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/12/compile-opt/">webpack使用后编译优化代码体积</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/12/compile-opt/" class="archive-article-date">
+  	<time datetime="2017-10-12T03:55:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="webpack使用后编译优化代码体积"><a href="#webpack使用后编译优化代码体积" class="headerlink" title="webpack使用后编译优化代码体积"></a>webpack使用后编译优化代码体积</h1><blockquote>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651227090&amp;idx=1&amp;sn=2bf5e13805c72c7b4f462a6b1949c904&amp;chksm=bd495a568a3ed340ef689805f774cf6f3a868b9288abf26bebac61bf0dae4baa15d5caf0caf0&amp;scene=38##" target="_blank" rel="external">webpack 应用编译优化之路</a></p>
+</blockquote>
+<p>简单的说,如果多个模块，先后进行编译的话，会多出很多runtime code（编译代码）。</p>
+<p>在配置文件中设置，可以实现简单依赖的后编译。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">// webpack.config.js</div><div class="line">module.exports = &#123;</div><div class="line">  // ...</div><div class="line">  module: &#123;</div><div class="line">    rules: [</div><div class="line">      // ...</div><div class="line">      &#123;</div><div class="line">        test: /\.js$/,</div><div class="line">        loader: &apos;babel-loader&apos;,</div><div class="line">        // 注意这里的 include</div><div class="line">        // 除了 src 还包含了额外的 node_modules 下的两个包</div><div class="line">        include: [</div><div class="line">            resolve(&apos;src&apos;),</div><div class="line">            resolve(&apos;node_modules/A&apos;),</div><div class="line">            resolve(&apos;node_modules/B&apos;)</div><div class="line">          ]</div><div class="line">      &#125;,</div><div class="line">      // ...</div><div class="line">    ]</div><div class="line">  &#125;,</div><div class="line">  // ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对于多层嵌套的依赖，可以借助插件webpack-post-compile-plugin实现自动收集后编译的依赖包以及其嵌套依赖。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">阅读笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/10/12/compile-opt/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-YDKJS-3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -164,7 +429,95 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>#You Don’t Know JS(3)-this &amp; Object Prototypes</p>
+<h2 id="Chapter-2-this-All-Makes-Sense-Now"><a href="#Chapter-2-this-All-Makes-Sense-Now" class="headerlink" title="Chapter 2: this All Makes Sense Now!"></a>Chapter 2: this All Makes Sense Now!</h2><h3 id="this丢失"><a href="#this丢失" class="headerlink" title="this丢失"></a>this丢失</h3><p>callback会造成成this的丢失。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line">	console.log( this.a );</div><div class="line">&#125;</div><div class="line"></div><div class="line">function doFoo(fn) &#123;</div><div class="line">	// `fn` is just another reference to `foo`</div><div class="line"></div><div class="line">	fn(); // &lt;-- call-site!</div><div class="line">&#125;</div><div class="line"></div><div class="line">var obj = &#123;</div><div class="line">	a: 2,</div><div class="line">	foo: foo</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var a = &quot;oops, global&quot;; // `a` also property on global object</div><div class="line"></div><div class="line">doFoo( obj.foo ); // &quot;oops, global&quot;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line">	console.log( this.a );</div><div class="line">&#125;</div><div class="line"></div><div class="line">var obj = &#123;</div><div class="line">	a: 2,</div><div class="line">	foo: foo</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var a = &quot;oops, global&quot;; // `a` also property on global object</div><div class="line"></div><div class="line">setTimeout( obj.foo, 100 ); // &quot;oops, global&quot;</div></pre></td></tr></table></figure>
+<h3 id="显式绑定this"><a href="#显式绑定this" class="headerlink" title="显式绑定this"></a>显式绑定this</h3><p><code>obj.foo()</code>这样的调用可以隐式绑定this。</p>
+<p>call(..) 和 apply(..)可以用来绑定this。当参数是简单数据类型string, boolean, number时，是将它们的对象形式(相当于由new String(..), new Boolean(..), or new Number(..)生成的对象)作为this。</p>
+<h3 id="Hard-Binding"><a href="#Hard-Binding" class="headerlink" title="Hard Binding"></a>Hard Binding</h3><p>可以用来解决this丢失的问题。因为this被明确的确定，所以称为hard binding。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line">	console.log( this.a );</div><div class="line">&#125;</div><div class="line"></div><div class="line">var obj = &#123;</div><div class="line">	a: 2</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var bar = function() &#123;</div><div class="line">	foo.call( obj );</div><div class="line">&#125;;</div><div class="line"></div><div class="line">bar(); // 2</div><div class="line">setTimeout( bar, 100 ); // 2</div><div class="line"></div><div class="line">// `bar` hard binds `foo`&apos;s `this` to `obj`</div><div class="line">// so that it cannot be overriden</div><div class="line">bar.call( window ); // 2</div></pre></td></tr></table></figure>
+<p>####实现hard binding的三种常用方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 外包一层函数，同时传递所有参数</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">something</span>) </span>&#123;</div><div class="line">	<span class="built_in">console</span>.log( <span class="keyword">this</span>.a, something );</div><div class="line">	<span class="keyword">return</span> <span class="keyword">this</span>.a + something;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">	<span class="attr">a</span>: <span class="number">2</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> foo.apply( obj, <span class="built_in">arguments</span> );</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> b = bar( <span class="number">3</span> ); <span class="comment">// 2 3</span></div><div class="line"><span class="built_in">console</span>.log( b ); <span class="comment">// 5</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 使用工具函数bind，来实现该功能的复用</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">something</span>) </span>&#123;</div><div class="line">	<span class="built_in">console</span>.log( <span class="keyword">this</span>.a, something );</div><div class="line">	<span class="keyword">return</span> <span class="keyword">this</span>.a + something;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// simple `bind` helper</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">bind</span>(<span class="params">fn, obj</span>) </span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="keyword">return</span> fn.apply( obj, <span class="built_in">arguments</span> );</div><div class="line">	&#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">	<span class="attr">a</span>: <span class="number">2</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> bar = bind( foo, obj );</div><div class="line"></div><div class="line"><span class="keyword">var</span> b = bar( <span class="number">3</span> ); <span class="comment">// 2 3</span></div><div class="line"><span class="built_in">console</span>.log( b ); <span class="comment">// 5</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">// 由于该方法较为常用，在ES5加入了bind方法，用来返回一个绑定了this的函数</div><div class="line">function foo(something) &#123;</div><div class="line">	console.log( this.a, something );</div><div class="line">	return this.a + something;</div><div class="line">&#125;</div><div class="line"></div><div class="line">var obj = &#123;</div><div class="line">	a: 2</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var bar = foo.bind( obj );</div><div class="line"></div><div class="line">var b = bar( 3 ); // 2 3</div><div class="line">console.log( b ); // 5</div></pre></td></tr></table></figure>
+<p>###new Binding</p>
+<p>使用new操作符时，经过如下操作：</p>
+<ol>
+<li>创建一个新的对象</li>
+<li>这个新对象与构造函数通过原型链联系在一起(对象的proto指向构造函数的prototype)</li>
+<li><strong>新对象将作为构造函数执行时的this</strong></li>
+<li>除非构造函数返回一个指定对象，否则将默认返回这个新对象</li>
+</ol>
+<p>hard binding的三种方法中，.bind方法生成的函数的this可以被new操作符复写，而另外两种则不会被复写。</p>
+<p>摘自MDN关于bind的polyfill：</p>
+<blockquote>
+<p>与文章中的版本相比，改进了Fbound函数中关于this的逻辑判断。 </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">if (!Function.prototype.bind) &#123;</div><div class="line">  Function.prototype.bind = function(oThis) &#123;</div><div class="line">    if (typeof this !== &apos;function&apos;) &#123;</div><div class="line">      // closest thing possible to the ECMAScript 5</div><div class="line">      // internal IsCallable function</div><div class="line">      throw new TypeError(&apos;Function.prototype.bind - what is trying to be bound is not callable&apos;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    var aArgs   = Array.prototype.slice.call(arguments, 1),</div><div class="line">        fToBind = this,</div><div class="line">        fNOP    = function() &#123;&#125;,</div><div class="line">        fBound  = function() &#123;</div><div class="line">        	// 仅在new操作时，this instanceof fNOP == true</div><div class="line">          return fToBind.apply(this instanceof fNOP</div><div class="line">                 ? this</div><div class="line">                 : oThis,</div><div class="line">                 // 获取调用时(fBound)的传参.bind 返回的函数入参往往是这么传递的</div><div class="line">                 aArgs.concat(Array.prototype.slice.call(arguments)));</div><div class="line">        &#125;;</div><div class="line"></div><div class="line">    // 维护原型关系</div><div class="line">    if (this.prototype) &#123;</div><div class="line">      // Function.prototype doesn&apos;t have a prototype property</div><div class="line">      fNOP.prototype = this.prototype; </div><div class="line">    &#125;</div><div class="line">    fBound.prototype = new fNOP();</div><div class="line"></div><div class="line">    return fBound;</div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="this的判断规则"><a href="#this的判断规则" class="headerlink" title="this的判断规则"></a>this的判断规则</h3><p>逐条检查直至有一条符合。</p>
+<ol>
+<li>函数是否由new进行调用。如果是，this指向新建的对象。<br><code>var bar = new foo()</code></li>
+<li>函数是否通过call，apply进行调用(显式绑定)。注意，显示绑定可能在hard binding中。如果是，this指向指明的对象。<br><code>var bar = foo.call( obj2 )</code></li>
+<li>是否是隐式绑定？this指向直接调用的对象。<br><code>var bar = obj1.foo()</code><br>4.其他情况，this默认指向global对象。在严格模式下，this为undefined。</li>
+</ol>
+<h3 id="例外"><a href="#例外" class="headerlink" title="例外"></a>例外</h3><h4 id="被略过的this"><a href="#被略过的this" class="headerlink" title="被略过的this"></a>被略过的this</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line">	console.log( this.a );</div><div class="line">&#125;</div><div class="line"></div><div class="line">var a = 2;</div><div class="line"></div><div class="line">foo.call( null ); // 2</div></pre></td></tr></table></figure>
+<p>当传null或者undefined作为绑定参数给call，apply时，默认this会生效。</p>
+<p>这个方法，可以用来传一个参数数列，或者进行curry化:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">function foo(a,b) &#123;</div><div class="line">	console.log( &quot;a:&quot; + a + &quot;, b:&quot; + b );</div><div class="line">&#125;</div><div class="line"></div><div class="line">// spreading out array as parameters</div><div class="line">foo.apply( null, [2, 3] ); // a:2, b:3</div><div class="line"></div><div class="line">// currying with `bind(..)`</div><div class="line">var bar = foo.bind( null, 2 );</div><div class="line">bar( 3 ); // a:2, b:3</div></pre></td></tr></table></figure>
+<h4 id="safer-this"><a href="#safer-this" class="headerlink" title="safer this"></a>safer this</h4><p>比起传null(this指向global)，传一个空对象作为this更为安全。<br>Object.create( null )，与{}创建空对象相比，空得更彻底，它不继承Object</p>
+<h3 id="Softening-Binding"><a href="#Softening-Binding" class="headerlink" title="Softening Binding"></a>Softening Binding</h3><p>使用.bind()进行hard binding之后，无法再用bind改变它的this指向。而Softening Binding，使得我们可以实现这个需求。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">if (!Function.prototype.softBind) &#123;</div><div class="line">	Function.prototype.softBind = function(obj) &#123;</div><div class="line">		var fn = this,</div><div class="line">			curried = [].slice.call( arguments, 1 ),</div><div class="line">			bound = function bound() &#123;</div><div class="line">			// 如果this(实时)不是global则改变this。</div><div class="line">				return fn.apply(</div><div class="line">					(!this ||</div><div class="line">						(typeof window !== &quot;undefined&quot; &amp;&amp;</div><div class="line">							this === window) ||</div><div class="line">						(typeof global !== &quot;undefined&quot; &amp;&amp;</div><div class="line">							this === global)</div><div class="line">					) ? obj : this,</div><div class="line">					curried.concat.apply( curried, arguments )</div><div class="line">				);</div><div class="line">			&#125;;</div><div class="line">		bound.prototype = Object.create( fn.prototype );</div><div class="line">		return bound;</div><div class="line">	&#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Lexical-this"><a href="#Lexical-this" class="headerlink" title="Lexical this"></a>Lexical this</h3><p>ES6中引入箭头函数，箭头函数中的this无法被绑定。this在其中的表现，更像是作为一个普通变量，在作用域链链中逐级去查找最近的this。</p>
+<h2 id="Chapter4-Object"><a href="#Chapter4-Object" class="headerlink" title="Chapter4 Object"></a>Chapter4 Object</h2><h3 id="‘-’与’-’"><a href="#‘-’与’-’" class="headerlink" title="‘[]’与’.’"></a>‘[]’与’.’</h3><p>‘[]’是key访问，’.’是property访问。在实际中，二者访问同一个地址，输出一样的值。二者最大的不同在于，’.’操作符要求输入符合规范的属性名，而’[]’能够接受任何UTF-8/unicode兼容的字符，以及变量。</p>
+<h3 id="symbol"><a href="#symbol" class="headerlink" title="symbol"></a>symbol</h3><p>ES6新增的Symbol，因为具有唯一性，也可以作为Object属性的标识符，但只能使用’[]’。</p>
+<h3 id="function并不属于object"><a href="#function并不属于object" class="headerlink" title="function并不属于object"></a>function并不属于object</h3><p>及时是定义在object中的函数，也不属于object。我们只能称，在JS里，function和method可以相互转换(通过不同的调用方法)。</p>
+<h3 id="Property-Descriptors-属性描述符"><a href="#Property-Descriptors-属性描述符" class="headerlink" title="Property Descriptors 属性描述符"></a>Property Descriptors 属性描述符</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">// 获取</div><div class="line">Object.getOwnPropertyDescriptor( myObject, &quot;a&quot; );</div><div class="line">// &#123;</div><div class="line">//    value: 2,</div><div class="line">//    writable: true,</div><div class="line">//    enumerable: true,</div><div class="line">//    configurable: true</div><div class="line">// &#125;</div><div class="line"></div><div class="line">// 设置</div><div class="line">Object.defineProperty( myObject, &quot;a&quot;, &#123;</div><div class="line">	value: 2,</div><div class="line">	writable: true,</div><div class="line">	configurable: true,</div><div class="line">	enumerable: true</div><div class="line">&#125; );</div></pre></td></tr></table></figure>
+<p>####enumeration<br>决定一个属性是否能够被for..in循环访问到。<br>Object.keys(..)也只返回<code>enumeration=true</code>的键名</p>
+<h3 id="对象常量"><a href="#对象常量" class="headerlink" title="对象常量"></a>对象常量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var myObject = &#123;&#125;;</div><div class="line"></div><div class="line">Object.defineProperty( myObject, &quot;FAVORITE_NUMBER&quot;, &#123;</div><div class="line">	value: 42,</div><div class="line">	writable: false,</div><div class="line">	configurable: false</div><div class="line">&#125; );</div></pre></td></tr></table></figure>
+<h3 id="Prevent-Extensions"><a href="#Prevent-Extensions" class="headerlink" title="Prevent Extensions"></a>Prevent Extensions</h3><p>阻止新增属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var myObject = &#123;</div><div class="line">	a: 2</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Object.preventExtensions( myObject );</div><div class="line"></div><div class="line">myObject.b = 3;</div><div class="line">myObject.b; // undefined</div></pre></td></tr></table></figure>
+<h3 id="Object-freeze-Object-seal"><a href="#Object-freeze-Object-seal" class="headerlink" title="Object.freeze(),Object.seal()"></a>Object.freeze(),Object.seal()</h3><p>Object.seal()后，已存在的属性的值可能可以被修改。<br>Object.freeze()真正返回一个不变的对象。</p>
+<h3 id="判断属性是否存在"><a href="#判断属性是否存在" class="headerlink" title="判断属性是否存在"></a>判断属性是否存在</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var myObject = &#123;</div><div class="line">	a: 2</div><div class="line">&#125;;</div><div class="line"></div><div class="line">(&quot;a&quot; in myObject);				// true</div><div class="line">(&quot;b&quot; in myObject);				// false</div><div class="line"></div><div class="line">myObject.hasOwnProperty( &quot;a&quot; );	// true</div><div class="line">myObject.hasOwnProperty( &quot;b&quot; );	// false</div></pre></td></tr></table></figure>
+<h3 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h3><p>ES5增加了 forEach(..),every(..),以及some(..)的遍历方法。</p>
+<ul>
+<li>forEach(..)将遍历数组中的所有项，无视callback的返回值</li>
+<li>every(..)从头遍历至未，直到返回值为false</li>
+<li>some(..)从头遍历至未，直到返回值为true</li>
+</ul>
+<h4 id="iterator"><a href="#iterator" class="headerlink" title="iterator"></a>iterator</h4><p>数组中内置有遍历器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var myArray = [ 1, 2, 3 ];</div><div class="line">var it = myArray[Symbol.iterator]();</div><div class="line"></div><div class="line">it.next(); // &#123; value:1, done:false &#125;</div><div class="line">it.next(); // &#123; value:2, done:false &#125;</div><div class="line">it.next(); // &#123; value:3, done:false &#125;</div><div class="line">it.next(); // &#123; done:true &#125;</div></pre></td></tr></table></figure>
+<p>我们也可以自定义一个遍历器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">var myObject = &#123;</div><div class="line">	a: 2,</div><div class="line">	b: 3</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Object.defineProperty( myObject, Symbol.iterator, &#123;</div><div class="line">	enumerable: false,</div><div class="line">	writable: false,</div><div class="line">	configurable: true,</div><div class="line">	value: function() &#123;</div><div class="line">		var o = this;</div><div class="line">		var idx = 0;</div><div class="line">		var ks = Object.keys( o );</div><div class="line">		return &#123;</div><div class="line">			next: function() &#123;</div><div class="line">				return &#123;</div><div class="line">					value: o[ks[idx++]],</div><div class="line">					done: (idx &gt; ks.length)</div><div class="line">				&#125;;</div><div class="line">			&#125;</div><div class="line">		&#125;;</div><div class="line">	&#125;</div><div class="line">&#125; );</div></pre></td></tr></table></figure>
+<p><code>for of</code>的实质就是调用遍历器</p>
+<h2 id="Chapter-5-Prototypes"><a href="#Chapter-5-Prototypes" class="headerlink" title="Chapter 5: Prototypes"></a>Chapter 5: Prototypes</h2><h3 id="myObject-foo在原型链上的读写"><a href="#myObject-foo在原型链上的读写" class="headerlink" title="myObject.foo在原型链上的读写"></a><code>myObject.foo</code>在原型链上的读写</h3><ul>
+<li><p>如果在高层原型链上，有foo属性，且不为只读，<code>myObject.foo=&#39;bar&#39;</code>会直接在myObject上创建属性foo并赋值，称为shadowed属性</p>
+</li>
+<li><p>如果在高层原型链上，有foo属性，且为read-only (writable:false),那么已存在属性的修改，以及在myObject上创建shadowed属性都是不允许的。</p>
+</li>
+<li><p>如果在高层原型链上，有foo属性，且它有配置setter，那么setter总是会被调用。</p>
+</li>
+</ul>
+<h3 id="实现继承-ES6之前"><a href="#实现继承-ES6之前" class="headerlink" title="实现继承(ES6之前)"></a>实现继承(ES6之前)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">f=function()&#123;&#125;</div><div class="line">f.prototype=Parent.prototype</div><div class="line">Child.prototype=new f()</div><div class="line">```</div></pre></td></tr></table></figure>
+<p>//  语法糖<br>Child.prototype = Object.create( Parent.prototype );<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">两种方法都是将子类的prototype赋值为一个已实现继承的空对象。constructor如果需要，需要手动赋值`Child.prototype.constructor=Child`。</div><div class="line"></div><div class="line">### 判断两个对象的关系</div></pre></td></tr></table></figure></p>
+<p>Foo.prototype.isPrototypeOf( a );</p>
+<p>//实际使用中，我们不需要涉及class，只需要两个实例对象<br>b.isPrototypeOf( c );<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### 建立两个对象的联系</div></pre></td></tr></table></figure></p>
+<p>var foo = {<br>    something: function() {<br>        console.log( “Tell me something good…” );<br>    }<br>};</p>
+<p>var bar = Object.create( foo );</p>
+<p>bar.something(); // Tell me something good…<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">这么做，不涉及class，也不需要new，只是利用原型链的特性。</div><div class="line"></div><div class="line">##Chapter 6: Behavior Delegation</div><div class="line"> OLOO(objects-linked-to-other-objects) style code：抽出JS中，class的核心：通过原型链将两个对象联系起来。</div></pre></td></tr></table></figure></p>
+<p>var Task = {<br>    setID: function(ID) { this.id = ID; },<br>    outputID: function() { console.log( this.id ); }<br>};</p>
+<p>// make <code>XYZ</code> delegate to <code>Task</code><br>var XYZ = Object.create( Task );</p>
+<p>XYZ.prepareTask = function(ID,Label) {<br>    this.setID( ID );<br>    this.label = Label;<br>};</p>
+<p>XYZ.outputTaskDetails = function() {<br>    this.outputID();<br>    console.log( this.label );<br>};</p>
+<p>// ABC = Object.create( Task );<br>// ABC … = …<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Behavior Delegation意味着，一些对象(XYZ)，将自己无法完成(不存在相应方法、属性)的事，委托给其他人来完成(Task)</div><div class="line"></div><div class="line">原则：</div><div class="line"></div><div class="line">1. 将状态值直接放在委托人上(delegators (XYZ, ABC))</div><div class="line">2. 尽可能的避免原型链上的命名冲突</div><div class="line"></div><div class="line">使用OLOO编程，constructor name无法再被追踪，但是谁创建了这个对象也已经变得无关紧要了。它只在class-style编程中有用。</div><div class="line"></div><div class="line">## appendix A</div><div class="line">super()并</div></pre></td></tr></table></figure></p>
+<p>class P {<br>    foo() { console.log( “P.foo” ); }<br>}</p>
+<p>class C extends P {<br>    foo() {<br>        super();<br>    }<br>}</p>
+<p>var c1 = new C();<br>c1.foo(); // “P.foo”</p>
+<p>var D = {<br>    foo: function() { console.log( “D.foo” ); }<br>};</p>
+<p>var E = {<br>    foo: C.prototype.foo<br>};</p>
+<p>// Link E to D for delegation<br>Object.setPrototypeOf( E, D );</p>
+<p>E.foo(); // “P.foo”<br>```</p>
+
       
 
       
@@ -677,6 +1030,86 @@
 
 
   
+    <article id="post-typeof" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/30/typeof/">typeof</a>
+    </h1>
+  
+
+        
+        <a href="/2017/08/30/typeof/" class="archive-article-date">
+  	<time datetime="2017-08-30T07:30:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="使用Object-prototype-toString-call-target-判断数据类型"><a href="#使用Object-prototype-toString-call-target-判断数据类型" class="headerlink" title="使用Object.prototype.toString.call(target)判断数据类型"></a>使用Object.prototype.toString.call(target)判断数据类型</h1><p>1.typeof的不足<br><code>typeof []; //输出结果是Object</code></p>
+<p>2.instanceof,constructor的不足</p>
+<p>instanceof,constructor</p>
+<blockquote>
+<p>instanceof 和constructor 判断的变量，必须在当前页面声明的，比如，一个页面（父页面）有一个框架，框架中引用了一个页面（子页面），在子页面中声明了一个ary，并将其赋值给父页面的一个变量，这时判断该变量，Array == object.constructor;会返回false；</p>
+</blockquote>
+<p>3.Object.prototype.toString.call(target)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">console.log(Object.prototype.toString.call(123)) //[object Number]</div><div class="line">console.log(Object.prototype.toString.call(&apos;123&apos;)) //[object String]</div><div class="line">console.log(Object.prototype.toString.call(true)) //[object Boolean]</div><div class="line">console.log(Object.prototype.toString.call(undefined)) //[object Undefined]</div><div class="line">console.log(Object.prototype.toString.call(null)) //[object Null]</div><div class="line">console.log(Object.prototype.toString.call(&#123;&#125;)) //[object Object]</div><div class="line">console.log(Object.prototype.toString.call([])) //[object Array]</div><div class="line">console.log(Object.prototype.toString.call(function()&#123;&#125;)) //[object Function]</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">JS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/08/30/typeof/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-thisofArrow" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -732,86 +1165,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/08/30/thisofArrow/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-typeof" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/30/typeof/">typeof</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/30/typeof/" class="archive-article-date">
-  	<time datetime="2017-08-30T07:30:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="使用Object-prototype-toString-call-target-判断数据类型"><a href="#使用Object-prototype-toString-call-target-判断数据类型" class="headerlink" title="使用Object.prototype.toString.call(target)判断数据类型"></a>使用Object.prototype.toString.call(target)判断数据类型</h1><p>1.typeof的不足<br><code>typeof []; //输出结果是Object</code></p>
-<p>2.instanceof,constructor的不足</p>
-<p>instanceof,constructor</p>
-<blockquote>
-<p>instanceof 和constructor 判断的变量，必须在当前页面声明的，比如，一个页面（父页面）有一个框架，框架中引用了一个页面（子页面），在子页面中声明了一个ary，并将其赋值给父页面的一个变量，这时判断该变量，Array == object.constructor;会返回false；</p>
-</blockquote>
-<p>3.Object.prototype.toString.call(target)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">console.log(Object.prototype.toString.call(123)) //[object Number]</div><div class="line">console.log(Object.prototype.toString.call(&apos;123&apos;)) //[object String]</div><div class="line">console.log(Object.prototype.toString.call(true)) //[object Boolean]</div><div class="line">console.log(Object.prototype.toString.call(undefined)) //[object Undefined]</div><div class="line">console.log(Object.prototype.toString.call(null)) //[object Null]</div><div class="line">console.log(Object.prototype.toString.call(&#123;&#125;)) //[object Object]</div><div class="line">console.log(Object.prototype.toString.call([])) //[object Array]</div><div class="line">console.log(Object.prototype.toString.call(function()&#123;&#125;)) //[object Function]</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">JS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/30/typeof/">展开全文 >></a>
         </p>
       
 
@@ -900,175 +1253,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/08/28/YDKJS-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-image2dataurl" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/28/image2dataurl/">image2dataurl</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/28/image2dataurl/" class="archive-article-date">
-  	<time datetime="2017-07-28T01:33:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#将图片转化为dataURL</p>
-<blockquote>
-<p>在实践中，遇到需要将图片转为dataURL，避免图片单独的http请求。<br>[来源]（<a href="http://blog.csdn.net/cuixiping/article/details/45932793" target="_blank" rel="external">http://blog.csdn.net/cuixiping/article/details/45932793</a>)</p>
-</blockquote>
-<h3 id="canvas转换为dataURL"><a href="#canvas转换为dataURL" class="headerlink" title="canvas转换为dataURL"></a>canvas转换为dataURL</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">var dataurl = canvas.toDataURL(&apos;image/png&apos;);</div><div class="line">var dataurl2 = canvas.toDataURL(&apos;image/jpeg&apos;, 0.8);</div></pre></td></tr></table></figure>
-<h3 id="File对象转换为dataURL、Blob对象转换为dataURL"><a href="#File对象转换为dataURL、Blob对象转换为dataURL" class="headerlink" title="File对象转换为dataURL、Blob对象转换为dataURL"></a>File对象转换为dataURL、Blob对象转换为dataURL</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">function readBlobAsDataURL(blob, callback) &#123;</div><div class="line">    var a = new FileReader();</div><div class="line">    a.onload = function(e) &#123;callback(e.target.result);&#125;;</div><div class="line">    a.readAsDataURL(blob);</div><div class="line">&#125;</div><div class="line">//example:</div><div class="line">readBlobAsDataURL(blob, function (dataurl)&#123;</div><div class="line">    console.log(dataurl);</div><div class="line">&#125;);</div><div class="line">readBlobAsDataURL(file, function (dataurl)&#123;</div><div class="line">    console.log(dataurl);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<h3 id="Canvas转换为Blob对象并使用Ajax发送"><a href="#Canvas转换为Blob对象并使用Ajax发送" class="headerlink" title="Canvas转换为Blob对象并使用Ajax发送"></a>Canvas转换为Blob对象并使用Ajax发送</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var dataurl = canvas.toDataURL(&apos;image/png&apos;);</div><div class="line">var blob = dataURLtoBlob(dataurl);</div><div class="line">//使用ajax发送</div><div class="line">var fd = new FormData();</div><div class="line">fd.append(&quot;image&quot;, blob, &quot;image.png&quot;);</div><div class="line">var xhr = new XMLHttpRequest();</div><div class="line">xhr.open(&apos;POST&apos;, &apos;/server&apos;, true);</div><div class="line">xhr.send(fd);</div></pre></td></tr></table></figure>
-<p>以上是我从原博文中摘取的比较基础的方法，原文中还有其他几种复合方法。<br>因为我最近在接触fetch()方法，在获取blob文件时，我采用了如下做法(不一定更简便，但可以适应多种类型的文件)</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">fetch(url).then(<span class="function">(<span class="params">res</span>) =&gt;</span> res.blob())</div><div class="line">.then(<span class="function">(<span class="params">blob</span>) =&gt;</span> <span class="built_in">console</span>.log(blob))</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/28/image2dataurl/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-optImageLoading" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/26/optImageLoading/">优化图片加载--渐显</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/26/optImageLoading/" class="archive-article-date">
-  	<time datetime="2017-07-26T06:06:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="优化图片加载–渐显"><a href="#优化图片加载–渐显" class="headerlink" title="优化图片加载–渐显"></a>优化图片加载–渐显</h2><blockquote>
-<p><a href="http://www.jackpu.com/medium-shi-ru-he-zuo-tu-pian-jia-zai-de/" target="_blank" rel="external">Medium 是如何优化图片加载的</a><br><a href="http://www.cnblogs.com/cuoreqzt/p/5848270.html" target="_blank" rel="external">CSS黑科技2】CSS百分比实现高度占位自适应（margin/padding）</a></p>
-</blockquote>
-<p>在许多网站中，照片的展示能从模糊渐渐变为清晰，这是个很不错的设定。</p>
-<p>渐进式图片本身具有这一特性，但可能显示过程不是特别符合我们的要求，另外也受限于图片格式。（PS中保存web格式时勾选连续，就能使图片具有这个特征）</p>
-<p>如果自定义完成这个图片加载过程，基本流程如下：</p>
-<ol>
-<li>为图片的加载预留一个展示区.</li>
-<li>加载小图片，并以模糊显示。</li>
-<li>当大图片加载完成时，显示大图片。</li>
-</ol>
-<h3 id="预留展示区"><a href="#预留展示区" class="headerlink" title="预留展示区"></a>预留展示区</h3><p>图片宽高只有等到加载完成才能获取，渲染时会使页面发生重排，通过给容器设定宽高可以为图片预留位置。<br>在这里，将用到一个小技巧，通过padding-bottom/padding-top的设置来撑高容器。值得注意的一点，使用百分数来设置padding/margin时，参照物都是父元素的width。<strong>利用这一特性，便可以得到一个根据父元素width变化的展示区。</strong>这一特点，在响应式的栅格布局，以及flexbox布局中将很有用。具体代码如下。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"placeholder"</span> <span class="attr">data-src</span>=<span class="string">"urlOfLarge"</span>&gt;</span></div><div class="line">	 <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">"img-small"</span> <span class="attr">src</span>=<span class="string">"urlOfLarge"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></div><div class="line">.placeholder &#123;</div><div class="line">  position: relative;</div><div class="line">  overflow: hidden;</div><div class="line">  background: #e1e1e1;</div><div class="line">  /*利用padding-bottom占位,值为宽高比*/</div><div class="line">  padding-bottom: 56%;</div><div class="line">&#125;</div><div class="line">.placeholder img &#123;</div><div class="line">  position: absolute;</div><div class="line">  left: 0;</div><div class="line">  top: 0;</div><div class="line">  width: 100%;</div><div class="line">&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>这个做法有个不足之处，我们无法给容器设置max-height属性。<br>解决这个问题有两个办法:</p>
-<ul>
-<li>将box-sizing:content-box 改为 box-sizing:border-box</li>
-<li>将padding-bottom这一项属性交给图片容器的伪元素或者子元素。</li>
-</ul>
-<h3 id="模糊显示小图。"><a href="#模糊显示小图。" class="headerlink" title="模糊显示小图。"></a>模糊显示小图。</h3><p>模糊显示小图主要有两种方法，一种是使用canvas以高斯模糊绘制小图，另一种是使用CSS的模糊滤镜filter: blur()。当然，也可以在批量生成预览图时便对原图模糊处理。<br>canvas与CSS方法相比，canvas在兼容性方面略胜一筹(canvas支持IE11)，但CSS的方法更为简单。</p>
-<p>在模糊显示小图时，还有一点可以作为备选。可以将小图转为Data URL再引入html中，这样做可以减少http请求，优化加载速度。</p>
-<h3 id="当大图片加载完成时，显示大图片"><a href="#当大图片加载完成时，显示大图片" class="headerlink" title="当大图片加载完成时，显示大图片"></a>当大图片加载完成时，显示大图片</h3><p>这步比较简单，使用transition属性优化过渡即可。</p>
-<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><p><a href="http://js.jirengu.com/yeguv" target="_blank" rel="external">预览</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line"></div><div class="line">&lt;head&gt;</div><div class="line">&lt;meta name=&quot;description&quot; content=&quot;图片渐显&quot; /&gt;</div><div class="line">  &lt;meta charset=&quot;utf-8&quot;&gt;</div><div class="line">  &lt;title&gt;JS Bin&lt;/title&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;style&gt;</div><div class="line">.placeholder &#123;</div><div class="line">  position: relative;</div><div class="line">  overflow: hidden;</div><div class="line">  /* 控制图片大小 */</div><div class="line">  </div><div class="line">  width: 800px;</div><div class="line">&#125;</div><div class="line">/* 由伪元素撑开高度，使得max-height可以使用 */</div><div class="line"></div><div class="line">.placeholder:before &#123;</div><div class="line">  content: &apos;&apos;;</div><div class="line">  display: block;</div><div class="line">  background: #e1e1e1;</div><div class="line">  /*利用padding-bottom占位,值为宽高比*/</div><div class="line">  </div><div class="line">  padding-bottom: 56%;</div><div class="line">&#125;</div><div class="line">.placeholder img &#123;</div><div class="line">  position: absolute;</div><div class="line">  opacity: 0;</div><div class="line">  left: 0;</div><div class="line">  top: 0;</div><div class="line">  width: 100%;</div><div class="line">  transition: opacity 1s linear;</div><div class="line">&#125;</div><div class="line">.img-small &#123;</div><div class="line">  filter: blur(50px);</div><div class="line">  /* this is needed so Safari keeps sharp edges */</div><div class="line">  </div><div class="line">  transform: scale(1);</div><div class="line">&#125;</div><div class="line">.placeholder img.loaded &#123;</div><div class="line">  opacity: 1;</div><div class="line">&#125;</div><div class="line">&lt;/style&gt;</div><div class="line">&lt;body&gt;</div><div class="line">    &lt;div class=&quot;placeholder&quot; data-src=&quot;http://onh4x8q0o.bkt.clouddn.com/17-7-26/8085761.jpg&quot;&gt;</div><div class="line">      &lt;img class=&quot;img-small&quot; src=&quot;http://onh4x8q0o.bkt.clouddn.com/17-7-26/14430529.jpg&quot;&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;script&gt;</div><div class="line">window.onload = function() &#123;</div><div class="line">  var placeholder = document.querySelector(&apos;.placeholder&apos;)</div><div class="line">  var small = placeholder.querySelector(&apos;.img-small&apos;)</div><div class="line">  console.log(placeholder.clientHeight)</div><div class="line">    // 1: load small image and show it</div><div class="line">  var img = new Image();</div><div class="line">  img.src = small.src;</div><div class="line">  img.onload = function() &#123;</div><div class="line">    small.classList.add(&apos;loaded&apos;);</div><div class="line">  &#125;;</div><div class="line"></div><div class="line">  // 2: load large image</div><div class="line">  var imgLarge = new Image();</div><div class="line">  imgLarge.src = placeholder.dataset.src;</div><div class="line">  imgLarge.onload = function() &#123;</div><div class="line">    imgLarge.classList.add(&apos;loaded&apos;);</div><div class="line">  &#125;;</div><div class="line">  placeholder.appendChild(imgLarge);</div><div class="line">&#125;</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">阅读笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">demo</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/26/optImageLoading/">展开全文 >></a>
         </p>
       
 

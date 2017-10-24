@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://nsxz945.github.io">
-  <title>Archives: 2017/8 | nsxz&#39;s blog</title>
+  <title>TypeScriptTutorial | nsxz&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="nsxz&#39;s blog">
-<meta property="og:url" content="https://nsxz945.github.io/archives/2017/08/index.html">
+  <meta name="description" content="《TypeScript 入门教程》学习笔记TypeScript 入门教程 by xcatliu  TypeScript的基础是类型定义。通过类型定义，可以在编译阶段就发现一些错误，另外它增强了编辑器和 IDE 的功能，包括代码补全、接口提示、跳转到定义、重构等。  基础原始数据类型在变量后使用“:”进行类型定义。 12let isDone: boolean = false;let text: st">
+<meta name="keywords" content="阅读笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TypeScriptTutorial">
+<meta property="og:url" content="https://nsxz945.github.io/2017/10/16/TypeScriptTutorial/index.html">
 <meta property="og:site_name" content="nsxz&#39;s blog">
+<meta property="og:description" content="《TypeScript 入门教程》学习笔记TypeScript 入门教程 by xcatliu  TypeScript的基础是类型定义。通过类型定义，可以在编译阶段就发现一些错误，另外它增强了编辑器和 IDE 的功能，包括代码补全、接口提示、跳转到定义、重构等。  基础原始数据类型在变量后使用“:”进行类型定义。 12let isDone: boolean = false;let text: st">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-10-17T06:24:51.064Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="nsxz&#39;s blog">
+<meta name="twitter:title" content="TypeScriptTutorial">
+<meta name="twitter:description" content="《TypeScript 入门教程》学习笔记TypeScript 入门教程 by xcatliu  TypeScript的基础是类型定义。通过类型定义，可以在编译阶段就发现一些错误，另外它增强了编辑器和 IDE 的功能，包括代码补全、接口提示、跳转到定义、重构等。  基础原始数据类型在变量后使用“:”进行类型定义。 12let isDone: boolean = false;let text: st">
   
     <link rel="alternative" href="/atom.xml" title="nsxz&#39;s blog" type="application/atom+xml">
   
@@ -142,74 +147,146 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-TypeScriptTutorial" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/30/typeof/" class="archive-article-date">
-  	<time datetime="2017-08-30T07:30:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-30</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/30/typeof/">typeof</a>
+    <h1 class="article-title" itemprop="name">
+      TypeScriptTutorial
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">JS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/30/thisofArrow/" class="archive-article-date">
-  	<time datetime="2017-08-30T07:30:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-30</time>
+        
+        <a href="/2017/10/16/TypeScriptTutorial/" class="archive-article-date">
+  	<time datetime="2017-10-16T01:11:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-16</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/30/thisofArrow/">箭头函数的this指向</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="《TypeScript-入门教程》学习笔记"><a href="#《TypeScript-入门教程》学习笔记" class="headerlink" title="《TypeScript 入门教程》学习笔记"></a>《TypeScript 入门教程》学习笔记</h1><p><a href="https://ts.xcatliu.com/" target="_blank" rel="external">TypeScript 入门教程 by xcatliu</a></p>
+<blockquote>
+<p>TypeScript的基础是类型定义。通过类型定义，可以在编译阶段就发现一些错误，另外它增强了编辑器和 IDE 的功能，包括代码补全、接口提示、跳转到定义、重构等。</p>
+</blockquote>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="原始数据类型"><a href="#原始数据类型" class="headerlink" title="原始数据类型"></a>原始数据类型</h3><p>在变量后使用“:”进行类型定义。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let isDone: boolean = false;</div><div class="line">let text: string = &apos;text string&apos;;</div></pre></td></tr></table></figure>
+<p>注意，使用构造函数 Boolean 创造的对象不是布尔值，而是对象(同理，其他基础类型也一样，除了undefined，null)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let createdByNewBoolean: boolean = new Boolean(1); // 编译失败</div><div class="line">let createdByNewBoolean: Boolean = new Boolean(1); // 编译成功</div></pre></td></tr></table></figure>
+<p>在 TypeScirpt 中，可以用 void 表示没有任何返回值的函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function alertName(): void &#123;</div><div class="line">  alert(&apos;My name is xcatliu&apos;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>undefined 和 null 是所有类型的子类型，其他类型的变量声明，可以赋值为undefined 和 null。</p>
+<h3 id="任意值"><a href="#任意值" class="headerlink" title="任意值"></a>任意值</h3><p>未声明、及声明为any时的变量，可以赋予任意值。</p>
+<h3 id="联合类型"><a href="#联合类型" class="headerlink" title="联合类型"></a>联合类型</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">let myFavoriteNumber: string | number;</div></pre></td></tr></table></figure>
+<h4 id="访问联合类型的属性或方法"><a href="#访问联合类型的属性或方法" class="headerlink" title="访问联合类型的属性或方法"></a>访问联合类型的属性或方法</h4><p>当 TypeScript 不确定一个联合类型的变量到底是哪个类型的时候，我们只能访问此联合类型的所有类型里共有的属性或方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function getLength(something: string | number): number &#123;</div><div class="line">  return something.length;</div><div class="line">&#125;</div><div class="line">// index.ts(2,20): error TS2339: Property &apos;length&apos; does not exist on type &apos;string | number&apos;.</div><div class="line">//   Property &apos;length&apos; does not exist on type &apos;number&apos;.</div></pre></td></tr></table></figure></p>
+<h3 id="对象的类型——接口"><a href="#对象的类型——接口" class="headerlink" title="对象的类型——接口"></a>对象的类型——接口</h3><p>类比插座上的接口，接口必须与插头匹配才能使用。在TS中，通过interface定义一个接口的标准，包括属性名称、类型。</p>
+<p>简单的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">interface Person &#123;</div><div class="line">  name: string;</div><div class="line">  age: number;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let xcatliu: Person = &#123;</div><div class="line">  name: &apos;Xcat Liu&apos;,</div><div class="line">  age: 25,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>上述例子中，xcatliu必须含有name，age属性，且类型必须符合。</p>
+<h4 id="可选属性"><a href="#可选属性" class="headerlink" title="可选属性"></a>可选属性</h4><p>有时我们希望不要完全匹配一个形状，那么可以用可选属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">interface Person &#123;</div><div class="line">  name: string;</div><div class="line">  age?: number;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let xcatliu: Person = &#123;</div><div class="line">  name: &apos;Xcat Liu&apos;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h4 id="任意属性"><a href="#任意属性" class="headerlink" title="任意属性"></a>任意属性</h4><p>有时候我们希望一个接口允许有任意的属性，可以使用如下方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">interface Person &#123;</div><div class="line">  name: string;</div><div class="line">  age?: number;</div><div class="line">  [propName: string]: any;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let xcatliu: Person = &#123;</div><div class="line">  name: &apos;Xcat Liu&apos;,</div><div class="line">  website: &apos;http://xcatliu.com&apos;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>需要注意的是，一旦定义了任意属性，那么确定属性和可选属性都必须是它的子属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">interface Person &#123;</div><div class="line">  name: string;</div><div class="line">  age?: number;</div><div class="line">  [propName: string]: string;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let xcatliu: Person = &#123;</div><div class="line">  name: &apos;Xcat Liu&apos;,</div><div class="line">  age: 25,</div><div class="line">  website: &apos;http://xcatliu.com&apos;,</div><div class="line">&#125;;</div><div class="line">// index.ts(3,3): error TS2411: Property &apos;age&apos; of type &apos;number&apos; is not assignable to string index type &apos;string&apos;.</div><div class="line">// index.ts(7,5): error TS2322: Type &apos;&#123; [x: string]: string | number; name: string; age: number; website: string; &#125;&apos; is not assignable to type &apos;Person&apos;.</div><div class="line">//   Index signatures are incompatible.</div><div class="line">//     Type &apos;string | number&apos; is not assignable to type &apos;string&apos;.</div><div class="line">//       Type &apos;number&apos; is not assignable to type &apos;string&apos;.</div></pre></td></tr></table></figure>
+<h4 id="只读属性"><a href="#只读属性" class="headerlink" title="只读属性"></a>只读属性</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">interface Person &#123;</div><div class="line">  readonly id: number;</div><div class="line">  name: string;</div><div class="line">  age?: number;</div><div class="line">  [propName: string]: any;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let xcatliu: Person = &#123;</div><div class="line">  id: 89757,</div><div class="line">  name: &apos;Xcat Liu&apos;,</div><div class="line">  website: &apos;http://xcatliu.com&apos;,</div><div class="line">&#125;;</div><div class="line"></div><div class="line">xcatliu.id = 9527;</div><div class="line"></div><div class="line">// index.ts(14,9): error TS2540: Cannot assign to &apos;id&apos; because it is a constant or a read-only property.</div></pre></td></tr></table></figure>
+<p>只读的约束存在于第一次给对象赋值的时候，而不是第一次给只读属性赋值的时候:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">interface Person &#123;</div><div class="line">  readonly id: number;</div><div class="line">  name: string;</div><div class="line">  age?: number;</div><div class="line">  [propName: string]: any;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let xcatliu: Person = &#123;</div><div class="line">  name: &apos;Xcat Liu&apos;,</div><div class="line">  website: &apos;http://xcatliu.com&apos;,</div><div class="line">&#125;;</div><div class="line"></div><div class="line">xcatliu.id = 89757;</div><div class="line"></div><div class="line">// index.ts(8,5): error TS2322: Type &apos;&#123; name: string; website: string; &#125;&apos; is not assignable to type &apos;Person&apos;.</div><div class="line">//   Property &apos;id&apos; is missing in type &apos;&#123; name: string; website: string; &#125;&apos;.</div><div class="line">// index.ts(13,9): error TS2540: Cannot assign to &apos;id&apos; because it is a constant or a read-only property.</div></pre></td></tr></table></figure>
+<h3 id="数组的类型"><a href="#数组的类型" class="headerlink" title="数组的类型"></a>数组的类型</h3><p>####「类型 + 方括号」表示法<br><code>let fibonacci: number[] = [1, 1, 2, 3, 5];</code></p>
+<h4 id="数组泛型"><a href="#数组泛型" class="headerlink" title="数组泛型"></a>数组泛型</h4><p><code>let fibonacci: Array&lt;number&gt; = [1, 1, 2, 3, 5];</code></p>
+<h4 id="用接口表示数组"><a href="#用接口表示数组" class="headerlink" title="用接口表示数组"></a>用接口表示数组</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">interface NumberArray &#123;</div><div class="line">  [index: number]: number;</div><div class="line">&#125;</div><div class="line">let fibonacci: NumberArray = [1, 1, 2, 3, 5];</div></pre></td></tr></table></figure>
+<h4 id="类数组"><a href="#类数组" class="headerlink" title="类数组"></a>类数组</h4><p>类数组（Array-like Object）不是数组类型，常见的类数组都有自己的接口定义，如 IArguments, NodeList, HTMLCollection 等。参考内置对象一章。</p>
+<h3 id="函数表达式"><a href="#函数表达式" class="headerlink" title="函数表达式"></a>函数表达式</h3><p>函数声明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function sum(x: number, y: number): number &#123;</div><div class="line">  return x + y;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用时，参数个数需要严格相同。</p>
+<p>当定义一个函数表达式时，还需要对变量声明类型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let mySum: (x: number, y: number) =&gt; number = function (x: number, y: number): number &#123;</div><div class="line">  return x + y;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h4 id="接口中函数的定义"><a href="#接口中函数的定义" class="headerlink" title="接口中函数的定义"></a>接口中函数的定义</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">interface SearchFunc &#123;</div><div class="line">  (source: string, subString: string): boolean;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let mySearch: SearchFunc;</div><div class="line">mySearch = function(source: string, subString: string) &#123;</div><div class="line">  return source.search(subString) !== -1;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="可选参数"><a href="#可选参数" class="headerlink" title="可选参数"></a>可选参数</h4><p>和对象类似，需要注意的是，可选参数一定要放在最后。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function buildName(firstName: string, lastName?: string) &#123;</div><div class="line">  if (lastName) &#123;</div><div class="line">    return firstName + &apos; &apos; + lastName;</div><div class="line">  &#125; else &#123;</div><div class="line">    return firstName;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">let xcatliu = buildName(&apos;Xcat&apos;, &apos;Liu&apos;);</div><div class="line">let xcat = buildName(&apos;Xcat&apos;);</div></pre></td></tr></table></figure>
+<h4 id="参数默认值"><a href="#参数默认值" class="headerlink" title="参数默认值"></a>参数默认值</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function buildName(firstName: string, lastName: string = &apos;Liu&apos;) &#123;</div><div class="line">  return firstName + &apos; &apos; + lastName;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="剩余参数"><a href="#剩余参数" class="headerlink" title="剩余参数"></a>剩余参数</h4><p>rest参数定义为数组，且必须作为最后一个参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function push(array: any[], ...items: any[]) &#123;</div><div class="line">  items.forEach(function(item) &#123;</div><div class="line">    array.push(item);</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h4><p>重载允许一个函数接受不同数量或类型的参数时，作出不同的处理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function reverse(x: number | string): number | string &#123;</div><div class="line">  if (typeof x === &apos;number&apos;) &#123;</div><div class="line">    return Number(x.toString().split(&apos;&apos;).reverse().join(&apos;&apos;));</div><div class="line">  &#125; else if (typeof x === &apos;string&apos;) &#123;</div><div class="line">    return x.split(&apos;&apos;).reverse().join(&apos;&apos;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这个类型定义中，是不够准确的。因为参数为字符串时，返回值既可以是字符串，也可以是数字。这时，我们可以使用重载定义多个 reverse 的函数类型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function reverse(x: number): number;</div><div class="line">function reverse(x: string): string;</div><div class="line">function reverse(x: number | string): number | string &#123;</div><div class="line">  if (typeof x === &apos;number&apos;) &#123;</div><div class="line">    return Number(x.toString().split(&apos;&apos;).reverse().join(&apos;&apos;));</div><div class="line">  &#125; else if (typeof x === &apos;string&apos;) &#123;</div><div class="line">    return x.split(&apos;&apos;).reverse().join(&apos;&apos;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上例中，我们重复定义了多次函数 reverse，前几次都是函数定义，最后一次是函数实现。<br>注意，TypeScript 会优先从最前面的函数定义开始匹配，所以多个函数定义如果由包含关系，需要优先把精确的定义写在前面。</p>
+<h3 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h3><p>将一个联合类型的变量指定为一个更加具体的类型 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function getLength(something: string | number): number &#123;</div><div class="line">  if ((&lt;string&gt;something).length) &#123;</div><div class="line">    return (&lt;string&gt;something).length;</div><div class="line">  &#125; else &#123;</div><div class="line">    return something.toString().length;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在需要断言的变量前加上 <type> 即可。如果不这么做，因为length不是string和number的共有属性，编译时会报错。</type></p>
+<h3 id="声明文件"><a href="#声明文件" class="headerlink" title="声明文件"></a>声明文件</h3><p>使用第三方库时，用 declare 关键字来定义它的类型，帮助 TypeScript 判断我们传入的参数类型对不对：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">declare var jQuery: (string) =&gt; any;</div><div class="line"></div><div class="line">jQuery(&apos;#foo&apos;);</div></pre></td></tr></table></figure>
+<h3 id="内置对象"><a href="#内置对象" class="headerlink" title="内置对象"></a>内置对象</h3><p>ECMAScript 标准提供的内置对象有：<br><code>Boolean、Error、Date、RegExp 等。</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let b: Boolean = new Boolean(1);</div><div class="line">let e: Error = new Error(&apos;Error occurred&apos;);</div><div class="line">let d: Date = new Date();</div><div class="line">let r: RegExp = /[a-z]/;</div></pre></td></tr></table></figure>
+<p>DOM 和 BOM 提供的内置对象有：<br><code>Document、HTMLElement、Event、NodeList 等。</code></p>
+<p>TypeScript 中会经常用到这些类型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">let body: HTMLElement = document.body;</div><div class="line">let allDiv: NodeList = document.querySelectorAll(&apos;div&apos;);</div><div class="line">document.addEventListener(&apos;click&apos;, function(e: MouseEvent) &#123;</div><div class="line">  // Do something</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h2><h3 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h3><p>上例中，我们使用 type 创建类型别名。<br>类型别名常用于联合类型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">type Name = string;</div><div class="line">type NameResolver = () =&gt; string;</div><div class="line">type NameOrResolver = Name | NameResolver;</div><div class="line">function getName(n: NameOrResolver): Name &#123;</div><div class="line">  if (typeof n === &apos;string&apos;) &#123;</div><div class="line">    return n;</div><div class="line">  &#125;</div><div class="line">  else &#123;</div><div class="line">    return n();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="字符串字面量类型"><a href="#字符串字面量类型" class="headerlink" title="字符串字面量类型"></a>字符串字面量类型</h3><p>字符串字面量类型用来约束取值只能是某几个字符串中的一个。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">type EventNames = &apos;click&apos; | &apos;scroll&apos; | &apos;mousemove&apos;;</div><div class="line">function handleEvent(ele: Element, event: EventNames) &#123;</div><div class="line">  // do something</div><div class="line">&#125;</div><div class="line"></div><div class="line">handleEvent(document.getElementById(&apos;hello&apos;), &apos;scroll&apos;);  // 没问题</div><div class="line">handleEvent(document.getElementById(&apos;world&apos;), &apos;dbclick&apos;); // 报错，event 不能为 &apos;dbclick&apos;</div></pre></td></tr></table></figure>
+<h3 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h3><p>数组合并了相同类型的对象，而元组（Tuple）合并了不同类型的对象。</p>
+<p>定义一对值分别为 string 和 number 的元组：</p>
+<p><code>let xcatliu: [string, number] = [&#39;Xcat Liu&#39;, 25];</code></p>
+<p>当直接对元组类型的变量进行初始化或者赋值的时候，需要提供所有元组类型中指定的项。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let xcatliu: [string, number];</div><div class="line">xcatliu = [&apos;Xcat Liu&apos;, 25];</div></pre></td></tr></table></figure>
+<h4 id="越界的元素"><a href="#越界的元素" class="headerlink" title="越界的元素"></a>越界的元素</h4><p>当赋值给越界的元素时，它类型会被限制为元组中每个类型的联合类型<br>当访问一个越界的元素，也会识别为元组中每个类型的联合类型</p>
+<h3 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h3><blockquote>
+<p>对于几种枚举的实际用途前仍十分困惑。。留待实践中感受。</p>
+</blockquote>
+<p>枚举（Enum）类型用于取值被限定在一定范围内的场景，比如一周只能有七天，颜色限定为红绿蓝等。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">enum Days &#123;Sun, Mon, Tue, Wed, Thu, Fri, Sat&#125;;</div><div class="line"></div><div class="line">console.log(Days[&quot;Sun&quot;] === 0); // true</div><div class="line">console.log(Days[&quot;Mon&quot;] === 1); // true</div><div class="line">console.log(Days[&quot;Tue&quot;] === 2); // true</div><div class="line">console.log(Days[&quot;Sat&quot;] === 6); // true</div><div class="line"></div><div class="line">console.log(Days[0] === &quot;Sun&quot;); // true</div><div class="line">console.log(Days[1] === &quot;Mon&quot;); // true</div><div class="line">console.log(Days[2] === &quot;Tue&quot;); // true</div><div class="line">console.log(Days[6] === &quot;Sat&quot;); // true</div></pre></td></tr></table></figure>
+<p>事实上，上面的例子会被编译为：</p>
+<p>var Days;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">(function (Days) &#123;</div><div class="line">  Days[Days[&quot;Sun&quot;] = 0] = &quot;Sun&quot;;</div><div class="line">  Days[Days[&quot;Mon&quot;] = 1] = &quot;Mon&quot;;</div><div class="line">  Days[Days[&quot;Tue&quot;] = 2] = &quot;Tue&quot;;</div><div class="line">  Days[Days[&quot;Wed&quot;] = 3] = &quot;Wed&quot;;</div><div class="line">  Days[Days[&quot;Thu&quot;] = 4] = &quot;Thu&quot;;</div><div class="line">  Days[Days[&quot;Fri&quot;] = 5] = &quot;Fri&quot;;</div><div class="line">  Days[Days[&quot;Sat&quot;] = 6] = &quot;Sat&quot;;</div><div class="line">&#125;)(Days || (Days = &#123;&#125;));</div></pre></td></tr></table></figure>
+<h4 id="手动赋值"><a href="#手动赋值" class="headerlink" title="手动赋值"></a>手动赋值</h4><p>未手动赋值的枚举项会接着上一个枚举项递增。<br>TypeScript不会察觉,未手动赋值的枚举项与手动赋值的重复。应避免出现这种情况。<br>手动赋值的枚举项可以不是数字。</p>
+<h4 id="常数枚举"><a href="#常数枚举" class="headerlink" title="常数枚举"></a>常数枚举</h4><p>常数枚举是使用 const enum 定义的枚举类型。<br>常数枚举与普通枚举的区别是，它会在编译阶段被删除，并且不能包含计算成员。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">// constEnum.ts</div><div class="line">const enum Directions &#123;</div><div class="line">  Up,</div><div class="line">  Down,</div><div class="line">  Left,</div><div class="line">  Right</div><div class="line">&#125;</div><div class="line"></div><div class="line">let directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];</div><div class="line"></div><div class="line">// constEnum.js</div><div class="line">var directions = [0 /* Up */, 1 /* Down */, 2 /* Left */, 3 /* Right */];</div></pre></td></tr></table></figure>
+<h3 id="外部枚举"><a href="#外部枚举" class="headerlink" title="外部枚举"></a>外部枚举</h3><p>外部枚举（Ambient Enums）是使用 declare enum 定义的枚举类型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">declare enum Directions &#123;</div><div class="line">  Up,</div><div class="line">  Down,</div><div class="line">  Left,</div><div class="line">  Right</div><div class="line">&#125;</div><div class="line"></div><div class="line">let directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];</div></pre></td></tr></table></figure>
+<p>之前提到过，declare 定义的类型只会用于编译时的检查，编译结果中会被删除。</p>
+<p>上例的编译结果是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];</div></pre></td></tr></table></figure>
+<p>同时使用 declare 和 const 也是可以的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">declare const enum Directions &#123;</div><div class="line">  Up,</div><div class="line">  Down,</div><div class="line">  Left,</div><div class="line">  Right</div><div class="line">&#125;</div><div class="line"></div><div class="line">let directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right];</div></pre></td></tr></table></figure>
+<p>编译结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var directions = [0 /* Up */, 1 /* Down */, 2 /* Left */, 3 /* Right */];</div></pre></td></tr></table></figure>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><p>TS支持ES6中的class，以及ES7中的静态属性。<br>此外还可以使用三种修饰符<br>分别是 public、private 和 protected。</p>
+<ul>
+<li>public 修饰的属性或方法是公有的，可以在任何地方被访问到，默认所有的属性和方法都是 public 的</li>
+<li>private 修饰的属性或方法是私有的，不能在声明它的类的外部访问</li>
+<li>protected 修饰的属性或方法是受保护的，它和 private 类似，区别是它在子类中也是允许被访问的</li>
+</ul>
+<h4 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h4><p>abstract 用于定义抽象类和其中的抽象方法。<br>抽象类是不允许被实例化的，它的抽象方法必须被子类实现。因此，抽象类是用来被继承的父类。</p>
+<h3 id="类与接口"><a href="#类与接口" class="headerlink" title="类与接口"></a>类与接口</h3><p>实现（implements）是面向对象中的一个重要概念。一般来讲，一个类只能继承自另一个类，有时候不同类之间可以有一些共有的特性，这时候就可以把特性提取成接口（interfaces），用 implements 关键字来实现。这个特性大大提高了面向对象的灵活性。</p>
+<p>举例来说，门是一个类，防盗门是门的子类。如果防盗门有一个报警器的功能，我们可以简单的给防盗门添加一个报警方法。这时候如果有另一个类，车，也有报警器的功能，就可以考虑把报警器提取出来，作为一个接口，防盗门和车都去实现它：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">interface Alarm &#123;</div><div class="line">  alert();</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Door &#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class SecurityDoor extends Door implements Alarm &#123;</div><div class="line">  alert() &#123;</div><div class="line">    console.log(&apos;SecurityDoor alert&apos;);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Car implements Alarm &#123;</div><div class="line">  alert() &#123;</div><div class="line">    console.log(&apos;Car alert&apos;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="接口继承接口"><a href="#接口继承接口" class="headerlink" title="接口继承接口"></a>接口继承接口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">interface Alarm &#123;</div><div class="line">  alert();</div><div class="line">&#125;</div><div class="line"></div><div class="line">interface LightableAlarm extends Alarm &#123;</div><div class="line">  lightOn();</div><div class="line">  lightOff();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="接口继承类"><a href="#接口继承类" class="headerlink" title="接口继承类"></a>接口继承类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">class Point &#123;</div><div class="line">  x: number;</div><div class="line">  y: number;</div><div class="line">&#125;</div><div class="line"></div><div class="line">interface Point3d extends Point &#123;</div><div class="line">  z: number;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let point3d: Point3d = &#123;x: 1, y: 2, z: 3&#125;;</div></pre></td></tr></table></figure>
+<h4 id="混合类型"><a href="#混合类型" class="headerlink" title="混合类型"></a>混合类型</h4><p>一个函数还可以有自己的属性和方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">interface Counter &#123;</div><div class="line">    (start: number): string;</div><div class="line">    interval: number;</div><div class="line">    reset(): void;</div><div class="line">&#125;</div><div class="line"></div><div class="line">function getCounter(): Counter &#123;</div><div class="line">    let counter = &lt;Counter&gt;function (start: number) &#123; &#125;;</div><div class="line">    counter.interval = 123;</div><div class="line">    counter.reset = function () &#123; &#125;;</div><div class="line">    return counter;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let c = getCounter();</div><div class="line">c(10);</div><div class="line">c.reset();</div><div class="line">c.interval = 5.0;</div></pre></td></tr></table></figure>
+<h4 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h4><p>泛型（Generics）是指在定义函数、接口或类的时候，不预先指定具体的类型，而在使用的时候再指定类型的一种特性。</p>
+<p>例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function createArray(length: number, value: any): Array&lt;any&gt; &#123;</div><div class="line">  let result = [];</div><div class="line">  for (let i = 0; i &lt; length; i++) &#123;</div><div class="line">    result[i] = value;</div><div class="line">  &#125;</div><div class="line">  return result;</div><div class="line">&#125;</div><div class="line"></div><div class="line">createArray(3, &apos;x&apos;); // [&apos;x&apos;, &apos;x&apos;, &apos;x&apos;]</div></pre></td></tr></table></figure>
+<p>我们预期的是，数组中每一项都应该是输入的 value 的类型。这时候，泛型就派上用场了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function createArray&lt;T&gt;(length: number, value: T): Array&lt;T&gt; &#123;</div><div class="line">  let result = [];</div><div class="line">  for (let i = 0; i &lt; length; i++) &#123;</div><div class="line">    result[i] = value;</div><div class="line">  &#125;</div><div class="line">  return result;</div><div class="line">&#125;</div><div class="line"></div><div class="line">createArray&lt;string&gt;(3, &apos;x&apos;); // [&apos;x&apos;, &apos;x&apos;, &apos;x&apos;]</div></pre></td></tr></table></figure>
+<p>上例中，我们在函数名后添加了 <t>，其中 T 用来指代任意输入的类型，在后面的输入 value: T 和输出 Array<t> 中即可使用了。接着在调用的时候，可以指定它具体的类型为 string。当然，也可以不手动指定，而让类型推论自动推算出来.</t></t></p>
+<h4 id="泛型约束"><a href="#泛型约束" class="headerlink" title="泛型约束"></a>泛型约束</h4><p>我们可以对泛型进行约束，只允许这个函数传入那些包含 length 属性的变量。这就是泛型约束：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">interface Lengthwise &#123;</div><div class="line">  length: number;</div><div class="line">&#125;</div><div class="line"></div><div class="line">function loggingIdentity&lt;T extends Lengthwise&gt;(arg: T): T &#123;</div><div class="line">  console.log(arg.length);</div><div class="line">  return arg;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="泛型接口"><a href="#泛型接口" class="headerlink" title="泛型接口"></a>泛型接口</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">interface CreateArrayFunc &#123;</div><div class="line">  &lt;T&gt;(length: number, value: T): Array&lt;T&gt;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">interface CreateArrayFunc&lt;T&gt; &#123;</div><div class="line">  (length: number, value: T): Array&lt;T&gt;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="泛型类"><a href="#泛型类" class="headerlink" title="泛型类"></a>泛型类</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">class GenericNumber&lt;T&gt; &#123;</div><div class="line">    zeroValue: T;</div><div class="line">    add: (x: T, y: T) =&gt; T;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let myGenericNumber = new GenericNumber&lt;number&gt;();</div><div class="line">myGenericNumber.zeroValue = 0;</div><div class="line">myGenericNumber.add = function(x, y) &#123; return x + y; &#125;;</div></pre></td></tr></table></figure>
+<p>###声明合并</p>
+<p>如果定义了两个相同名字的函数、接口或类，那么它们会合并成一个类型：</p>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -221,57 +298,104 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://nsxz945.github.io/2017/10/16/TypeScriptTutorial/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/28/YDKJS-1/" class="archive-article-date">
-  	<time datetime="2017-08-28T07:11:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-28</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/10/12/compile-opt/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">webpack使用后编译优化代码体积</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/28/YDKJS-1/">You Don&#39;t Know JS-Up &amp; Going</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">阅读笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -294,8 +418,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
