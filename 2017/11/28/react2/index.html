@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://nsxz945.github.io">
-  <title>Archives: 2017/8 | nsxz&#39;s blog</title>
+  <title>React文档学习 | nsxz&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="nsxz&#39;s blog">
-<meta property="og:url" content="https://nsxz945.github.io/archives/2017/08/index.html">
+  <meta name="description" content="React文档学习 熟悉vue之后，再来重拾react，很多东西都变得非常自然。但仍然有些值得摘入，注意的细节。  setState()状态更新可能是异步的React 可以将多个setState() 调用合并成一个调用来提高性能。因为 this.props 和 this.state 可能是异步更新的，不应该依靠它们的值来计算下一个状态。 1234// Wrongthis.setState(&amp;#12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React文档学习">
+<meta property="og:url" content="https://nsxz945.github.io/2017/11/28/react2/index.html">
 <meta property="og:site_name" content="nsxz&#39;s blog">
+<meta property="og:description" content="React文档学习 熟悉vue之后，再来重拾react，很多东西都变得非常自然。但仍然有些值得摘入，注意的细节。  setState()状态更新可能是异步的React 可以将多个setState() 调用合并成一个调用来提高性能。因为 this.props 和 this.state 可能是异步更新的，不应该依靠它们的值来计算下一个状态。 1234// Wrongthis.setState(&amp;#12">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-28T07:20:43.859Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="nsxz&#39;s blog">
+<meta name="twitter:title" content="React文档学习">
+<meta name="twitter:description" content="React文档学习 熟悉vue之后，再来重拾react，很多东西都变得非常自然。但仍然有些值得摘入，注意的细节。  setState()状态更新可能是异步的React 可以将多个setState() 调用合并成一个调用来提高性能。因为 this.props 和 this.state 可能是异步更新的，不应该依靠它们的值来计算下一个状态。 1234// Wrongthis.setState(&amp;#12">
   
     <link rel="alternative" href="/atom.xml" title="nsxz&#39;s blog" type="application/atom+xml">
   
@@ -142,136 +146,168 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-react2" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      React文档学习
+    </h1>
+  
+
+        
+        <a href="/2017/11/28/react2/" class="archive-article-date">
+  	<time datetime="2017-11-28T07:06:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-28</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="React文档学习"><a href="#React文档学习" class="headerlink" title="React文档学习"></a>React文档学习</h1><blockquote>
+<p>熟悉vue之后，再来重拾react，很多东西都变得非常自然。<br>但仍然有些值得摘入，注意的细节。</p>
+</blockquote>
+<h2 id="setState-状态更新可能是异步的"><a href="#setState-状态更新可能是异步的" class="headerlink" title="setState()状态更新可能是异步的"></a>setState()状态更新可能是异步的</h2><p>React 可以将多个setState() 调用合并成一个调用来提高性能。<br>因为 this.props 和 this.state 可能是异步更新的，不应该依靠它们的值来计算下一个状态。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// Wrong</div><div class="line">this.setState(&#123;</div><div class="line">  counter: this.state.counter + this.props.increment,</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>要修复它，应使用第二种形式的 setState() 来接受一个函数而不是一个对象。 该函数将接收先前的状态作为第一个参数，将此次更新被应用时的props做为第二个参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">this.setState((prevState, props) =&gt; (&#123;</div><div class="line">  counter: prevState.counter + props.increment</div><div class="line">&#125;));</div></pre></td></tr></table></figure>
+<h2 id="向事件处理程序传递参数"><a href="#向事件处理程序传递参数" class="headerlink" title="向事件处理程序传递参数"></a>向事件处理程序传递参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// 通过 bind 方式向监听函数传参，在类组件中定义的监听函数，事件对象 e 要排在所传递参数的后面</div><div class="line">deleteRow(id,e)&#123;&#125;</div><div class="line"></div><div class="line">&lt;button onClick=&#123;(e) =&gt; this.deleteRow(id, e)&#125;&gt;Delete Row&lt;/button&gt;</div><div class="line"></div><div class="line">// 使用bind创建事件函数，事件对象e以及更多的参数将会被隐式的进行传递</div><div class="line">&lt;button onClick=&#123;this.deleteRow.bind(this, id)&#125;&gt;Delete Row&lt;/button&gt;</div></pre></td></tr></table></figure>
+<h2 id="阻止组件渲染"><a href="#阻止组件渲染" class="headerlink" title="阻止组件渲染"></a>阻止组件渲染</h2><p>让 render 方法返回 null 即可实现。</p>
+<h2 id="协调（Reconciliation）"><a href="#协调（Reconciliation）" class="headerlink" title="协调（Reconciliation）"></a>协调（Reconciliation）</h2><h3 id="对比算法"><a href="#对比算法" class="headerlink" title="对比算法"></a>对比算法</h3><ul>
+<li>每当根元素有不同类型，React将卸载旧树并重新构建新树。</li>
+<li>相同类型的DOM元素,React则会观察二者的属性，保持相同的底层DOM节点，并仅更新变化的属性</li>
+<li>相同类型的组件元素,更新属性，调用render()，再对比</li>
+<li>递归子节点，对比，并逐一修改。</li>
+</ul>
+<h3 id="keys"><a href="#keys" class="headerlink" title="keys"></a>keys</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// 在递归子节点时，遇到如下情况，每个li都被进行修改，效率很低。</div><div class="line">&lt;ul&gt;</div><div class="line">  &lt;li&gt;Duke&lt;/li&gt;</div><div class="line">  &lt;li&gt;Villanova&lt;/li&gt;</div><div class="line">&lt;/ul&gt;</div><div class="line"></div><div class="line">&lt;ul&gt;</div><div class="line">  &lt;li&gt;Connecticut&lt;/li&gt;</div><div class="line">  &lt;li&gt;Duke&lt;/li&gt;</div><div class="line">  &lt;li&gt;Villanova&lt;/li&gt;</div><div class="line">&lt;/ul&gt;</div></pre></td></tr></table></figure>
+<p>为了解决上述问题，引入key，通过key来辅助比较。</p>
+<h2 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h2><h3 id="使用-children-属性将子元素直接传递到输出。"><a href="#使用-children-属性将子元素直接传递到输出。" class="headerlink" title="使用 children 属性将子元素直接传递到输出。"></a>使用 children 属性将子元素直接传递到输出。</h3><p>和vue中的slot类似</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">function FancyBorder(props) &#123;</div><div class="line">  return (</div><div class="line">    &lt;div className=&#123;&apos;FancyBorder FancyBorder-&apos; + props.color&#125;&gt;</div><div class="line">      &#123;props.children&#125;</div><div class="line">    &lt;/div&gt;</div><div class="line">  );</div><div class="line">&#125;</div><div class="line"></div><div class="line">function WelcomeDialog() &#123;</div><div class="line">  return (</div><div class="line">    &lt;FancyBorder color=&quot;blue&quot;&gt;</div><div class="line">      &lt;h1 className=&quot;Dialog-title&quot;&gt;</div><div class="line">        Welcome</div><div class="line">      &lt;/h1&gt;</div><div class="line">      &lt;p className=&quot;Dialog-message&quot;&gt;</div><div class="line">        Thank you for visiting our spacecraft!</div><div class="line">      &lt;/p&gt;</div><div class="line">    &lt;/FancyBorder&gt;</div><div class="line">  );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="自定义属性，设置多个入口"><a href="#自定义属性，设置多个入口" class="headerlink" title="自定义属性，设置多个入口"></a>自定义属性，设置多个入口</h3><p>和vue中具名slot类似</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">function SplitPane(props) &#123;</div><div class="line">  return (</div><div class="line">    &lt;div className=&quot;SplitPane&quot;&gt;</div><div class="line">      &lt;div className=&quot;SplitPane-left&quot;&gt;</div><div class="line">        &#123;props.left&#125;</div><div class="line">      &lt;/div&gt;</div><div class="line">      &lt;div className=&quot;SplitPane-right&quot;&gt;</div><div class="line">        &#123;props.right&#125;</div><div class="line">      &lt;/div&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">  );</div><div class="line">&#125;</div><div class="line"></div><div class="line">function App() &#123;</div><div class="line">  return (</div><div class="line">    &lt;SplitPane</div><div class="line">      left=&#123;</div><div class="line">        &lt;Contacts /&gt;</div><div class="line">      &#125;</div><div class="line">      right=&#123;</div><div class="line">        &lt;Chat /&gt;</div><div class="line">      &#125; /&gt;</div><div class="line">  );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="检查类型"><a href="#检查类型" class="headerlink" title="检查类型"></a>检查类型</h2><p>可以借助flow、typescript，也可以引入React提供的库prop-types</p>
+<h2 id="Refs-amp-DOM"><a href="#Refs-amp-DOM" class="headerlink" title="Refs &amp; DOM"></a>Refs &amp; DOM</h2><h3 id="使用ref属性保存dom节点的引用"><a href="#使用ref属性保存dom节点的引用" class="headerlink" title="使用ref属性保存dom节点的引用"></a>使用ref属性保存dom节点的引用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">class CustomTextInput extends React.Component &#123;</div><div class="line">  constructor(props) &#123;</div><div class="line">    super(props);</div><div class="line">    this.focus = this.focus.bind(this);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  focus() &#123;</div><div class="line">    // 直接使用原生 API 使 text 输入框获得焦点</div><div class="line">    this.textInput.focus();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  render() &#123;</div><div class="line">    // 使用 `ref` 的回调将 text 输入框的 DOM 节点存储到 React </div><div class="line">    // 实例上（比如 this.textInput）</div><div class="line">    return (</div><div class="line">      &lt;div&gt;</div><div class="line">        &lt;input</div><div class="line">          type=&quot;text&quot;</div><div class="line">          ref=&#123;(input) =&gt; &#123; this.textInput = input; &#125;&#125; /&gt;</div><div class="line"></div><div class="line">        &lt;input</div><div class="line">          type=&quot;button&quot;</div><div class="line">          value=&quot;Focus the text input&quot;</div><div class="line">          onClick=&#123;this.focus&#125;</div><div class="line">        /&gt;</div><div class="line">      &lt;/div&gt;</div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="为类组件添加-Ref"><a href="#为类组件添加-Ref" class="headerlink" title="为类组件添加 Ref"></a>为类组件添加 Ref</h3><p>在组件中使用，回调函数接收的是react实例。使用该方法，组件必须是由class声明的(函数声明无效)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">class AutoFocusTextInput extends React.Component &#123;</div><div class="line">  componentDidMount() &#123;</div><div class="line">    this.textInput.focusTextInput();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line">      &lt;CustomTextInput</div><div class="line">        ref=&#123;(input) =&gt; &#123; this.textInput = input; &#125;&#125; /&gt;</div><div class="line"></div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="对父组件暴露-DOM-节点"><a href="#对父组件暴露-DOM-节点" class="headerlink" title="对父组件暴露 DOM 节点"></a>对父组件暴露 DOM 节点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">function CustomTextInput(props) &#123;</div><div class="line">  return (</div><div class="line">    &lt;div&gt;</div><div class="line">      &lt;input ref=&#123;props.inputRef&#125; /&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">  );</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Parent extends React.Component &#123;</div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line">      &lt;CustomTextInput</div><div class="line">        inputRef=&#123;el =&gt; this.inputElement = el&#125;</div><div class="line">      /&gt;</div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>##性能优化</p>
+<p>###使用Chrome Timeline归档组件<br>Chrome浏览器内：<br>在项目地址栏内添加查询字符串 ?react_perf（例如， <a href="http://localhost:3000/?react_perf）。" target="_blank" rel="external">http://localhost:3000/?react_perf）。</a><br>打开Chrome开发工具Timeline 按tab键然后选Record.<br>执行你想要分析的动作。不要记录超过20s，不然Chrome可能会挂起。<br>停止记录。<br>React事件将会被归类在 User Timing标签下。</p>
+<h3 id="避免重复渲染"><a href="#避免重复渲染" class="headerlink" title="避免重复渲染"></a>避免重复渲染</h3><p>你的组件可以通过重写这个生命周期函数shouldComponentUpdate来提升速度， 它是在重新渲染过程开始前触发的。 这个函数默认返回true，可使React执行更新；false来跳过整个渲染进程。</p>
+<h3 id="避免值突变"><a href="#避免值突变" class="headerlink" title="避免值突变"></a>避免值突变</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">// 值突变.带来的影响是,words在方法中已发生变化，PureComponent对新新旧值进行比较时，新旧值仍是相等的。使得后续渲染可能无法正常进行。</div><div class="line">handler() &#123;</div><div class="line">	const words = this.state.words;</div><div class="line">   	words.push(&apos;marklar&apos;);</div><div class="line">	this.setState(&#123;words: words&#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 改成函数形式的setState即可解决</div><div class="line">handle() &#123;</div><div class="line">  this.setState(prevState =&gt; (&#123;</div><div class="line">    words: prevState.words.concat([&apos;marklar&apos;])</div><div class="line">  &#125;));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Portals"><a href="#Portals" class="headerlink" title="Portals"></a>Portals</h2><p>Portals 提供了一种很好的将子节点渲染到父组件以外的 DOM 节点的方式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">render() &#123;</div><div class="line">  // React does *not* create a new div. It renders the children into `domNode`.</div><div class="line">  // `domNode` is any valid DOM node, regardless of its location in the DOM.</div><div class="line">  return ReactDOM.createPortal(</div><div class="line">    this.props.children,</div><div class="line">    domNode,</div><div class="line">  );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>domNode也可以是新建的元素。</p>
+<h3 id="通过-Portals-进行事件冒泡"><a href="#通过-Portals-进行事件冒泡" class="headerlink" title="通过 Portals 进行事件冒泡"></a>通过 Portals 进行事件冒泡</h3><p>一个从 portal 内部会触发的事件会一直冒泡至包含 React 树 的祖先</p>
+<h2 id="高阶组件"><a href="#高阶组件" class="headerlink" title="高阶组件"></a>高阶组件</h2><p>用一个外层组件来分别包裹多个功能组件，并将功能组件的通用部分提升到外层组件中。<br>例子中，使用一个函数来接受功能组件，和通用方法的实例，返回一个处理后的组件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">// 函数接受一个组件参数……</div><div class="line">function withSubscription(WrappedComponent, selectData) &#123;</div><div class="line">  // ……返回另一个新组件……</div><div class="line">  return class extends React.Component &#123;</div><div class="line">    constructor(props) &#123;</div><div class="line">      super(props);</div><div class="line">      this.handleChange = this.handleChange.bind(this);</div><div class="line">      this.state = &#123;</div><div class="line">        data: selectData(DataSource, props)</div><div class="line">      &#125;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    componentDidMount() &#123;</div><div class="line">      // ……注意订阅数据……</div><div class="line">      DataSource.addChangeListener(this.handleChange);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    componentWillUnmount() &#123;</div><div class="line">      DataSource.removeChangeListener(this.handleChange);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    handleChange() &#123;</div><div class="line">      this.setState(&#123;</div><div class="line">        data: selectData(DataSource, this.props)</div><div class="line">      &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    render() &#123;</div><div class="line">      // ……使用最新的数据渲染组件</div><div class="line">      // 注意此处将已有的props属性传递给原组件</div><div class="line">      return &lt;WrappedComponent data=&#123;this.state.data&#125; &#123;...this.props&#125; /&gt;;</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line">const CommentListWithSubscription = withSubscription(</div><div class="line">  CommentList,</div><div class="line">  (DataSource) =&gt; DataSource.getComments()</div><div class="line">);</div><div class="line"></div><div class="line">const BlogPostWithSubscription = withSubscription(</div><div class="line">  BlogPost,</div><div class="line">  (DataSource, props) =&gt; DataSource.getBlogPost(props.id)</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/30/typeof/" class="archive-article-date">
-  	<time datetime="2017-08-30T07:30:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/30/typeof/">typeof</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">JS</a>
-        		</li>
-      		
-		</ul>
-	</div>
+      
 
-          
-
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://nsxz945.github.io/2017/11/28/react2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/30/thisofArrow/" class="archive-article-date">
-  	<time datetime="2017-08-30T07:30:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-30</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/10/25/YDKJS-4/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">You Don&#39;t Know JS-Types &amp; Grammar</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/30/thisofArrow/">箭头函数的this指向</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">阅读笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/28/YDKJS-1/" class="archive-article-date">
-  	<time datetime="2017-08-28T07:11:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/28/YDKJS-1/">You Don&#39;t Know JS-Up &amp; Going</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">阅读笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -294,8 +330,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

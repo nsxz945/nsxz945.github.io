@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="nsxz&#39;s blog">
 <meta property="og:description" content="Chapter 1: Types检查是否为null123var a = null;(!a &amp;amp;&amp;amp; typeof a === &quot;object&quot;); // true typeof可以安全地检查尚未声明的变量Chapter 2: Value设置最大误差来比较两个数js运算时0.1+0.2 不等于0.3。这是因为js的number基于”IEEE 754”，该规范本身造成的结果。通常的做法是，">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-10-27T06:55:06.469Z">
+<meta property="og:updated_time" content="2017-11-24T07:17:42.953Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="You Don&#39;t Know JS-Types &amp; Grammar">
 <meta name="twitter:description" content="Chapter 1: Types检查是否为null123var a = null;(!a &amp;amp;&amp;amp; typeof a === &quot;object&quot;); // true typeof可以安全地检查尚未声明的变量Chapter 2: Value设置最大误差来比较两个数js运算时0.1+0.2 不等于0.3。这是因为js的number基于”IEEE 754”，该规范本身造成的结果。通常的做法是，">
@@ -169,7 +169,24 @@
         <h2 id="Chapter-1-Types"><a href="#Chapter-1-Types" class="headerlink" title="Chapter 1: Types"></a>Chapter 1: Types</h2><h3 id="检查是否为null"><a href="#检查是否为null" class="headerlink" title="检查是否为null"></a>检查是否为null</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="literal">null</span>;</div><div class="line"></div><div class="line">(!a &amp;&amp; <span class="keyword">typeof</span> a === <span class="string">"object"</span>); <span class="comment">// true</span></div></pre></td></tr></table></figure>
 <h3 id="typeof可以安全地检查尚未声明的变量"><a href="#typeof可以安全地检查尚未声明的变量" class="headerlink" title="typeof可以安全地检查尚未声明的变量"></a>typeof可以安全地检查尚未声明的变量</h3><h2 id="Chapter-2-Value"><a href="#Chapter-2-Value" class="headerlink" title="Chapter 2: Value"></a>Chapter 2: Value</h2><h3 id="设置最大误差来比较两个数"><a href="#设置最大误差来比较两个数" class="headerlink" title="设置最大误差来比较两个数"></a>设置最大误差来比较两个数</h3><p>js运算时0.1+0.2 不等于0.3。这是因为js的number基于”IEEE 754”，该规范本身造成的结果。通常的做法是，设置一个最大误差。这个极小的最大误差值称为“machine epsilon”，通常值为2^-52 (2.220446049250313e-16)。<br>在ES6中，可以通过Number.EPSILON取得。</p>
 <h3 id="区分正零、负零"><a href="#区分正零、负零" class="headerlink" title="区分正零、负零"></a>区分正零、负零</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">function isNegZero(n) &#123;</div><div class="line">	n = Number( n );</div><div class="line">	return (n === 0) &amp;&amp; (1 / n === -Infinity);</div><div class="line">&#125;</div><div class="line"></div><div class="line">isNegZero( -0 );		// true</div><div class="line">isNegZero( 0 / -3 );	// true</div><div class="line">isNegZero( 0 );			// false</div></pre></td></tr></table></figure>
-<h2 id="Chapter-3"><a href="#Chapter-3" class="headerlink" title="Chapter 3"></a>Chapter 3</h2><h3 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h3><p>Function、Array、RegExp的..prototype;分别是一个空的function、array，</p>
+<h2 id="Chapter-3"><a href="#Chapter-3" class="headerlink" title="Chapter 3"></a>Chapter 3</h2><h3 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h3><p> <del>Function、Array、RegExp的.prototype;分别是一个空的function、array，RegExp。很适合作为参数为空时的默认值</del><br>在对参数操作时，会动到.prototype。</p>
+<h2 id="Chapter-4-Coercion"><a href="#Chapter-4-Coercion" class="headerlink" title="Chapter 4: Coercion"></a>Chapter 4: Coercion</h2><h3 id="JSON-stringify"><a href="#JSON-stringify" class="headerlink" title="JSON.stringify()"></a>JSON.stringify()</h3><p>一个对象如果有toJSON()属性，使用JSON.stringify()处理该对象，会调用toJSON()。</p>
+<p>JSON.stringify()能够接受第二个参数。可以用来避免避免处理function属性、导致闭环的属性、undefined等无法正确json化的属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">var a = &#123;</div><div class="line">	b: 42,</div><div class="line">	c: &quot;42&quot;,</div><div class="line">	d: [1,2,3]</div><div class="line">&#125;;</div><div class="line">// 字符串或数组形式时，为要处理的键名</div><div class="line">JSON.stringify( a, [&quot;b&quot;,&quot;c&quot;] ); // &quot;&#123;&quot;b&quot;:42,&quot;c&quot;:&quot;42&quot;&#125;&quot;</div><div class="line"></div><div class="line">// 函数形式时，为每个键名设置返回值，若要跳过某键名，则返回undefined</div><div class="line">// function第一次调用时，传递的两个参数是undefined，和对象a</div><div class="line">JSON.stringify( a, function(k,v)&#123;</div><div class="line">	if (k !== &quot;c&quot;) return v;</div><div class="line">&#125; );</div></pre></td></tr></table></figure>
+<p>JSON.stringify()的第三个参数，设置缩进。可以让输出结果更易读。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">var a = &#123;</div><div class="line">	b: 42,</div><div class="line">	c: &quot;42&quot;,</div><div class="line">	d: [1,2,3]</div><div class="line">&#125;;</div><div class="line"></div><div class="line">JSON.stringify( a, null, 3 );</div><div class="line">// &quot;&#123;</div><div class="line">//    &quot;b&quot;: 42,</div><div class="line">//    &quot;c&quot;: &quot;42&quot;,</div><div class="line">//    &quot;d&quot;: [</div><div class="line">//       1,</div><div class="line">//       2,</div><div class="line">//       3</div><div class="line">//    ]</div><div class="line">// &#125;&quot;</div><div class="line"></div><div class="line">JSON.stringify( a, null, &quot;-----&quot; );</div><div class="line">// &quot;&#123;</div><div class="line">// -----&quot;b&quot;: 42,</div><div class="line">// -----&quot;c&quot;: &quot;42&quot;,</div><div class="line">// -----&quot;d&quot;: [</div><div class="line">// ----------1,</div><div class="line">// ----------2,</div><div class="line">// ----------3</div><div class="line">// -----]</div><div class="line">// &#125;&quot;</div></pre></td></tr></table></figure>
+<h3 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h3><p>Number()和String.toNumber会执行ToPrimitive操作，即按序调用valueOf()、toString()中可用的一个方法。</p>
+<h3 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 获得时间戳</div><div class="line">+new Date()</div></pre></td></tr></table></figure>
+<p>计算过程中，调用了对象的valueOf方法。</p>
+<h3 id="取反运算符"><a href="#取反运算符" class="headerlink" title="~取反运算符"></a>~取反运算符</h3><p>字符串、数组的indexOf()在找不到匹配项时，返回值为-1。而-1的布尔值是true。<br>结合 <code>~a == -(a+1)</code>，类似情况，取反后的结果可以直接用于真假判断。</p>
+<p><code>~~</code> 连续的两次取反操作，可以截去小数部分。</p>
+<h3 id=""><a href="#" class="headerlink" title="=="></a>==</h3><p>== 和 ===的主要区别是，前者会进行类型转换。<br>一些很不符合直觉的等式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&quot;0&quot; == false;			// true -- UH OH!</div><div class="line">false == 0;				// true -- UH OH!</div><div class="line">false == &quot;&quot;;			// true -- UH OH!</div><div class="line">false == [];			// true -- UH OH!</div><div class="line">&quot;&quot; == 0;				// true -- UH OH!</div><div class="line">&quot;&quot; == [];				// true -- UH OH!</div><div class="line">0 == [];				// true -- UH OH!</div></pre></td></tr></table></figure>
+<h4 id="的使用建议："><a href="#的使用建议：" class="headerlink" title="== 的使用建议："></a>== 的使用建议：</h4><ul>
+<li>如果判别中会出现 true 或者 false，一定不使用！</li>
+<li>如果判别式中会出现[], “”, or 0，尽量不要使用。</li>
+</ul>
+<p>##Chapter 5: Grammar</p>
 
       
 
@@ -241,6 +258,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2017/11/28/react2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          React文档学习
+        
+      </div>
+    </a>
   
   
     <a href="/2017/10/16/TypeScriptTutorial/" id="article-nav-older" class="article-nav-link-wrap">

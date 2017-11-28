@@ -144,19 +144,19 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-typeof" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-thisofArrow" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/30/typeof/">typeof</a>
+      <a class="article-title" href="/2017/08/30/thisofArrow/">箭头函数的this指向</a>
     </h1>
   
 
         
-        <a href="/2017/08/30/typeof/" class="archive-article-date">
+        <a href="/2017/08/30/thisofArrow/" class="archive-article-date">
   	<time datetime="2017-08-30T07:30:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-30</time>
 </a>
         
@@ -164,14 +164,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="使用Object-prototype-toString-call-target-判断数据类型"><a href="#使用Object-prototype-toString-call-target-判断数据类型" class="headerlink" title="使用Object.prototype.toString.call(target)判断数据类型"></a>使用Object.prototype.toString.call(target)判断数据类型</h1><p>1.typeof的不足<br><code>typeof []; //输出结果是Object</code></p>
-<p>2.instanceof,constructor的不足</p>
-<p>instanceof,constructor</p>
-<blockquote>
-<p>instanceof 和constructor 判断的变量，必须在当前页面声明的，比如，一个页面（父页面）有一个框架，框架中引用了一个页面（子页面），在子页面中声明了一个ary，并将其赋值给父页面的一个变量，这时判断该变量，Array == object.constructor;会返回false；</p>
-</blockquote>
-<p>3.Object.prototype.toString.call(target)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">console.log(Object.prototype.toString.call(123)) //[object Number]</div><div class="line">console.log(Object.prototype.toString.call(&apos;123&apos;)) //[object String]</div><div class="line">console.log(Object.prototype.toString.call(true)) //[object Boolean]</div><div class="line">console.log(Object.prototype.toString.call(undefined)) //[object Undefined]</div><div class="line">console.log(Object.prototype.toString.call(null)) //[object Null]</div><div class="line">console.log(Object.prototype.toString.call(&#123;&#125;)) //[object Object]</div><div class="line">console.log(Object.prototype.toString.call([])) //[object Array]</div><div class="line">console.log(Object.prototype.toString.call(function()&#123;&#125;)) //[object Function]</div></pre></td></tr></table></figure>
+        <p><a href="https://juejin.im/post/59aa71d56fb9a0248d24fae3?utm_source=wechat&amp;from=singlemessage&amp;isappinstalled=0" target="_blank" rel="external">https://juejin.im/post/59aa71d56fb9a0248d24fae3?utm_source=wechat&amp;from=singlemessage&amp;isappinstalled=0</a></p>
+<p>#箭头函数的this指向</p>
+<h2 id="普通函数的this"><a href="#普通函数的this" class="headerlink" title="普通函数的this"></a>普通函数的this</h2><p>以往对函数this的讨论，主要是针对由<code>function(){}</code>创建的函数。它的this很明确，哪一个对象调用了该函数，this便指向哪一个对象。默认由window进行调用。通过call，apply，bind可以改变函数的this。</p>
+<h2 id="箭头函数的this"><a href="#箭头函数的this" class="headerlink" title="箭头函数的this"></a>箭头函数的this</h2><p>简单的总结下箭头函数中this的指向：</p>
+<ol>
+<li>箭头函数不绑定this,箭头函数中的this相当于普通变量。</li>
+<li>箭头函数的this寻值行为与普通变量相同，在作用域中逐级寻找。</li>
+<li>箭头函数的this无法通过bind，call，apply来直接修改。</li>
+<li>改变作用域中this的指向可以改变箭头函数的this</li>
+<li>eg. <code>function closure(){()=&gt;{//code }}</code>，在此例中，我们通过改变封包环境<code>closure.bind(another)()</code>，来改变箭头函数this的指向。</li>
+</ol>
+
       
 
       
@@ -184,7 +188,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">JS</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">阅读笔记</a>
         		</li>
       		
 		</ul>
@@ -194,7 +198,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/30/typeof/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/08/30/thisofArrow/">展开全文 >></a>
         </p>
       
 
