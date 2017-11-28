@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="nsxz&#39;s blog">
 <meta property="og:description" content="《TypeScript 入门教程》学习笔记TypeScript 入门教程 by xcatliu  TypeScript的基础是类型定义。通过类型定义，可以在编译阶段就发现一些错误，另外它增强了编辑器和 IDE 的功能，包括代码补全、接口提示、跳转到定义、重构等。  基础原始数据类型在变量后使用“:”进行类型定义。 12let isDone: boolean = false;let text: st">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-10-17T06:24:51.064Z">
+<meta property="og:updated_time" content="2017-11-22T02:37:09.043Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TypeScriptTutorial">
 <meta name="twitter:description" content="《TypeScript 入门教程》学习笔记TypeScript 入门教程 by xcatliu  TypeScript的基础是类型定义。通过类型定义，可以在编译阶段就发现一些错误，另外它增强了编辑器和 IDE 的功能，包括代码补全、接口提示、跳转到定义、重构等。  基础原始数据类型在变量后使用“:”进行类型定义。 12let isDone: boolean = false;let text: st">
@@ -215,7 +215,7 @@
 <p>上例中，我们重复定义了多次函数 reverse，前几次都是函数定义，最后一次是函数实现。<br>注意，TypeScript 会优先从最前面的函数定义开始匹配，所以多个函数定义如果由包含关系，需要优先把精确的定义写在前面。</p>
 <h3 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h3><p>将一个联合类型的变量指定为一个更加具体的类型 </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function getLength(something: string | number): number &#123;</div><div class="line">  if ((&lt;string&gt;something).length) &#123;</div><div class="line">    return (&lt;string&gt;something).length;</div><div class="line">  &#125; else &#123;</div><div class="line">    return something.toString().length;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在需要断言的变量前加上 <type> 即可。如果不这么做，因为length不是string和number的共有属性，编译时会报错。</type></p>
+<p>在需要断言的变量前加上<code>&lt;Type&gt;</code>即可。如果不这么做，因为length不是string和number的共有属性，编译时会报错。</p>
 <h3 id="声明文件"><a href="#声明文件" class="headerlink" title="声明文件"></a>声明文件</h3><p>使用第三方库时，用 declare 关键字来定义它的类型，帮助 TypeScript 判断我们传入的参数类型对不对：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">declare var jQuery: (string) =&gt; any;</div><div class="line"></div><div class="line">jQuery(&apos;#foo&apos;);</div></pre></td></tr></table></figure>
 <h3 id="内置对象"><a href="#内置对象" class="headerlink" title="内置对象"></a>内置对象</h3><p>ECMAScript 标准提供的内置对象有：<br><code>Boolean、Error、Date、RegExp 等。</code></p>
@@ -232,9 +232,9 @@
 <p><code>let xcatliu: [string, number] = [&#39;Xcat Liu&#39;, 25];</code></p>
 <p>当直接对元组类型的变量进行初始化或者赋值的时候，需要提供所有元组类型中指定的项。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let xcatliu: [string, number];</div><div class="line">xcatliu = [&apos;Xcat Liu&apos;, 25];</div></pre></td></tr></table></figure>
-<h4 id="越界的元素"><a href="#越界的元素" class="headerlink" title="越界的元素"></a>越界的元素</h4><p>当赋值给越界的元素时，它类型会被限制为元组中每个类型的联合类型<br>当访问一个越界的元素，也会识别为元组中每个类型的联合类型</p>
+<h4 id="越界的元素"><a href="#越界的元素" class="headerlink" title="越界的元素"></a>越界的元素</h4><p>当赋值给越界的元素时，它的类型会被限制为元组中每个类型的联合类型<br>当访问一个越界的元素，也会识别为元组中每个类型的联合类型</p>
 <h3 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h3><blockquote>
-<p>对于几种枚举的实际用途前仍十分困惑。。留待实践中感受。</p>
+<p>对于几种枚举的实际用途仍十分困惑。。留待实践中感受。</p>
 </blockquote>
 <p>枚举（Enum）类型用于取值被限定在一定范围内的场景，比如一周只能有七天，颜色限定为红绿蓝等。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">enum Days &#123;Sun, Mon, Tue, Wed, Thu, Fri, Sat&#125;;</div><div class="line"></div><div class="line">console.log(Days[&quot;Sun&quot;] === 0); // true</div><div class="line">console.log(Days[&quot;Mon&quot;] === 1); // true</div><div class="line">console.log(Days[&quot;Tue&quot;] === 2); // true</div><div class="line">console.log(Days[&quot;Sat&quot;] === 6); // true</div><div class="line"></div><div class="line">console.log(Days[0] === &quot;Sun&quot;); // true</div><div class="line">console.log(Days[1] === &quot;Mon&quot;); // true</div><div class="line">console.log(Days[2] === &quot;Tue&quot;); // true</div><div class="line">console.log(Days[6] === &quot;Sat&quot;); // true</div></pre></td></tr></table></figure>

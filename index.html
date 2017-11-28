@@ -144,6 +144,104 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-react2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/28/react2/">React文档学习</a>
+    </h1>
+  
+
+        
+        <a href="/2017/11/28/react2/" class="archive-article-date">
+  	<time datetime="2017-11-28T07:06:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="React文档学习"><a href="#React文档学习" class="headerlink" title="React文档学习"></a>React文档学习</h1><blockquote>
+<p>熟悉vue之后，再来重拾react，很多东西都变得非常自然。<br>但仍然有些值得摘入，注意的细节。</p>
+</blockquote>
+<h2 id="setState-状态更新可能是异步的"><a href="#setState-状态更新可能是异步的" class="headerlink" title="setState()状态更新可能是异步的"></a>setState()状态更新可能是异步的</h2><p>React 可以将多个setState() 调用合并成一个调用来提高性能。<br>因为 this.props 和 this.state 可能是异步更新的，不应该依靠它们的值来计算下一个状态。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// Wrong</div><div class="line">this.setState(&#123;</div><div class="line">  counter: this.state.counter + this.props.increment,</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>要修复它，应使用第二种形式的 setState() 来接受一个函数而不是一个对象。 该函数将接收先前的状态作为第一个参数，将此次更新被应用时的props做为第二个参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">this.setState((prevState, props) =&gt; (&#123;</div><div class="line">  counter: prevState.counter + props.increment</div><div class="line">&#125;));</div></pre></td></tr></table></figure>
+<h2 id="向事件处理程序传递参数"><a href="#向事件处理程序传递参数" class="headerlink" title="向事件处理程序传递参数"></a>向事件处理程序传递参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// 通过 bind 方式向监听函数传参，在类组件中定义的监听函数，事件对象 e 要排在所传递参数的后面</div><div class="line">deleteRow(id,e)&#123;&#125;</div><div class="line"></div><div class="line">&lt;button onClick=&#123;(e) =&gt; this.deleteRow(id, e)&#125;&gt;Delete Row&lt;/button&gt;</div><div class="line"></div><div class="line">// 使用bind创建事件函数，事件对象e以及更多的参数将会被隐式的进行传递</div><div class="line">&lt;button onClick=&#123;this.deleteRow.bind(this, id)&#125;&gt;Delete Row&lt;/button&gt;</div></pre></td></tr></table></figure>
+<h2 id="阻止组件渲染"><a href="#阻止组件渲染" class="headerlink" title="阻止组件渲染"></a>阻止组件渲染</h2><p>让 render 方法返回 null 即可实现。</p>
+<h2 id="协调（Reconciliation）"><a href="#协调（Reconciliation）" class="headerlink" title="协调（Reconciliation）"></a>协调（Reconciliation）</h2><h3 id="对比算法"><a href="#对比算法" class="headerlink" title="对比算法"></a>对比算法</h3><ul>
+<li>每当根元素有不同类型，React将卸载旧树并重新构建新树。</li>
+<li>相同类型的DOM元素,React则会观察二者的属性，保持相同的底层DOM节点，并仅更新变化的属性</li>
+<li>相同类型的组件元素,更新属性，调用render()，再对比</li>
+<li>递归子节点，对比，并逐一修改。</li>
+</ul>
+<h3 id="keys"><a href="#keys" class="headerlink" title="keys"></a>keys</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// 在递归子节点时，遇到如下情况，每个li都被进行修改，效率很低。</div><div class="line">&lt;ul&gt;</div><div class="line">  &lt;li&gt;Duke&lt;/li&gt;</div><div class="line">  &lt;li&gt;Villanova&lt;/li&gt;</div><div class="line">&lt;/ul&gt;</div><div class="line"></div><div class="line">&lt;ul&gt;</div><div class="line">  &lt;li&gt;Connecticut&lt;/li&gt;</div><div class="line">  &lt;li&gt;Duke&lt;/li&gt;</div><div class="line">  &lt;li&gt;Villanova&lt;/li&gt;</div><div class="line">&lt;/ul&gt;</div></pre></td></tr></table></figure>
+<p>为了解决上述问题，引入key，通过key来辅助比较。</p>
+<h2 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h2><h3 id="使用-children-属性将子元素直接传递到输出。"><a href="#使用-children-属性将子元素直接传递到输出。" class="headerlink" title="使用 children 属性将子元素直接传递到输出。"></a>使用 children 属性将子元素直接传递到输出。</h3><p>和vue中的slot类似</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">function FancyBorder(props) &#123;</div><div class="line">  return (</div><div class="line">    &lt;div className=&#123;&apos;FancyBorder FancyBorder-&apos; + props.color&#125;&gt;</div><div class="line">      &#123;props.children&#125;</div><div class="line">    &lt;/div&gt;</div><div class="line">  );</div><div class="line">&#125;</div><div class="line"></div><div class="line">function WelcomeDialog() &#123;</div><div class="line">  return (</div><div class="line">    &lt;FancyBorder color=&quot;blue&quot;&gt;</div><div class="line">      &lt;h1 className=&quot;Dialog-title&quot;&gt;</div><div class="line">        Welcome</div><div class="line">      &lt;/h1&gt;</div><div class="line">      &lt;p className=&quot;Dialog-message&quot;&gt;</div><div class="line">        Thank you for visiting our spacecraft!</div><div class="line">      &lt;/p&gt;</div><div class="line">    &lt;/FancyBorder&gt;</div><div class="line">  );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="自定义属性，设置多个入口"><a href="#自定义属性，设置多个入口" class="headerlink" title="自定义属性，设置多个入口"></a>自定义属性，设置多个入口</h3><p>和vue中具名slot类似</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">function SplitPane(props) &#123;</div><div class="line">  return (</div><div class="line">    &lt;div className=&quot;SplitPane&quot;&gt;</div><div class="line">      &lt;div className=&quot;SplitPane-left&quot;&gt;</div><div class="line">        &#123;props.left&#125;</div><div class="line">      &lt;/div&gt;</div><div class="line">      &lt;div className=&quot;SplitPane-right&quot;&gt;</div><div class="line">        &#123;props.right&#125;</div><div class="line">      &lt;/div&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">  );</div><div class="line">&#125;</div><div class="line"></div><div class="line">function App() &#123;</div><div class="line">  return (</div><div class="line">    &lt;SplitPane</div><div class="line">      left=&#123;</div><div class="line">        &lt;Contacts /&gt;</div><div class="line">      &#125;</div><div class="line">      right=&#123;</div><div class="line">        &lt;Chat /&gt;</div><div class="line">      &#125; /&gt;</div><div class="line">  );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="检查类型"><a href="#检查类型" class="headerlink" title="检查类型"></a>检查类型</h2><p>可以借助flow、typescript，也可以引入React提供的库prop-types</p>
+<h2 id="Refs-amp-DOM"><a href="#Refs-amp-DOM" class="headerlink" title="Refs &amp; DOM"></a>Refs &amp; DOM</h2><h3 id="使用ref属性保存dom节点的引用"><a href="#使用ref属性保存dom节点的引用" class="headerlink" title="使用ref属性保存dom节点的引用"></a>使用ref属性保存dom节点的引用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">class CustomTextInput extends React.Component &#123;</div><div class="line">  constructor(props) &#123;</div><div class="line">    super(props);</div><div class="line">    this.focus = this.focus.bind(this);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  focus() &#123;</div><div class="line">    // 直接使用原生 API 使 text 输入框获得焦点</div><div class="line">    this.textInput.focus();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  render() &#123;</div><div class="line">    // 使用 `ref` 的回调将 text 输入框的 DOM 节点存储到 React </div><div class="line">    // 实例上（比如 this.textInput）</div><div class="line">    return (</div><div class="line">      &lt;div&gt;</div><div class="line">        &lt;input</div><div class="line">          type=&quot;text&quot;</div><div class="line">          ref=&#123;(input) =&gt; &#123; this.textInput = input; &#125;&#125; /&gt;</div><div class="line"></div><div class="line">        &lt;input</div><div class="line">          type=&quot;button&quot;</div><div class="line">          value=&quot;Focus the text input&quot;</div><div class="line">          onClick=&#123;this.focus&#125;</div><div class="line">        /&gt;</div><div class="line">      &lt;/div&gt;</div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="为类组件添加-Ref"><a href="#为类组件添加-Ref" class="headerlink" title="为类组件添加 Ref"></a>为类组件添加 Ref</h3><p>在组件中使用，回调函数接收的是react实例。使用该方法，组件必须是由class声明的(函数声明无效)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">class AutoFocusTextInput extends React.Component &#123;</div><div class="line">  componentDidMount() &#123;</div><div class="line">    this.textInput.focusTextInput();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line">      &lt;CustomTextInput</div><div class="line">        ref=&#123;(input) =&gt; &#123; this.textInput = input; &#125;&#125; /&gt;</div><div class="line"></div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="对父组件暴露-DOM-节点"><a href="#对父组件暴露-DOM-节点" class="headerlink" title="对父组件暴露 DOM 节点"></a>对父组件暴露 DOM 节点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">function CustomTextInput(props) &#123;</div><div class="line">  return (</div><div class="line">    &lt;div&gt;</div><div class="line">      &lt;input ref=&#123;props.inputRef&#125; /&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">  );</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Parent extends React.Component &#123;</div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line">      &lt;CustomTextInput</div><div class="line">        inputRef=&#123;el =&gt; this.inputElement = el&#125;</div><div class="line">      /&gt;</div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>##性能优化</p>
+<p>###使用Chrome Timeline归档组件<br>Chrome浏览器内：<br>在项目地址栏内添加查询字符串 ?react_perf（例如， <a href="http://localhost:3000/?react_perf）。" target="_blank" rel="external">http://localhost:3000/?react_perf）。</a><br>打开Chrome开发工具Timeline 按tab键然后选Record.<br>执行你想要分析的动作。不要记录超过20s，不然Chrome可能会挂起。<br>停止记录。<br>React事件将会被归类在 User Timing标签下。</p>
+<h3 id="避免重复渲染"><a href="#避免重复渲染" class="headerlink" title="避免重复渲染"></a>避免重复渲染</h3><p>你的组件可以通过重写这个生命周期函数shouldComponentUpdate来提升速度， 它是在重新渲染过程开始前触发的。 这个函数默认返回true，可使React执行更新；false来跳过整个渲染进程。</p>
+<h3 id="避免值突变"><a href="#避免值突变" class="headerlink" title="避免值突变"></a>避免值突变</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">// 值突变.带来的影响是,words在方法中已发生变化，PureComponent对新新旧值进行比较时，新旧值仍是相等的。使得后续渲染可能无法正常进行。</div><div class="line">handler() &#123;</div><div class="line">	const words = this.state.words;</div><div class="line">   	words.push(&apos;marklar&apos;);</div><div class="line">	this.setState(&#123;words: words&#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 改成函数形式的setState即可解决</div><div class="line">handle() &#123;</div><div class="line">  this.setState(prevState =&gt; (&#123;</div><div class="line">    words: prevState.words.concat([&apos;marklar&apos;])</div><div class="line">  &#125;));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Portals"><a href="#Portals" class="headerlink" title="Portals"></a>Portals</h2><p>Portals 提供了一种很好的将子节点渲染到父组件以外的 DOM 节点的方式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">render() &#123;</div><div class="line">  // React does *not* create a new div. It renders the children into `domNode`.</div><div class="line">  // `domNode` is any valid DOM node, regardless of its location in the DOM.</div><div class="line">  return ReactDOM.createPortal(</div><div class="line">    this.props.children,</div><div class="line">    domNode,</div><div class="line">  );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>domNode也可以是新建的元素。</p>
+<h3 id="通过-Portals-进行事件冒泡"><a href="#通过-Portals-进行事件冒泡" class="headerlink" title="通过 Portals 进行事件冒泡"></a>通过 Portals 进行事件冒泡</h3><p>一个从 portal 内部会触发的事件会一直冒泡至包含 React 树 的祖先</p>
+<h2 id="高阶组件"><a href="#高阶组件" class="headerlink" title="高阶组件"></a>高阶组件</h2><p>用一个外层组件来分别包裹多个功能组件，并将功能组件的通用部分提升到外层组件中。<br>例子中，使用一个函数来接受功能组件，和通用方法的实例，返回一个处理后的组件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">// 函数接受一个组件参数……</div><div class="line">function withSubscription(WrappedComponent, selectData) &#123;</div><div class="line">  // ……返回另一个新组件……</div><div class="line">  return class extends React.Component &#123;</div><div class="line">    constructor(props) &#123;</div><div class="line">      super(props);</div><div class="line">      this.handleChange = this.handleChange.bind(this);</div><div class="line">      this.state = &#123;</div><div class="line">        data: selectData(DataSource, props)</div><div class="line">      &#125;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    componentDidMount() &#123;</div><div class="line">      // ……注意订阅数据……</div><div class="line">      DataSource.addChangeListener(this.handleChange);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    componentWillUnmount() &#123;</div><div class="line">      DataSource.removeChangeListener(this.handleChange);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    handleChange() &#123;</div><div class="line">      this.setState(&#123;</div><div class="line">        data: selectData(DataSource, this.props)</div><div class="line">      &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    render() &#123;</div><div class="line">      // ……使用最新的数据渲染组件</div><div class="line">      // 注意此处将已有的props属性传递给原组件</div><div class="line">      return &lt;WrappedComponent data=&#123;this.state.data&#125; &#123;...this.props&#125; /&gt;;</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line">const CommentListWithSubscription = withSubscription(</div><div class="line">  CommentList,</div><div class="line">  (DataSource) =&gt; DataSource.getComments()</div><div class="line">);</div><div class="line"></div><div class="line">const BlogPostWithSubscription = withSubscription(</div><div class="line">  BlogPost,</div><div class="line">  (DataSource, props) =&gt; DataSource.getBlogPost(props.id)</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/11/28/react2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-YDKJS-4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -167,7 +265,24 @@
         <h2 id="Chapter-1-Types"><a href="#Chapter-1-Types" class="headerlink" title="Chapter 1: Types"></a>Chapter 1: Types</h2><h3 id="检查是否为null"><a href="#检查是否为null" class="headerlink" title="检查是否为null"></a>检查是否为null</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="literal">null</span>;</div><div class="line"></div><div class="line">(!a &amp;&amp; <span class="keyword">typeof</span> a === <span class="string">"object"</span>); <span class="comment">// true</span></div></pre></td></tr></table></figure>
 <h3 id="typeof可以安全地检查尚未声明的变量"><a href="#typeof可以安全地检查尚未声明的变量" class="headerlink" title="typeof可以安全地检查尚未声明的变量"></a>typeof可以安全地检查尚未声明的变量</h3><h2 id="Chapter-2-Value"><a href="#Chapter-2-Value" class="headerlink" title="Chapter 2: Value"></a>Chapter 2: Value</h2><h3 id="设置最大误差来比较两个数"><a href="#设置最大误差来比较两个数" class="headerlink" title="设置最大误差来比较两个数"></a>设置最大误差来比较两个数</h3><p>js运算时0.1+0.2 不等于0.3。这是因为js的number基于”IEEE 754”，该规范本身造成的结果。通常的做法是，设置一个最大误差。这个极小的最大误差值称为“machine epsilon”，通常值为2^-52 (2.220446049250313e-16)。<br>在ES6中，可以通过Number.EPSILON取得。</p>
 <h3 id="区分正零、负零"><a href="#区分正零、负零" class="headerlink" title="区分正零、负零"></a>区分正零、负零</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">function isNegZero(n) &#123;</div><div class="line">	n = Number( n );</div><div class="line">	return (n === 0) &amp;&amp; (1 / n === -Infinity);</div><div class="line">&#125;</div><div class="line"></div><div class="line">isNegZero( -0 );		// true</div><div class="line">isNegZero( 0 / -3 );	// true</div><div class="line">isNegZero( 0 );			// false</div></pre></td></tr></table></figure>
-<h2 id="Chapter-3"><a href="#Chapter-3" class="headerlink" title="Chapter 3"></a>Chapter 3</h2><h3 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h3><p>Function、Array、RegExp的..prototype;分别是一个空的function、array，</p>
+<h2 id="Chapter-3"><a href="#Chapter-3" class="headerlink" title="Chapter 3"></a>Chapter 3</h2><h3 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h3><p> <del>Function、Array、RegExp的.prototype;分别是一个空的function、array，RegExp。很适合作为参数为空时的默认值</del><br>在对参数操作时，会动到.prototype。</p>
+<h2 id="Chapter-4-Coercion"><a href="#Chapter-4-Coercion" class="headerlink" title="Chapter 4: Coercion"></a>Chapter 4: Coercion</h2><h3 id="JSON-stringify"><a href="#JSON-stringify" class="headerlink" title="JSON.stringify()"></a>JSON.stringify()</h3><p>一个对象如果有toJSON()属性，使用JSON.stringify()处理该对象，会调用toJSON()。</p>
+<p>JSON.stringify()能够接受第二个参数。可以用来避免避免处理function属性、导致闭环的属性、undefined等无法正确json化的属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">var a = &#123;</div><div class="line">	b: 42,</div><div class="line">	c: &quot;42&quot;,</div><div class="line">	d: [1,2,3]</div><div class="line">&#125;;</div><div class="line">// 字符串或数组形式时，为要处理的键名</div><div class="line">JSON.stringify( a, [&quot;b&quot;,&quot;c&quot;] ); // &quot;&#123;&quot;b&quot;:42,&quot;c&quot;:&quot;42&quot;&#125;&quot;</div><div class="line"></div><div class="line">// 函数形式时，为每个键名设置返回值，若要跳过某键名，则返回undefined</div><div class="line">// function第一次调用时，传递的两个参数是undefined，和对象a</div><div class="line">JSON.stringify( a, function(k,v)&#123;</div><div class="line">	if (k !== &quot;c&quot;) return v;</div><div class="line">&#125; );</div></pre></td></tr></table></figure>
+<p>JSON.stringify()的第三个参数，设置缩进。可以让输出结果更易读。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">var a = &#123;</div><div class="line">	b: 42,</div><div class="line">	c: &quot;42&quot;,</div><div class="line">	d: [1,2,3]</div><div class="line">&#125;;</div><div class="line"></div><div class="line">JSON.stringify( a, null, 3 );</div><div class="line">// &quot;&#123;</div><div class="line">//    &quot;b&quot;: 42,</div><div class="line">//    &quot;c&quot;: &quot;42&quot;,</div><div class="line">//    &quot;d&quot;: [</div><div class="line">//       1,</div><div class="line">//       2,</div><div class="line">//       3</div><div class="line">//    ]</div><div class="line">// &#125;&quot;</div><div class="line"></div><div class="line">JSON.stringify( a, null, &quot;-----&quot; );</div><div class="line">// &quot;&#123;</div><div class="line">// -----&quot;b&quot;: 42,</div><div class="line">// -----&quot;c&quot;: &quot;42&quot;,</div><div class="line">// -----&quot;d&quot;: [</div><div class="line">// ----------1,</div><div class="line">// ----------2,</div><div class="line">// ----------3</div><div class="line">// -----]</div><div class="line">// &#125;&quot;</div></pre></td></tr></table></figure>
+<h3 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h3><p>Number()和String.toNumber会执行ToPrimitive操作，即按序调用valueOf()、toString()中可用的一个方法。</p>
+<h3 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 获得时间戳</div><div class="line">+new Date()</div></pre></td></tr></table></figure>
+<p>计算过程中，调用了对象的valueOf方法。</p>
+<h3 id="取反运算符"><a href="#取反运算符" class="headerlink" title="~取反运算符"></a>~取反运算符</h3><p>字符串、数组的indexOf()在找不到匹配项时，返回值为-1。而-1的布尔值是true。<br>结合 <code>~a == -(a+1)</code>，类似情况，取反后的结果可以直接用于真假判断。</p>
+<p><code>~~</code> 连续的两次取反操作，可以截去小数部分。</p>
+<h3 id=""><a href="#" class="headerlink" title="=="></a>==</h3><p>== 和 ===的主要区别是，前者会进行类型转换。<br>一些很不符合直觉的等式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&quot;0&quot; == false;			// true -- UH OH!</div><div class="line">false == 0;				// true -- UH OH!</div><div class="line">false == &quot;&quot;;			// true -- UH OH!</div><div class="line">false == [];			// true -- UH OH!</div><div class="line">&quot;&quot; == 0;				// true -- UH OH!</div><div class="line">&quot;&quot; == [];				// true -- UH OH!</div><div class="line">0 == [];				// true -- UH OH!</div></pre></td></tr></table></figure>
+<h4 id="的使用建议："><a href="#的使用建议：" class="headerlink" title="== 的使用建议："></a>== 的使用建议：</h4><ul>
+<li>如果判别中会出现 true 或者 false，一定不使用！</li>
+<li>如果判别式中会出现[], “”, or 0，尽量不要使用。</li>
+</ul>
+<p>##Chapter 5: Grammar</p>
 
       
 
@@ -278,7 +393,7 @@
 <p>上例中，我们重复定义了多次函数 reverse，前几次都是函数定义，最后一次是函数实现。<br>注意，TypeScript 会优先从最前面的函数定义开始匹配，所以多个函数定义如果由包含关系，需要优先把精确的定义写在前面。</p>
 <h3 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h3><p>将一个联合类型的变量指定为一个更加具体的类型 </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">function getLength(something: string | number): number &#123;</div><div class="line">  if ((&lt;string&gt;something).length) &#123;</div><div class="line">    return (&lt;string&gt;something).length;</div><div class="line">  &#125; else &#123;</div><div class="line">    return something.toString().length;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在需要断言的变量前加上 <type> 即可。如果不这么做，因为length不是string和number的共有属性，编译时会报错。</type></p>
+<p>在需要断言的变量前加上<code>&lt;Type&gt;</code>即可。如果不这么做，因为length不是string和number的共有属性，编译时会报错。</p>
 <h3 id="声明文件"><a href="#声明文件" class="headerlink" title="声明文件"></a>声明文件</h3><p>使用第三方库时，用 declare 关键字来定义它的类型，帮助 TypeScript 判断我们传入的参数类型对不对：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">declare var jQuery: (string) =&gt; any;</div><div class="line"></div><div class="line">jQuery(&apos;#foo&apos;);</div></pre></td></tr></table></figure>
 <h3 id="内置对象"><a href="#内置对象" class="headerlink" title="内置对象"></a>内置对象</h3><p>ECMAScript 标准提供的内置对象有：<br><code>Boolean、Error、Date、RegExp 等。</code></p>
@@ -295,9 +410,9 @@
 <p><code>let xcatliu: [string, number] = [&#39;Xcat Liu&#39;, 25];</code></p>
 <p>当直接对元组类型的变量进行初始化或者赋值的时候，需要提供所有元组类型中指定的项。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let xcatliu: [string, number];</div><div class="line">xcatliu = [&apos;Xcat Liu&apos;, 25];</div></pre></td></tr></table></figure>
-<h4 id="越界的元素"><a href="#越界的元素" class="headerlink" title="越界的元素"></a>越界的元素</h4><p>当赋值给越界的元素时，它类型会被限制为元组中每个类型的联合类型<br>当访问一个越界的元素，也会识别为元组中每个类型的联合类型</p>
+<h4 id="越界的元素"><a href="#越界的元素" class="headerlink" title="越界的元素"></a>越界的元素</h4><p>当赋值给越界的元素时，它的类型会被限制为元组中每个类型的联合类型<br>当访问一个越界的元素，也会识别为元组中每个类型的联合类型</p>
 <h3 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h3><blockquote>
-<p>对于几种枚举的实际用途前仍十分困惑。。留待实践中感受。</p>
+<p>对于几种枚举的实际用途仍十分困惑。。留待实践中感受。</p>
 </blockquote>
 <p>枚举（Enum）类型用于取值被限定在一定范围内的场景，比如一周只能有七天，颜色限定为红绿蓝等。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">enum Days &#123;Sun, Mon, Tue, Wed, Thu, Fri, Sat&#125;;</div><div class="line"></div><div class="line">console.log(Days[&quot;Sun&quot;] === 0); // true</div><div class="line">console.log(Days[&quot;Mon&quot;] === 1); // true</div><div class="line">console.log(Days[&quot;Tue&quot;] === 2); // true</div><div class="line">console.log(Days[&quot;Sat&quot;] === 6); // true</div><div class="line"></div><div class="line">console.log(Days[0] === &quot;Sun&quot;); // true</div><div class="line">console.log(Days[1] === &quot;Mon&quot;); // true</div><div class="line">console.log(Days[2] === &quot;Tue&quot;); // true</div><div class="line">console.log(Days[6] === &quot;Sat&quot;); // true</div></pre></td></tr></table></figure>
@@ -1151,86 +1266,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/08/30/thisofArrow/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-typeof" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/30/typeof/">typeof</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/30/typeof/" class="archive-article-date">
-  	<time datetime="2017-08-30T07:30:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="使用Object-prototype-toString-call-target-判断数据类型"><a href="#使用Object-prototype-toString-call-target-判断数据类型" class="headerlink" title="使用Object.prototype.toString.call(target)判断数据类型"></a>使用Object.prototype.toString.call(target)判断数据类型</h1><p>1.typeof的不足<br><code>typeof []; //输出结果是Object</code></p>
-<p>2.instanceof,constructor的不足</p>
-<p>instanceof,constructor</p>
-<blockquote>
-<p>instanceof 和constructor 判断的变量，必须在当前页面声明的，比如，一个页面（父页面）有一个框架，框架中引用了一个页面（子页面），在子页面中声明了一个ary，并将其赋值给父页面的一个变量，这时判断该变量，Array == object.constructor;会返回false；</p>
-</blockquote>
-<p>3.Object.prototype.toString.call(target)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">console.log(Object.prototype.toString.call(123)) //[object Number]</div><div class="line">console.log(Object.prototype.toString.call(&apos;123&apos;)) //[object String]</div><div class="line">console.log(Object.prototype.toString.call(true)) //[object Boolean]</div><div class="line">console.log(Object.prototype.toString.call(undefined)) //[object Undefined]</div><div class="line">console.log(Object.prototype.toString.call(null)) //[object Null]</div><div class="line">console.log(Object.prototype.toString.call(&#123;&#125;)) //[object Object]</div><div class="line">console.log(Object.prototype.toString.call([])) //[object Array]</div><div class="line">console.log(Object.prototype.toString.call(function()&#123;&#125;)) //[object Function]</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">JS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/30/typeof/">展开全文 >></a>
         </p>
       
 
