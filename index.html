@@ -144,6 +144,164 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-CSS-Will-Change" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/29/CSS-Will-Change/">使用will-change属性，进行GPU加速</a>
+    </h1>
+  
+
+        
+        <a href="/2018/01/29/CSS-Will-Change/" class="archive-article-date">
+  	<time datetime="2018-01-29T06:57:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p><a href="http://www.zhangxinxu.com/wordpress/2015/11/css3-will-change-improve-paint/" target="_blank" rel="external">使用CSS3 will-change提高页面滚动、动画等渲染性能</a></p>
+<h1 id="使用will-change属性，进行GPU加速"><a href="#使用will-change属性，进行GPU加速" class="headerlink" title="使用will-change属性，进行GPU加速"></a>使用will-change属性，进行GPU加速</h1></blockquote>
+<p>以往只知道，使用3D动画相关的属性，可以开启GPU的加速，今天发现一个更合适的方法，即CSS的will-change属性。</p>
+<h2 id="先抄两个实践"><a href="#先抄两个实践" class="headerlink" title="先抄两个实践"></a>先抄两个实践</h2><p>1.CSS 中的使用<br>很重要的一点，不能让这个属性始终处于启用状态，不然对GPU性能就是一种浪费。应该按需启用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">.will-change-parent:hover .will-change &#123;</div><div class="line">  will-change: transform;</div><div class="line">&#125;</div><div class="line">.will-change &#123;</div><div class="line">  transition: transform 0.3s;</div><div class="line">&#125;</div><div class="line">.will-change:hover &#123;</div><div class="line">  transform: scale(1.5);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2.JS中的使用<br>动画触发前使用，动画结束时移除。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">dom.onmousedown = function() &#123;</div><div class="line">    target.style.willChange = &apos;transform&apos;;</div><div class="line">&#125;;</div><div class="line">dom.onclick = function() &#123;</div><div class="line">    // target动画哔哩哔哩...</div><div class="line">&#125;;</div><div class="line">target.onanimationend = function() &#123;</div><div class="line">    // 动画结束回调，移除will-change</div><div class="line">    this.style.willChange = &apos;auto&apos;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="MDN上的属性值"><a href="#MDN上的属性值" class="headerlink" title="MDN上的属性值"></a>MDN上的属性值</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">will-change: auto</div><div class="line">will-change: scroll-position</div><div class="line">will-change: contents</div><div class="line">will-change: transform        // Example of &lt;custom-ident&gt; </div><div class="line">will-change: opacity          // Example of &lt;custom-ident&gt;</div><div class="line">will-change: left, top        // Example of two &lt;animateable-feature&gt;</div><div class="line"></div><div class="line">will-change: unset</div><div class="line">will-change: initial</div><div class="line">will-change: inherit</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/01/29/CSS-Will-Change/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-scroolOptByRAF" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/27/scroolOptByRAF/">使用RAF优化移动端onscrolld额执行评论</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/27/scroolOptByRAF/" class="archive-article-date">
+  	<time datetime="2017-12-27T03:29:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://mp.weixin.qq.com/s?__biz=MjM5MTA1MjAxMQ==&amp;mid=2651227470&amp;idx=1&amp;sn=68c59d96df36c3fa9e9b2daa8e50b4c6&amp;chksm=bd495cca8a3ed5dcec63654617d3003c9c1439b87cd46ef7372dfda2852ffd39f333005d87e3&amp;scene=38#wechat_redirect" target="_blank" rel="external">【第1143期】优化移动端window.onscroll的执行频率方案</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div></pre></td><td class="code"><pre><div class="line">var rAF = window.requestAnimationFrame ||</div><div class="line">window.webkitRequestAnimationFrame ||</div><div class="line">window.mozRequestAnimationFrame ||</div><div class="line">window.oRequestAnimationFrame ||</div><div class="line">window.msRequestAnimationFrame ||</div><div class="line">function (callback) &#123; window.setTimeout(callback, 1000 / 60); &#125;;</div><div class="line">var cancelRAF = window.cancelAnimationFrame ||</div><div class="line">window.webkitCancelAnimationFrame ||</div><div class="line">window.webkitCancelRequestAnimationFrame ||</div><div class="line">window.mozCancelRequestAnimationFrame ||</div><div class="line">window.oCancelRequestAnimationFrame ||</div><div class="line">window.msCancelRequestAnimationFrame ||</div><div class="line">clearTimeout;</div><div class="line">class BetterScroll &#123;</div><div class="line">constructor() &#123;</div><div class="line">    let sy = window.scrollY;</div><div class="line">    this.onScroll = this.onScroll;</div><div class="line">    this.onScrollEnd = this.onScrollEnd;</div><div class="line">    this.scrollList = [];</div><div class="line">    this.scrollEndList = [];</div><div class="line">    this.scrollTimer = null;</div><div class="line">    this.nowWsy = sy;</div><div class="line">    this.lastY  =  sy;</div><div class="line">    this.direction = 0;</div><div class="line">    this.rafMark = null;</div><div class="line">    this.rafingMark = false;</div><div class="line">    this.gap = 0;</div><div class="line">    this.bindEvent();</div><div class="line">&#125;</div><div class="line">onScroll(cb) &#123;</div><div class="line">    if (typeof cb !== &apos;function&apos;) &#123;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    this.scrollList.push(cb);</div><div class="line">&#125;</div><div class="line">onScrollEnd(cb) &#123;</div><div class="line">    if (typeof cb !== &apos;function&apos;) &#123;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    this.scrollEndList.push(cb);</div><div class="line">&#125;</div><div class="line">scrollEnd() &#123;</div><div class="line">    let winInfo = &#123;</div><div class="line">        sy : this.nowWsy,</div><div class="line">        gap : Math.abs(this.gap),</div><div class="line">        dir : this.direction,</div><div class="line">    &#125;</div><div class="line">    for (let i = 0, len = this.scrollEndList.length; i &lt; len; i++) &#123;</div><div class="line">        try &#123;</div><div class="line">            this.scrollEndList[i](winInfo);</div><div class="line">        &#125; catch (error) &#123;</div><div class="line">            console.warn(error)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">rafing() &#123;</div><div class="line">    this.nowWsy = window.scrollY;</div><div class="line">    this.gap = this.nowWsy - this.lastY;</div><div class="line">    // 1为向上滑动 -1 为向下滑动</div><div class="line">    !!this.gap &amp;&amp; (this.direction = (((this.gap &gt;= 0) | 0 ) - 0.5) * 2);</div><div class="line">    this.lastY = this.nowWsy;</div><div class="line">    let winInfo = &#123;</div><div class="line">        sy : this.nowWsy, //当前window的scrollY</div><div class="line">        gap : Math.abs(this.gap), //上次到这次滑动的距离</div><div class="line">        dir : this.direction,  ／／ 滑动方向</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    for (let i = 0, len = this.scrollList.length; i &lt; len; i++) &#123;</div><div class="line">        try &#123;</div><div class="line">            this.scrollList[i](winInfo);</div><div class="line">        &#125; catch (error) &#123;</div><div class="line">            console.warn(error)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    this.startRaf();</div><div class="line">&#125;</div><div class="line">startRaf() &#123;</div><div class="line">    let _this = this;</div><div class="line">    this.rafMark = rAF(function () &#123;</div><div class="line">        _this.rafing();</div><div class="line">    &#125;)</div><div class="line">&#125;</div><div class="line">bindEvent() &#123;</div><div class="line">    let _this = this;</div><div class="line">    window.addEventListener(&apos;scroll&apos;, function () &#123;</div><div class="line">        clearTimeout(_this.scrollTimer);</div><div class="line"></div><div class="line">        if (!_this.rafingMark) &#123;</div><div class="line">            _this.startRaf();</div><div class="line">            _this.rafingMark = true;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        _this.scrollTimer = setTimeout(function () &#123;</div><div class="line">            cancelRAF(_this.rafMark);</div><div class="line">            _this.scrollEnd();</div><div class="line">            _this.rafingMark = false;</div><div class="line">        &#125;, 50);</div><div class="line"></div><div class="line">    &#125;, 0)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">let btScroll = new BetterScroll();</div><div class="line">export default btScroll;</div></pre></td></tr></table></figure>
+<p>用法<br>window正在scrolling的函数，回调函数接受参数<br><code>btScroll.onScroll(callback);</code></p>
+<p>window滑动结束的函数，回调函数接受参数winInfo<br><code>btScroll.onScrollEnd(callback);</code></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">阅读笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/12/27/scroolOptByRAF/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-react2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -283,6 +441,9 @@
 <li>如果判别式中会出现[], “”, or 0，尽量不要使用。</li>
 </ul>
 <p>##Chapter 5: Grammar</p>
+<p>&amp;&amp; 的优先级比 || 高<br>|| 的优先级比 ?:高</p>
+<h3 id="try-finally"><a href="#try-finally" class="headerlink" title="try..finally"></a>try..finally</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line">	try &#123;</div><div class="line">		return 42;</div><div class="line">	&#125;</div><div class="line">	finally &#123;</div><div class="line">		console.log( &quot;Hello&quot; );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	console.log( &quot;never runs&quot; );</div><div class="line">&#125;</div><div class="line"></div><div class="line">console.log( foo() );</div><div class="line">// Hello</div><div class="line">// 42</div></pre></td></tr></table></figure>
+<p>return的值在函数结束时返回，而finally在try结束时执行。</p>
 
       
 
@@ -1097,203 +1258,9 @@
 
 
   
-    <article id="post-YDKJS-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/15/YDKJS-2/">You Don&#39;t Know JS(2)-Scope &amp; Closures</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/15/YDKJS-2/" class="archive-article-date">
-  	<time datetime="2017-09-15T01:20:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#Scope &amp; Closures</p>
-<h2 id="chapter1-2"><a href="#chapter1-2" class="headerlink" title="chapter1-2"></a>chapter1-2</h2><h3 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h3><p>1.Tokenizing/Lexing<br>2.Parsing<br>3.Code-Generation</p>
-<h3 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h3><p>在这个过程中，主要有3个部分在起作用</p>
-<ol>
-<li>Engine</li>
-<li>Compiler</li>
-<li>Scope:明确已声明变量的作用域</li>
-</ol>
-<p>当执行<code>var a = 2</code>时:<br>1.解析<code>var = a</code>，Compiler向Scope询问当前作用域是否存在变量<code>a</code>:存在则忽略声明并转到这一变量上；不存在，则让Scope在当前作用域下声明一个变量<code>a</code>。<br>2.Compiler让Engine执行<code>a=2</code>，Engine会向Scope询问当前作用域上是否存在变量<code>a</code>:存在,则使用该变量;不存在,则让Scope在作用域链上寻找。</p>
-<h3 id="LHS-amp-amp-RHS"><a href="#LHS-amp-amp-RHS" class="headerlink" title="LHS &amp;&amp; RHS"></a>LHS &amp;&amp; RHS</h3><p>LHS查询变量所在锚点，RHS查询变量实际代表什么。LHS在作用域链上查询不到时，会在最外层的作用域上添加该变量。</p>
-<h3 id="scope"><a href="#scope" class="headerlink" title="scope"></a>scope</h3><p>同名的内层变量会遮盖外层的变量，除了全局变量可以使用<code>windows.item</code>来访问到，其他层级的变量无法被直接访问。</p>
-<p>使用eval()实现动态变量(旧方法，不提倡！)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">function foo(str, a) &#123;</div><div class="line">	eval( str ); // cheating!</div><div class="line">	console.log( a, b );</div><div class="line">&#125;</div><div class="line"></div><div class="line">var b = 2;</div><div class="line"></div><div class="line">foo( &quot;var b = 3;&quot;, 1 ); // 1 3</div></pre></td></tr></table></figure>
-<p>使用new Function实现动态变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">new Function ([arg1[, arg2[, ...argN]],] functionBody)</div></pre></td></tr></table></figure>
-<p>functionBody接受一段字符串来作为函数体。</p>
-<h3 id="with"><a href="#with" class="headerlink" title="with"></a>with</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">function foo(obj) &#123;</div><div class="line">	with (obj) &#123;</div><div class="line">		a = 2;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">var o1 = &#123;</div><div class="line">	a: 3</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var o2 = &#123;</div><div class="line">	b: 3</div><div class="line">&#125;;</div><div class="line"></div><div class="line">foo( o1 );</div><div class="line">console.log( o1.a ); // 2</div><div class="line"></div><div class="line">foo( o2 );</div><div class="line">console.log( o2.a ); // undefined</div><div class="line">console.log( a ); // 2 -- Oops, leaked global!</div></pre></td></tr></table></figure>
-<p>with可以用来给obj内已有的属性赋值；当对不存在的属性进行赋值时，以LHS进行变量查询，所以在全局处创建了变量a。</p>
-<p>ps:eval和with的使用，将使引擎不进行性能优化。</p>
-<h2 id="Chapter-3-Function-vs-Block-Scope"><a href="#Chapter-3-Function-vs-Block-Scope" class="headerlink" title="Chapter 3: Function vs. Block Scope"></a>Chapter 3: Function vs. Block Scope</h2><p>function是一个常用的产生块级作用域的方法，为了简明书写，可以使用IIFE。</p>
-<p>当使用let来声明变量时，每个<code>{}</code>确实创造了一个作用域。甚至于在for循环中，每次循环都会生成一个单独的作用域。而使用var却不是这样的。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++) &#123;</div><div class="line">	<span class="built_in">console</span>.log( i );</div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(i) <span class="comment">// 9</span></div><div class="line"></div><div class="line"><span class="keyword">if</span>(<span class="literal">true</span>)&#123;</div><div class="line">	<span class="keyword">var</span> b=<span class="number">1</span></div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(b) <span class="comment">//1</span></div><div class="line"></div><div class="line"><span class="comment">//ps:当把上诉情况中的var换成let，则会提示变量未定义</span></div></pre></td></tr></table></figure>
-<p>块级作用域的使用，能帮助引擎判断哪些变量已经没有用了，使内存回收机制更为有效。</p>
-<h2 id="Chapter-4-Hoisting"><a href="#Chapter-4-Hoisting" class="headerlink" title="Chapter 4: Hoisting"></a>Chapter 4: Hoisting</h2><p>函数声明、var变量声明均会发生变量提升。函数声明优先于var变量声明。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//函数声明提升导致了以下结果。</span></div><div class="line"><span class="comment">//在块级内声明函数的行为是不可靠的，应尽量避免</span></div><div class="line"><span class="comment">//个人认为，在源代码中，函数的执行在函数声明之后，并不会造成阅读、编译的误解</span></div><div class="line">foo(); <span class="comment">// "b"</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> a = <span class="literal">true</span>;</div><div class="line"><span class="keyword">if</span> (a) &#123;</div><div class="line">   <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log( <span class="string">"a"</span> ); &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span> &#123;</div><div class="line">   <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log( <span class="string">"b"</span> ); &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="Chapter-5-Closure"><a href="#Chapter-5-Closure" class="headerlink" title="Chapter 5: Closure"></a>Chapter 5: Closure</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> a = <span class="number">2</span>;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="built_in">console</span>.log( a );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> bar;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> baz = foo(); <span class="comment">//bar被创建，其所在环境也被保留下来。局部作用域依然能被访问。</span></div><div class="line"></div><div class="line">baz();</div></pre></td></tr></table></figure>
-<p>###其他使用closure的方法：<br>不管什么方法，都是在外部留有访问内部函数的入口。这样的一个内部函数因为之后可能被访问，故而整个封包的内存不会被回收。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line">	var a = 2;</div><div class="line"></div><div class="line">	function baz() &#123;</div><div class="line">		console.log( a ); // 2</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	bar( baz );</div><div class="line">&#125;</div><div class="line"></div><div class="line">function bar(fn) &#123;</div><div class="line">	fn(); // look ma, I saw closure!</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">var fn;</div><div class="line"></div><div class="line">function foo() &#123;</div><div class="line">	var a = 2;</div><div class="line"></div><div class="line">	function baz() &#123;</div><div class="line">		console.log( a );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	fn = baz; // assign `baz` to global variable</div><div class="line">&#125;</div><div class="line"></div><div class="line">function bar() &#123;</div><div class="line">	fn(); // look ma, I saw closure!</div><div class="line">&#125;</div><div class="line"></div><div class="line">foo();</div><div class="line"></div><div class="line">bar(); // 2</div></pre></td></tr></table></figure>
-<p>###IIFE<br>IIFE因为函数并没有在其他地方执行，所以不是封包。但IIFE与封包的实践有很大关系。IIFE可以帮助我们快速地创建一个局部作用域。</p>
-<p>用IIFE解决一个经典循环问题：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">for (var i=1; i&lt;=5; i++) &#123;</div><div class="line">	(function(j)&#123;</div><div class="line">		setTimeout( function timer()&#123;</div><div class="line">			console.log( j );</div><div class="line">		&#125;, j*1000 );</div><div class="line">	&#125;)( i );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>###模块化中的封包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">var foo = (function CoolModule() &#123;</div><div class="line">	var something = &quot;cool&quot;;</div><div class="line">	var another = [1, 2, 3];</div><div class="line"></div><div class="line">	function doSomething() &#123;</div><div class="line">		console.log( something );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	function doAnother() &#123;</div><div class="line">		console.log( another.join( &quot; ! &quot; ) );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	return &#123;</div><div class="line">		doSomething: doSomething,</div><div class="line">		doAnother: doAnother</div><div class="line">	&#125;;</div><div class="line">&#125;)();</div><div class="line"></div><div class="line">foo.doSomething(); // cool</div><div class="line">foo.doAnother(); // 1 ! 2 ! 3</div></pre></td></tr></table></figure>
-<p>###模块的管理(仅用作说明)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> MyModules = (<span class="function"><span class="keyword">function</span> <span class="title">Manager</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> modules = &#123;&#125;;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">define</span>(<span class="params">name, deps, impl</span>) </span>&#123;</div><div class="line">		<span class="comment">// 将依赖，一一指向实际方法，并且可以直接使用名字进行调用。</span></div><div class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;deps.length; i++) &#123;</div><div class="line">			deps[i] = modules[deps[i]];</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// 添加新模块，并保存其依赖；</span></div><div class="line">		<span class="comment">// 调用时，impl需要将deps展开写清楚，同时顺序要与deps数组相同</span></div><div class="line">		<span class="comment">// 可以考虑将deps改为对象，模块具名保存。使用call进行调用。在定义时，impl中也只需要加入deps这一个参数就行。</span></div><div class="line">		modules[name] = impl.apply( impl, deps );</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">		<span class="keyword">return</span> modules[name];</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> &#123;</div><div class="line">		<span class="attr">define</span>: define,</div><div class="line">		<span class="attr">get</span>: get</div><div class="line">	&#125;;</div><div class="line">&#125;)();</div><div class="line">MyModules.define( <span class="string">"bar"</span>, [], <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">hello</span>(<span class="params">who</span>) </span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">"Let me introduce: "</span> + who;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> &#123;</div><div class="line">		<span class="attr">hello</span>: hello</div><div class="line">	&#125;;</div><div class="line">&#125; );</div><div class="line"></div><div class="line"><span class="comment">// 此处handler中bar不可或缺</span></div><div class="line">MyModules.define( <span class="string">"foo"</span>, [<span class="string">"bar"</span>], <span class="function"><span class="keyword">function</span>(<span class="params">bar</span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> hungry = <span class="string">"hippo"</span>;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">awesome</span>(<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="built_in">console</span>.log( bar.hello( hungry ).toUpperCase() );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> &#123;</div><div class="line">		<span class="attr">awesome</span>: awesome</div><div class="line">	&#125;;</div><div class="line">&#125; );</div><div class="line"></div><div class="line"><span class="keyword">var</span> bar = MyModules.get( <span class="string">"bar"</span> );</div><div class="line"><span class="keyword">var</span> foo = MyModules.get( <span class="string">"foo"</span> );</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(</div><div class="line">	bar.hello( <span class="string">"hippo"</span> )</div><div class="line">); <span class="comment">// Let me introduce: hippo</span></div><div class="line"></div><div class="line">foo.awesome(); <span class="comment">// LET ME INTRODUCE: HIPPO</span></div></pre></td></tr></table></figure></p>
-<h2 id="Dynamic-Scope"><a href="#Dynamic-Scope" class="headerlink" title="Dynamic Scope"></a>Dynamic Scope</h2><p>Lexial Scope vs Dynamic Scope<br>前者的作用域是在函数创建时确定的，后者则是在函数被调用时确定的。在JS中，this的用法和Dynamic Scope很类似。<br>eval，with可以起到类似Dynamic Scope的作用。这两个影响性能，基本不会用。</p>
-<h2 id="Polyfilling-Block-Scope"><a href="#Polyfilling-Block-Scope" class="headerlink" title="Polyfilling Block Scope"></a>Polyfilling Block Scope</h2><p>在ES6中，我们可以用花括号来声明一个局部作用域。在考虑兼容的情况下，我们可以采用下面这个方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	try &#123;</div><div class="line">		throw undefined;</div><div class="line">	&#125; catch (a) &#123;</div><div class="line">		a = 2;</div><div class="line">		console.log( a );//2</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">console.log( a );//VM341:9 Uncaught ReferenceError: a is not defined</div></pre></td></tr></table></figure>
-<p>使用try/catch，可以创建一个局部作用域。</p>
-<p>###let局部作用域<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">let (a = 2) &#123;</div><div class="line">	console.log( a ); // 2</div><div class="line">&#125;</div><div class="line"></div><div class="line">console.log( a ); // ReferenceError</div><div class="line"></div><div class="line">&#123; let a = 2;</div><div class="line">	console.log( a );</div><div class="line">&#125;</div><div class="line"></div><div class="line">console.log( a ); // ReferenceError</div></pre></td></tr></table></figure></p>
-<p>###与IIFE比较<br>与真正的局部作用域相比，IIFE改变了代码的原意，尤其是当内部代码含有this, return, break, 以及 continue时。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">阅读笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/15/YDKJS-2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-typeof" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/30/typeof/">typeof</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/30/typeof/" class="archive-article-date">
-  	<time datetime="2017-08-30T07:30:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="使用Object-prototype-toString-call-target-判断数据类型"><a href="#使用Object-prototype-toString-call-target-判断数据类型" class="headerlink" title="使用Object.prototype.toString.call(target)判断数据类型"></a>使用Object.prototype.toString.call(target)判断数据类型</h1><p>1.typeof的不足<br><code>typeof []; //输出结果是Object</code></p>
-<p>2.instanceof,constructor的不足</p>
-<p>instanceof,constructor</p>
-<blockquote>
-<p>instanceof 和constructor 判断的变量，必须在当前页面声明的，比如，一个页面（父页面）有一个框架，框架中引用了一个页面（子页面），在子页面中声明了一个ary，并将其赋值给父页面的一个变量，这时判断该变量，Array == object.constructor;会返回false；</p>
-</blockquote>
-<p>3.Object.prototype.toString.call(target)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">console.log(Object.prototype.toString.call(123)) //[object Number]</div><div class="line">console.log(Object.prototype.toString.call(&apos;123&apos;)) //[object String]</div><div class="line">console.log(Object.prototype.toString.call(true)) //[object Boolean]</div><div class="line">console.log(Object.prototype.toString.call(undefined)) //[object Undefined]</div><div class="line">console.log(Object.prototype.toString.call(null)) //[object Null]</div><div class="line">console.log(Object.prototype.toString.call(&#123;&#125;)) //[object Object]</div><div class="line">console.log(Object.prototype.toString.call([])) //[object Array]</div><div class="line">console.log(Object.prototype.toString.call(function()&#123;&#125;)) //[object Function]</div></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">JS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/30/typeof/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1305,7 +1272,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 nsxz
+    		&copy; 2018 nsxz
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -1388,11 +1355,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">阅读笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">阅读笔记</a>
               </li>
              
               <li class="article-tag-list-item">

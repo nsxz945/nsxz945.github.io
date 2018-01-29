@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="nsxz&#39;s blog">
 <meta property="og:description" content="Chapter 1: Types检查是否为null123var a = null;(!a &amp;amp;&amp;amp; typeof a === &quot;object&quot;); // true typeof可以安全地检查尚未声明的变量Chapter 2: Value设置最大误差来比较两个数js运算时0.1+0.2 不等于0.3。这是因为js的number基于”IEEE 754”，该规范本身造成的结果。通常的做法是，">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-11-24T07:17:42.953Z">
+<meta property="og:updated_time" content="2018-01-19T11:24:35.858Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="You Don&#39;t Know JS-Types &amp; Grammar">
 <meta name="twitter:description" content="Chapter 1: Types检查是否为null123var a = null;(!a &amp;amp;&amp;amp; typeof a === &quot;object&quot;); // true typeof可以安全地检查尚未声明的变量Chapter 2: Value设置最大误差来比较两个数js运算时0.1+0.2 不等于0.3。这是因为js的number基于”IEEE 754”，该规范本身造成的结果。通常的做法是，">
@@ -187,6 +187,9 @@
 <li>如果判别式中会出现[], “”, or 0，尽量不要使用。</li>
 </ul>
 <p>##Chapter 5: Grammar</p>
+<p>&amp;&amp; 的优先级比 || 高<br>|| 的优先级比 ?:高</p>
+<h3 id="try-finally"><a href="#try-finally" class="headerlink" title="try..finally"></a>try..finally</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line">	try &#123;</div><div class="line">		return 42;</div><div class="line">	&#125;</div><div class="line">	finally &#123;</div><div class="line">		console.log( &quot;Hello&quot; );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	console.log( &quot;never runs&quot; );</div><div class="line">&#125;</div><div class="line"></div><div class="line">console.log( foo() );</div><div class="line">// Hello</div><div class="line">// 42</div></pre></td></tr></table></figure>
+<p>return的值在函数结束时返回，而finally在try结束时执行。</p>
 
       
 
@@ -311,7 +314,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 nsxz
+    		&copy; 2018 nsxz
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -394,11 +397,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">阅读笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">阅读笔记</a>
               </li>
              
               <li class="article-tag-list-item">

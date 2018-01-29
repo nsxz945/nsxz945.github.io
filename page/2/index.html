@@ -144,6 +144,120 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-YDKJS-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/15/YDKJS-2/">You Don&#39;t Know JS(2)-Scope &amp; Closures</a>
+    </h1>
+  
+
+        
+        <a href="/2017/09/15/YDKJS-2/" class="archive-article-date">
+  	<time datetime="2017-09-15T01:20:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#Scope &amp; Closures</p>
+<h2 id="chapter1-2"><a href="#chapter1-2" class="headerlink" title="chapter1-2"></a>chapter1-2</h2><h3 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h3><p>1.Tokenizing/Lexing<br>2.Parsing<br>3.Code-Generation</p>
+<h3 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h3><p>在这个过程中，主要有3个部分在起作用</p>
+<ol>
+<li>Engine</li>
+<li>Compiler</li>
+<li>Scope:明确已声明变量的作用域</li>
+</ol>
+<p>当执行<code>var a = 2</code>时:<br>1.解析<code>var = a</code>，Compiler向Scope询问当前作用域是否存在变量<code>a</code>:存在则忽略声明并转到这一变量上；不存在，则让Scope在当前作用域下声明一个变量<code>a</code>。<br>2.Compiler让Engine执行<code>a=2</code>，Engine会向Scope询问当前作用域上是否存在变量<code>a</code>:存在,则使用该变量;不存在,则让Scope在作用域链上寻找。</p>
+<h3 id="LHS-amp-amp-RHS"><a href="#LHS-amp-amp-RHS" class="headerlink" title="LHS &amp;&amp; RHS"></a>LHS &amp;&amp; RHS</h3><p>LHS查询变量所在锚点，RHS查询变量实际代表什么。LHS在作用域链上查询不到时，会在最外层的作用域上添加该变量。</p>
+<h3 id="scope"><a href="#scope" class="headerlink" title="scope"></a>scope</h3><p>同名的内层变量会遮盖外层的变量，除了全局变量可以使用<code>windows.item</code>来访问到，其他层级的变量无法被直接访问。</p>
+<p>使用eval()实现动态变量(旧方法，不提倡！)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">function foo(str, a) &#123;</div><div class="line">	eval( str ); // cheating!</div><div class="line">	console.log( a, b );</div><div class="line">&#125;</div><div class="line"></div><div class="line">var b = 2;</div><div class="line"></div><div class="line">foo( &quot;var b = 3;&quot;, 1 ); // 1 3</div></pre></td></tr></table></figure>
+<p>使用new Function实现动态变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">new Function ([arg1[, arg2[, ...argN]],] functionBody)</div></pre></td></tr></table></figure>
+<p>functionBody接受一段字符串来作为函数体。</p>
+<h3 id="with"><a href="#with" class="headerlink" title="with"></a>with</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">function foo(obj) &#123;</div><div class="line">	with (obj) &#123;</div><div class="line">		a = 2;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">var o1 = &#123;</div><div class="line">	a: 3</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var o2 = &#123;</div><div class="line">	b: 3</div><div class="line">&#125;;</div><div class="line"></div><div class="line">foo( o1 );</div><div class="line">console.log( o1.a ); // 2</div><div class="line"></div><div class="line">foo( o2 );</div><div class="line">console.log( o2.a ); // undefined</div><div class="line">console.log( a ); // 2 -- Oops, leaked global!</div></pre></td></tr></table></figure>
+<p>with可以用来给obj内已有的属性赋值；当对不存在的属性进行赋值时，以LHS进行变量查询，所以在全局处创建了变量a。</p>
+<p>ps:eval和with的使用，将使引擎不进行性能优化。</p>
+<h2 id="Chapter-3-Function-vs-Block-Scope"><a href="#Chapter-3-Function-vs-Block-Scope" class="headerlink" title="Chapter 3: Function vs. Block Scope"></a>Chapter 3: Function vs. Block Scope</h2><p>function是一个常用的产生块级作用域的方法，为了简明书写，可以使用IIFE。</p>
+<p>当使用let来声明变量时，每个<code>{}</code>确实创造了一个作用域。甚至于在for循环中，每次循环都会生成一个单独的作用域。而使用var却不是这样的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++) &#123;</div><div class="line">	<span class="built_in">console</span>.log( i );</div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(i) <span class="comment">// 9</span></div><div class="line"></div><div class="line"><span class="keyword">if</span>(<span class="literal">true</span>)&#123;</div><div class="line">	<span class="keyword">var</span> b=<span class="number">1</span></div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(b) <span class="comment">//1</span></div><div class="line"></div><div class="line"><span class="comment">//ps:当把上诉情况中的var换成let，则会提示变量未定义</span></div></pre></td></tr></table></figure>
+<p>块级作用域的使用，能帮助引擎判断哪些变量已经没有用了，使内存回收机制更为有效。</p>
+<h2 id="Chapter-4-Hoisting"><a href="#Chapter-4-Hoisting" class="headerlink" title="Chapter 4: Hoisting"></a>Chapter 4: Hoisting</h2><p>函数声明、var变量声明均会发生变量提升。函数声明优先于var变量声明。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//函数声明提升导致了以下结果。</span></div><div class="line"><span class="comment">//在块级内声明函数的行为是不可靠的，应尽量避免</span></div><div class="line"><span class="comment">//个人认为，在源代码中，函数的执行在函数声明之后，并不会造成阅读、编译的误解</span></div><div class="line">foo(); <span class="comment">// "b"</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> a = <span class="literal">true</span>;</div><div class="line"><span class="keyword">if</span> (a) &#123;</div><div class="line">   <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log( <span class="string">"a"</span> ); &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span> &#123;</div><div class="line">   <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log( <span class="string">"b"</span> ); &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Chapter-5-Closure"><a href="#Chapter-5-Closure" class="headerlink" title="Chapter 5: Closure"></a>Chapter 5: Closure</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> a = <span class="number">2</span>;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="built_in">console</span>.log( a );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> bar;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> baz = foo(); <span class="comment">//bar被创建，其所在环境也被保留下来。局部作用域依然能被访问。</span></div><div class="line"></div><div class="line">baz();</div></pre></td></tr></table></figure>
+<p>###其他使用closure的方法：<br>不管什么方法，都是在外部留有访问内部函数的入口。这样的一个内部函数因为之后可能被访问，故而整个封包的内存不会被回收。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">function foo() &#123;</div><div class="line">	var a = 2;</div><div class="line"></div><div class="line">	function baz() &#123;</div><div class="line">		console.log( a ); // 2</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	bar( baz );</div><div class="line">&#125;</div><div class="line"></div><div class="line">function bar(fn) &#123;</div><div class="line">	fn(); // look ma, I saw closure!</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">var fn;</div><div class="line"></div><div class="line">function foo() &#123;</div><div class="line">	var a = 2;</div><div class="line"></div><div class="line">	function baz() &#123;</div><div class="line">		console.log( a );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	fn = baz; // assign `baz` to global variable</div><div class="line">&#125;</div><div class="line"></div><div class="line">function bar() &#123;</div><div class="line">	fn(); // look ma, I saw closure!</div><div class="line">&#125;</div><div class="line"></div><div class="line">foo();</div><div class="line"></div><div class="line">bar(); // 2</div></pre></td></tr></table></figure>
+<p>###IIFE<br>IIFE因为函数并没有在其他地方执行，所以不是封包。但IIFE与封包的实践有很大关系。IIFE可以帮助我们快速地创建一个局部作用域。</p>
+<p>用IIFE解决一个经典循环问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">for (var i=1; i&lt;=5; i++) &#123;</div><div class="line">	(function(j)&#123;</div><div class="line">		setTimeout( function timer()&#123;</div><div class="line">			console.log( j );</div><div class="line">		&#125;, j*1000 );</div><div class="line">	&#125;)( i );</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>###模块化中的封包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">var foo = (function CoolModule() &#123;</div><div class="line">	var something = &quot;cool&quot;;</div><div class="line">	var another = [1, 2, 3];</div><div class="line"></div><div class="line">	function doSomething() &#123;</div><div class="line">		console.log( something );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	function doAnother() &#123;</div><div class="line">		console.log( another.join( &quot; ! &quot; ) );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	return &#123;</div><div class="line">		doSomething: doSomething,</div><div class="line">		doAnother: doAnother</div><div class="line">	&#125;;</div><div class="line">&#125;)();</div><div class="line"></div><div class="line">foo.doSomething(); // cool</div><div class="line">foo.doAnother(); // 1 ! 2 ! 3</div></pre></td></tr></table></figure>
+<p>###模块的管理(仅用作说明)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> MyModules = (<span class="function"><span class="keyword">function</span> <span class="title">Manager</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> modules = &#123;&#125;;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">define</span>(<span class="params">name, deps, impl</span>) </span>&#123;</div><div class="line">		<span class="comment">// 将依赖，一一指向实际方法，并且可以直接使用名字进行调用。</span></div><div class="line">		<span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;deps.length; i++) &#123;</div><div class="line">			deps[i] = modules[deps[i]];</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// 添加新模块，并保存其依赖；</span></div><div class="line">		<span class="comment">// 调用时，impl需要将deps展开写清楚，同时顺序要与deps数组相同</span></div><div class="line">		<span class="comment">// 可以考虑将deps改为对象，模块具名保存。使用call进行调用。在定义时，impl中也只需要加入deps这一个参数就行。</span></div><div class="line">		modules[name] = impl.apply( impl, deps );</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">		<span class="keyword">return</span> modules[name];</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> &#123;</div><div class="line">		<span class="attr">define</span>: define,</div><div class="line">		<span class="attr">get</span>: get</div><div class="line">	&#125;;</div><div class="line">&#125;)();</div><div class="line">MyModules.define( <span class="string">"bar"</span>, [], <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">hello</span>(<span class="params">who</span>) </span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">"Let me introduce: "</span> + who;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> &#123;</div><div class="line">		<span class="attr">hello</span>: hello</div><div class="line">	&#125;;</div><div class="line">&#125; );</div><div class="line"></div><div class="line"><span class="comment">// 此处handler中bar不可或缺</span></div><div class="line">MyModules.define( <span class="string">"foo"</span>, [<span class="string">"bar"</span>], <span class="function"><span class="keyword">function</span>(<span class="params">bar</span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> hungry = <span class="string">"hippo"</span>;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">awesome</span>(<span class="params"></span>) </span>&#123;</div><div class="line">		<span class="built_in">console</span>.log( bar.hello( hungry ).toUpperCase() );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> &#123;</div><div class="line">		<span class="attr">awesome</span>: awesome</div><div class="line">	&#125;;</div><div class="line">&#125; );</div><div class="line"></div><div class="line"><span class="keyword">var</span> bar = MyModules.get( <span class="string">"bar"</span> );</div><div class="line"><span class="keyword">var</span> foo = MyModules.get( <span class="string">"foo"</span> );</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(</div><div class="line">	bar.hello( <span class="string">"hippo"</span> )</div><div class="line">); <span class="comment">// Let me introduce: hippo</span></div><div class="line"></div><div class="line">foo.awesome(); <span class="comment">// LET ME INTRODUCE: HIPPO</span></div></pre></td></tr></table></figure></p>
+<h2 id="Dynamic-Scope"><a href="#Dynamic-Scope" class="headerlink" title="Dynamic Scope"></a>Dynamic Scope</h2><p>Lexial Scope vs Dynamic Scope<br>前者的作用域是在函数创建时确定的，后者则是在函数被调用时确定的。在JS中，this的用法和Dynamic Scope很类似。<br>eval，with可以起到类似Dynamic Scope的作用。这两个影响性能，基本不会用。</p>
+<h2 id="Polyfilling-Block-Scope"><a href="#Polyfilling-Block-Scope" class="headerlink" title="Polyfilling Block Scope"></a>Polyfilling Block Scope</h2><p>在ES6中，我们可以用花括号来声明一个局部作用域。在考虑兼容的情况下，我们可以采用下面这个方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	try &#123;</div><div class="line">		throw undefined;</div><div class="line">	&#125; catch (a) &#123;</div><div class="line">		a = 2;</div><div class="line">		console.log( a );//2</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">console.log( a );//VM341:9 Uncaught ReferenceError: a is not defined</div></pre></td></tr></table></figure>
+<p>使用try/catch，可以创建一个局部作用域。</p>
+<p>###let局部作用域<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">let (a = 2) &#123;</div><div class="line">	console.log( a ); // 2</div><div class="line">&#125;</div><div class="line"></div><div class="line">console.log( a ); // ReferenceError</div><div class="line"></div><div class="line">&#123; let a = 2;</div><div class="line">	console.log( a );</div><div class="line">&#125;</div><div class="line"></div><div class="line">console.log( a ); // ReferenceError</div></pre></td></tr></table></figure></p>
+<p>###与IIFE比较<br>与真正的局部作用域相比，IIFE改变了代码的原意，尤其是当内部代码含有this, return, break, 以及 continue时。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">阅读笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/09/15/YDKJS-2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-thisofArrow" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -199,6 +313,86 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/08/30/thisofArrow/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-typeof" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/30/typeof/">typeof</a>
+    </h1>
+  
+
+        
+        <a href="/2017/08/30/typeof/" class="archive-article-date">
+  	<time datetime="2017-08-30T07:30:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="使用Object-prototype-toString-call-target-判断数据类型"><a href="#使用Object-prototype-toString-call-target-判断数据类型" class="headerlink" title="使用Object.prototype.toString.call(target)判断数据类型"></a>使用Object.prototype.toString.call(target)判断数据类型</h1><p>1.typeof的不足<br><code>typeof []; //输出结果是Object</code></p>
+<p>2.instanceof,constructor的不足</p>
+<p>instanceof,constructor</p>
+<blockquote>
+<p>instanceof 和constructor 判断的变量，必须在当前页面声明的，比如，一个页面（父页面）有一个框架，框架中引用了一个页面（子页面），在子页面中声明了一个ary，并将其赋值给父页面的一个变量，这时判断该变量，Array == object.constructor;会返回false；</p>
+</blockquote>
+<p>3.Object.prototype.toString.call(target)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">console.log(Object.prototype.toString.call(123)) //[object Number]</div><div class="line">console.log(Object.prototype.toString.call(&apos;123&apos;)) //[object String]</div><div class="line">console.log(Object.prototype.toString.call(true)) //[object Boolean]</div><div class="line">console.log(Object.prototype.toString.call(undefined)) //[object Undefined]</div><div class="line">console.log(Object.prototype.toString.call(null)) //[object Null]</div><div class="line">console.log(Object.prototype.toString.call(&#123;&#125;)) //[object Object]</div><div class="line">console.log(Object.prototype.toString.call([])) //[object Array]</div><div class="line">console.log(Object.prototype.toString.call(function()&#123;&#125;)) //[object Function]</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">JS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/08/30/typeof/">展开全文 >></a>
         </p>
       
 
@@ -969,80 +1163,9 @@
 
 
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/28/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/28/hello-world/" class="archive-article-date">
-  	<time datetime="2017-04-28T02:07:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/04/28/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -1054,7 +1177,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 nsxz
+    		&copy; 2018 nsxz
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -1137,11 +1260,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">阅读笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">学习笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">阅读笔记</a>
               </li>
              
               <li class="article-tag-list-item">
